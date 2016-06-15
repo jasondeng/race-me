@@ -2,6 +2,7 @@
 
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -14,6 +15,8 @@ var expressSession = require('express-session');
 // MODELS
 var User = require('./models/user');
 
+var uri = fs.readFileSync('assets/uri.txt', 'utf8');
+
 // ROUTES
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,7 +24,7 @@ var users = require('./routes/users');
 var app = express();
 
 // connect to database
-var url = process.env.MONGODB_URI || 'mongodb://heroku_czw9k6mx:rviepv825gs3o3hdrcmg1u9bg5@ds015334.mlab.com:15334/heroku_czw9k6mx';
+var url = process.env.MONGODB_URI || uri;
 mongoose.connect(url);
 
 // view engine setup
