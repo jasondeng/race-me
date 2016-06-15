@@ -19,10 +19,12 @@ router.post("/register", function(req, res) {
   var newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, function(error, user){
     if(error) {
+      req.flash("error", error.message);
       console.log(error);
       return res.render("register");
     }
     passport.authenticate("local")(req, res, function(){
+      req.flash("success", "Welcome " + user.username);
       console.log("SUCCESS");
       res.redirect("/");
     });
@@ -40,12 +42,12 @@ router.post("/login", passport.authenticate("local",
     failureRedirect: "/login"
   }) ,function(req, res){
   if (req.session.returnTo) {
-    // req.flash("success", "Welcome back!");
+    req.flash("success", "Welcome back!");
     res.redirect("/");
     // console.log(req.session.returnTo);
     // delete req.session.returnTo;
   } else {
-    // req.flash("success", "Welcome back!");
+    req.flash("success", "Welcome back!");
     res.redirect("/");
   }
 });

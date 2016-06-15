@@ -11,6 +11,7 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var passportMongoose = require('passport-local-mongoose');
 var expressSession = require('express-session');
+var flash = require('connect-flash');
 // MODELS
 var User = require('./models/user');
 
@@ -39,6 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 // Passport config
 app.use(expressSession({
@@ -54,8 +56,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
-  // res.locals.error = req.flash("error");
-  // res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
 
