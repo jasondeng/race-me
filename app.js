@@ -21,12 +21,21 @@ var users = require('./routes/users');
 
 var app = express();
 
-// ENV
-var config = require('./env.json');
 
+var url = process.env.MONGODB_URI;
+// ENV
+try {
+  var config = require('./env.json');
+  var url = process.env.MONGODB_URI || config.MONGODB_URI;
+}
+catch (e) {
+  if(e.code === 'MODULE_NOT_FOUND') {
+    console.log("CANNOT LOAD env.json");
+  }
+}
 
 // connect to database
-var url = process.env.MONGODB_URI || config.MONGODB_URI;
+
 mongoose.connect(url);
 
 // view engine setup
