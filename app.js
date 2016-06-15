@@ -7,8 +7,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var passportLocal = require('passport-local');
+var passportMongoose = require('passport-local-mongoose');
+var expressSession = require('express-session');
+// MODELS
+var User = require('./models/user');
+
+// ROUTES
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
 var app = express();
 
 // connect to database
@@ -26,6 +35,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Passport config
+app.use(expressSession({
+  secret: "NO SECRET HERE",
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/', routes);
 app.use('/users', users);
