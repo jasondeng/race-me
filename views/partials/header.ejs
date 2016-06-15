@@ -13,9 +13,14 @@
             <div class="header item"><i class="big map icon"></i>Beat Me!</div>
             <a class="item" href="/">Home</a>
             <div class="right menu">
-                <a class="item" href="/register">Sign Up</a>
-                <a class="item" href="/login">Login</a>
-                <a class="item" href="#">Help</a>
+                <% if(!currentUser) { %>
+                    <a class="item" href="/register">Sign Up</a>
+                    <a class="item" href="/login">Login</a>
+                <% } else { %>
+                    <a class="item" href="#"><%= currentUser.username %></a>
+                    <a class="item" href="/logout">Logout</a>
+                    <a class="item" href="#">Help</a>
+                <% } %>
             </div>
         </div>
     </div>

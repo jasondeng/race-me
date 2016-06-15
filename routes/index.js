@@ -35,4 +35,19 @@ router.get("/login", function(req, res) {
   res.render("login");
 });
 
+router.post("/login", passport.authenticate("local",
+  {
+    failureRedirect: "/login"
+  }) ,function(req, res){
+  if (req.session.returnTo) {
+    // req.flash("success", "Welcome back!");
+    res.redirect("/");
+    // console.log(req.session.returnTo);
+    // delete req.session.returnTo;
+  } else {
+    // req.flash("success", "Welcome back!");
+    res.redirect("/");
+  }
+});
+
 module.exports = router;
