@@ -1,18 +1,24 @@
 <% include partials/header %>
 
-<div class="ui main container">
-    <div class="ui form">
-        <div class="field">
-            <label>Username</label>
-            <input type="text" name="user-name" placeholder="User Name" >
-        </div>
-        <div class="field">
-            <label>Password</label>
-            <input type="password" name="user-password" placeholder="Password" >
-        </div>
+<div class="ui main container center aligned grid">
+	<div class="six wide column">
+		<div class="ui form">
+			<div class="field">
+				<div class="ui left icon input">
+					<i class="user icon"></i>
+					<input type="text" name="user-name" placeholder="User Name" >
+				</div>
+			</div>
+			<div class="field">
+				<div class="ui left icon input">
+					<i class="lock icon"></i>
+					<input type="password" name="user-password" placeholder="Password" >
+				</div>
+			</div>
 
-        <div class="ui submit button">Login!</div>
-    </div>
+			<div class="ui submit button">Login!</div>
+		</div>
+	</div>
 </div>
 
 <% include partials/footer %>
