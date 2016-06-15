@@ -1,5 +1,8 @@
 /node_modules
 
+# ENV variable
+env.json
+
 # Webstorm stuff
 .idea/workspace.xml
 .idea/vcs.xml

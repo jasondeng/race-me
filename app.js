@@ -20,8 +20,12 @@ var users = require('./routes/users');
 
 var app = express();
 
+// ENV
+var config = require('./env.json');
+
+
 // connect to database
-var url = process.env.MONGODB_URI || 'mongodb://heroku_czw9k6mx:rviepv825gs3o3hdrcmg1u9bg5@ds015334.mlab.com:15334/heroku_czw9k6mx';
+var url = process.env.MONGODB_URI || config.MONGODB_URI;
 mongoose.connect(url);
 
 // view engine setup
