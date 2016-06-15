@@ -1,2 +1,9 @@
 /node_modules
-/.idea
+
+# Webstorm stuff
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/libraries
+.idea/inspectionProfiles/
+.idea/jsLinters/
