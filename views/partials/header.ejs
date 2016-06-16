@@ -3,11 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Beat Me</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
     <body>
 
@@ -25,10 +28,10 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-                </ul>
+
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+
                     <% if(!currentUser) { %>
                     <li><a href="/register">Sign Up <i class="fa fa-user-plus"></i></a></li>
                     <li><a href="/login">Login <i class="fa fa-user"></i></a></li>

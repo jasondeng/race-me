@@ -1,21 +1,26 @@
 <% include partials/header %>
 
 <div class="container">
-    <div class="row">
-        <h1 style="text-align: center;">Register</h1>
-        <div style="width:30%; margin: 30px auto;">
-            <form class="form" action="/register" method="post">
-                <div class="form-group">
-                    <input class="form-control" type="text" name="fullname" placeholder="Full Name">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" type="password" name="password" placeholder="Password">
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" name="button">Sign Up</button>
-            </form>
+    <div class="center-form panel">
+        <div class="panel-body">
+            <h4 class="text-center"><i class="ion-person-add"></i> Register</h4>
+                <form class="form" action="/register" method="post">
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="text" name="fullname" placeholder="Full Name" required autofocus>
+                        <span class="ion-star form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" type="text" name="username" placeholder="Username">
+                        <span class="ion-at form-control-feedback"></span>
+
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                        <span class="ion-key form-control-feedback"></span>
+
+                    </div>
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Register">
+                </form>
         </div>
     </div>
 </div>
