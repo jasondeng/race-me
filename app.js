@@ -14,6 +14,7 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 // MODELS
 var User = require('./models/user');
+var Health = require('./models/health');
 
 // ROUTES
 var routes = require('./routes/index');
@@ -26,7 +27,7 @@ var url = process.env.MONGODB_URI;
 // ENV
 try {
   var config = require('./env.json');
-  var url = process.env.MONGODB_URI || config.MONGODB_URI;
+  url = process.env.MONGODB_URI || config.MONGODB_URI;
 }
 catch (e) {
   if(e.code === 'MODULE_NOT_FOUND') {
