@@ -1,22 +1,17 @@
 <% include partials/header %>
 
-<div class="ui main container center aligned grid">
-	<div class="six wide column">
-		<div class="ui form">
-			<form action="/login" method="post">
-				<div class="field">
-					<div class="ui left icon input">
-						<i class="user icon"></i>
-						<input type="text" name="username" placeholder="Username" >
-					</div>
+<div class="container">
+	<div class="row">
+		<h1 style="text-align: center;">Login</h1>
+		<div style="width:30%; margin: 30px auto;">
+			<form class="form" action="/login" method="post">
+				<div class="form-group">
+					<input class="form-control" type="text" name="username" placeholder="Username">
 				</div>
-				<div class="field">
-					<div class="ui left icon input">
-						<i class="lock icon"></i>
-						<input type="password" name="password" placeholder="Password" >
-					</div>
+				<div class="form-group">
+					<input class="form-control" type="password" name="password" placeholder="Password">
 				</div>
-				<button class="ui submit button">Login!</button>
+				<input class="btn btn-primary btn-lg btn-block" type="submit" value="Login!">
 			</form>
 		</div>
 	</div>

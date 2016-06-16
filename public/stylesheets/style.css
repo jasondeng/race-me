@@ -1,21 +1,34 @@
-.container.main{
-  margin-top: 7.0em;
+.navbar.navbar{
+  margin: 0;
+  border-radius: 0;
 }
 
-.masthead h1.ui.header{
-  margin-top: 3em;
-  margin-bottom: 0em;
-  font-size: 4em;
-  font-weight: normal;
+.jumbotron{
+  background: #222;
+}
+#content{
+  color: white;
+  text-align: center;
+  padding: 10%;
+  text-shadow: 0px 4px 3px 	rgba(0,0,0,0.4),
+  0px 8px 13px 	rgba(0,0,0,0.1),
+  0px 18px 23px 	rgba(0,0,0,0.1);
+  height: 500px;
 }
 
-.masthead h2 {
-  font-size: 1.7em;
-  font-weight: normal;
+.btn {
+  vertical-align: middle;
 }
 
-.masthead.segment {
-  min-height: 700px;
+.fa-compass{
+  font-size:1.5em;
+  vertical-align: middle;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
 
 /*
