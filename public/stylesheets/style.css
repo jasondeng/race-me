@@ -35,6 +35,19 @@ hr {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
 
+div.flash{
+  margin: 0;
+  background: #222;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+}
+
+div.alert {
+  width: 80%;
+  margin: auto;
+}
+
 /*
 body {
   padding: 50px;

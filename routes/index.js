@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require("passport");
+var middleware = require('../middleware/index');
 
 // Import User schema
 var User = require("../models/user");
@@ -16,7 +17,7 @@ router.get("/register", function(req, res) {
 });
 
 router.post("/register", function(req, res) {
-  var newUser = new User({username: req.body.username});
+  var newUser = new User({username: req.body.username, fullname: req.body.fullname});
   User.register(newUser, req.body.password, function(error, user){
     if(error) {
       req.flash("error", error.message);
