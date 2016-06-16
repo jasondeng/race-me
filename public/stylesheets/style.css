@@ -51,16 +51,16 @@ body {
   }
 
 
-.navbar {
+/*.navbar {
   min-height: 50px;
   border: 0;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
 }
 
-/*.navbar-header {*/
-  /*float: left;*/
-  /*padding-left: 15px;*/
-/*}*/
+.navbar-header {
+  float: left;
+  padding-left: 15px;
+}
 
 .navbar-brand {
   height: 50px;
@@ -69,14 +69,14 @@ body {
   line-height: 50px;
 }
 
-/*.navbar-nav {*/
-  /*float: left;*/
-  /*margin: 0;*/
-/*}*/
+.navbar-nav {
+  float: left;
+  margin: 0;
+}
 
-/*.navbar-nav > li {*/
-  /*float: left;*/
-/*}*/
+.navbar-nav > li {
+  float: left;
+}
 
 .navbar-nav > li > a {
   padding: 0 15px;
@@ -87,7 +87,7 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+*/
 .center-form {
   width: 315px;
   margin: 10% auto;
