@@ -9,6 +9,7 @@ BeatMe is a fitness app that use reinforcements in order to generate self discip
 BeatMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
 BeatMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
 The app will allow:
+
     	1. Activity log - offline fitness tracking and achievements.
     	2. Competition mode - users will be paired for a match. 
     	3. Route suggestions - routes will be stored and will be later suggested for users.
