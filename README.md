@@ -8,7 +8,7 @@ Capstone Project for Hunter College CSCI499 Summer 2016
 BeatMe is a fitness app that use reinforcements in order to generate self discipline, motivation and persistence in the user.
 BeatMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
 BeatMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
-	The app will allow:
+The app will allow:
     	1. Activity log - offline fitness tracking and achievements.
     	2. Competition mode - users will be paired for a match. 
     	3. Route suggestions - routes will be stored and will be later suggested for users.
@@ -16,7 +16,7 @@ BeatMe allows users from all over the world, without geographical boundaries or 
     	5. Social network - users will meet and interact with real people from all over the world.
 
 ##Goals
-  	1. Contribute for the improvement of current statistics where less than 5% of adults practice at least in 30 min of daily 	activity.
+  	1. Contribute for the improvement of current statistics where less than 5% of adults practice at least in 30 min of daily activity.
   	2. Develop a global data base that holds geographical and fitness data.
   	3. The creation of a shared cyber space for working out, changing current working out practices.
   	4. Provide users a convenient, esthetic and enjoyable platform.
