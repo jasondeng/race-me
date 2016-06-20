@@ -9,7 +9,6 @@ BeatMe is a fitness app that use reinforcements in order to generate self discip
 BeatMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
 BeatMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
 The app will allow:
-
     	1. Activity log - offline fitness tracking and achievements.
     	2. Competition mode - users will be paired for a match. 
     	3. Route suggestions - routes will be stored and will be later suggested for users.
@@ -23,14 +22,9 @@ The app will allow:
   	4. Provide users a convenient, esthetic and enjoyable platform.
 
 ##Technology
-Server - Provide RESTful Api to interact with database and data to clients as well as handling authentication.
-	Use - 	1. Heroku for Hosting.
-        	2. MongoDB.
-IOS App - Renders data from database and provide interactivity (recommendation) and data visualization
-   	Use - 	1. Swift.
-	        2. Healthkit calls.
-Website - Provides users with a similar but limited interface to mobile App but with no interactivity (only view data)
-  	Use - 	1. Node.js.
+	1. Server - Provide RESTful Api to interact with database and data to clients as well as handling authentication. (Use - Heroku for Hosting. MongoDB - for DB.).
+	2. IOS App - Renders data from database and provide interactivity (recommendation) and data visualization (Use - Main language - Swift, and Healthkit calls).
+	3. Website - Provides users with a similar but limited interface to mobile App but with no interactivity (only view data). (Use - Main language - Node.js.).
 
 
 ## Requirements
