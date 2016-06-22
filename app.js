@@ -6,10 +6,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var passportLocal = require('passport-local');
-var passportMongoose = require('passport-local-mongoose');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 // MODELS
@@ -46,6 +46,7 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -54,15 +55,15 @@ app.use(flash());
 
 // Passport config
 app.use(expressSession({
-  secret: "NO SECRET HERE",
+  secret: process.env.SECRET_KEY || config.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new passportLocal(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.use(new passportLocal(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;

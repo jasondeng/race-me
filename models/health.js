@@ -5,13 +5,12 @@ var healthSchema = mongoose.Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
-        },
-        username: String
+        }
     },
     walkRunDistance: Number,
     flightsClimbed: Number,
     steps: Number,
-    created: {type: Date, default: Date.now}
+    created: {type: Date, default: new Date().toString()}
 });
 
 module.exports = mongoose.model("Health", healthSchema);
