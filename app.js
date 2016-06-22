@@ -36,7 +36,7 @@ catch (e) {
 }
 
 // connect to database
-
+// test
 mongoose.connect(url);
 
 // view engine setup
