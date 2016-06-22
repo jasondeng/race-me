@@ -9,6 +9,11 @@ BeatMe is a fitness app that use reinforcements in order to generate self discip
 BeatMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
 BeatMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
 
+##Links
+ 	1. Website - https://capstone-beatme.herokuapp.com.
+ 	2. iOS App - https://github.com/sst-1/capstone-beatme-ios
+ 	4. Statistics information - http://www.fitness.gov/resource-center/facts-and-statistics/
+
 The app will allow:
     	1. Activity log - online fitness tracking and achievements.
     	2. Competition mode - users will be paired for a match. 
@@ -46,10 +51,5 @@ The app will allow:
   	3. Cheng Pan - Server.
   	4. Lizhou Cao - Data visualization.
 
-##Links
- 	1. Web Site - https://capstone-beatme.herokuapp.com.
- 	2. iOS App - https://github.com/sst-1/capstone-beatme-ios
- 	3. Private Github account - https://github.com/jasonCodeng/capstone-beatme (Please contact us for access).
- 	4. Statistics information - http://www.fitness.gov/resource-center/facts-and-statistics/
 
 
