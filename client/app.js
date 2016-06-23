@@ -1,5 +1,5 @@
 angular.module('app', ['ngRoute', 'ngMessages'])
-    .config(function($routeProvider) {
+    .config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/home.html',
@@ -17,5 +17,6 @@ angular.module('app', ['ngRoute', 'ngMessages'])
                 templateUrl: 'views/help.html',
                 controller: 'HelpCtrl'
             })
-            .otherwise('/');
+
+
     });

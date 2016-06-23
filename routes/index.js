@@ -23,7 +23,15 @@ router.get('/' ,function(req, res, next) {
 router.get("/register", function(req, res) {
   res.render("register");
 });
+
+
 */
+
+router.get('/', function(req, res, next) {
+    res.render('index');
+});
+
+
 router.post("/register", Authenticate.signUp);
 
 /*router.post("/register", function(req, res) {
