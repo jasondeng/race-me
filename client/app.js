@@ -17,6 +17,4 @@ angular.module('app', ['ngRoute', 'ngMessages'])
                 templateUrl: 'views/help.html',
                 controller: 'HelpCtrl'
             })
-
-
     });
