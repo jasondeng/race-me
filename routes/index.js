@@ -12,16 +12,18 @@ const requireSignin = passport.authenticate('local', {session: false});
 var User = require("../models/user");
 
 /* GET home page. */
+/*
 router.get('/' ,function(req, res, next) {
   // res.send({hi: 'there'});
   res.render('index', { title: 'Express' });
 });
-
+*/
 // Get register page
+/*
 router.get("/register", function(req, res) {
   res.render("register");
 });
-
+*/
 router.post("/register", Authenticate.signUp);
 
 /*router.post("/register", function(req, res) {
@@ -43,9 +45,10 @@ router.post("/register", Authenticate.signUp);
 });*/
 
 // Get login page
+/*
 router.get("/login", function(req, res) {
   res.render("login");
-});
+});*/
 
 router.post("/login", requireSignin, Authenticate.signIn);
 
@@ -64,10 +67,11 @@ router.post("/login", requireSignin, Authenticate.signIn);
   }
 });*/
 
+/*
 router.get("/logout", function(req, res){
   req.logout();
   req.flash("success", "LOGGED OUT!");
   res.redirect("/");
-});
+});*/
 
 module.exports = router;
