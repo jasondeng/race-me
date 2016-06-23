@@ -7,7 +7,8 @@
 import random
 #Make the connection
 from pymongo import MongoClient
-connection = MongoClient('mongodb://admin:admin@ds015334.mlab.com:15334/heroku_czw9k6mx')
+#Please replace ???? !!!!!!!!!!
+connection = MongoClient('mongodb://????:????@ds015334.mlab.com:15334/heroku_czw9k6mx')
 #Call a collection
 db = connection.heroku_czw9k6mx.Test
 
