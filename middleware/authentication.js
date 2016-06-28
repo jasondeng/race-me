@@ -6,7 +6,7 @@ const User = require('../models/user'),
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
   // iat = issued at time
-  return jwt.encode({sub: user.id, iat: timestamp}, config.SECRET_KEY);
+  return jwt.encode({sub: user.id, username: user.username, fullname:user.fullname ,iat: timestamp}, config.SECRET_KEY);
 };
 
 
@@ -48,5 +48,6 @@ exports.signUp = function(req, res, next) {
 exports.signIn = function(req, res, next) {
   // Give token
   // req.user is from passport done(user)
+  console.log(req.user);
   res.send({token: tokenForUser(req.user)});
 };
