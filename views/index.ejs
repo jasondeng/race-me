@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
     <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="css/styles.css">
+
 </head>
 <body>
 <div class="navbar navbar-default navbar-static-top">
@@ -24,15 +25,19 @@
 </div>
 <div ng-view></div>
 
+
 <script src="vendor/angular.js"></script>
 <script src="vendor/angular-route.js"></script>
 <script src="vendor/angular-messages.js"></script>
+<script src="vendor/angular-jwt.min.js"></script>
 <script src="app.js"></script>
 <script src="controllers/home.js"></script>
 <script src="controllers/navbar.js"></script>
 <script src="controllers/login.js"></script>
 <script src="controllers/signup.js"></script>
 <script src="controllers/help.js"></script>
+
+<script src="services/authentication.service.js"></script>
 
 </body>
 </html>

@@ -7,14 +7,17 @@ angular.module('app', ['ngRoute', 'ngMessages'])
             })
             .when('/login', {
                 templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'vm'
             })
             .when('/signup', {
                 templateUrl: 'views/signup.html',
-                controller: 'SignupCtrl'
+                controller: 'SignupCtrl',
+                controllerAs: 'vm'
             })
             .when('/help', {
                 templateUrl: 'views/help.html',
                 controller: 'HelpCtrl'
             })
+
     });
