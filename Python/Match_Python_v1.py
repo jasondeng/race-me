@@ -87,11 +87,11 @@ def return_oppenent_by_rank_level(Fitness_rank,current_user_id,index_x,high,low,
 	list_rank = calc_groups_by_rank_high_low(Fitness_rank,high,low,same_speed)
 	list_len = len(list_rank)
 	if list_len == 0:
-		return False
+		return None
 	count = 0
-	while (count <= list_len):	
-		rand_crouser = int(random.randrange(0,list_len,1))
-		new_rank = list_rank[rand_crouser]
+	while (count < list_len):	
+		#rand_crouser = int(random.randrange(0,list_len,1))
+		new_rank =  list_rank[count]
 		index_new = db.find({"rank": new_rank})
 		op_list = return_oppenent_by_rank(new_rank,current_user_id,index_new)
 		if (op_list == None):
