@@ -130,7 +130,7 @@ def give_user_rank(user_s,user_d):
 
 import json
 
-with open("env.json") as json_file:
+with open("../env.json") as json_file:
 	json_data = json.load(json_file)
 
 #Make the connection
