@@ -12,8 +12,9 @@ const requireSignin = passport.authenticate('local', {session: false});
 var User = require("../models/user");
 
 /* GET home page. */
-router.get('/' ,function(req, res, next) {
+router.get('/' , requireAuth, function(req, res, next) {
   // res.send({hi: 'there'});
+  console.log(req.user);
   res.render('index', { title: 'Express' });
 });
 

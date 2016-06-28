@@ -12,6 +12,7 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
+var passportStrat = require('./middleware/passport');
 // MODELS
 var User = require('./models/user');
 var Health = require('./models/health');
