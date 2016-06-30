@@ -9,17 +9,26 @@ function LoginCtrl($location, authentication) {
         username : "",
         password : ""
     };
+
     vm.onSubmit = function () {
-        vm.doLogin();
+        vm.formError = "";
+        if (!vm.credentials.username || !vm.credentials.password) {
+            vm.formError = "All fields required, please try again";
+            return false;
+        } else {
+            vm.doLogin();
+        }
     };
     vm.doLogin = function() {
+        vm.formError = "";
         authentication
             .login(vm.credentials)
             .error(function(err){
-                console.log(err);
+                vm.formError.error = err;
             })
             .then(function() {
-                console.log('login success')
+                $location.search('page', null);
+                $location.path(vm.returnPage);
             })
     }
 }

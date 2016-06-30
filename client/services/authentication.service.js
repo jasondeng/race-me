@@ -31,7 +31,8 @@
             var token = getToken();
             if (token) {
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
-                return payload.exp > Date.now() / 1000;
+                // TODO EXP DATE
+                return true;
             } else {
                 return false;
             }
@@ -40,10 +41,13 @@
         var currentUser = function () {
             if (isLoggedIn()) {
                 var token = getToken();
+                console.log(token);
+
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
+                console.log(payload);
                 return {
-                    fullname: payload.fullname,
-                    name: payload.name
+                    username : payload.username,
+                    fullname : payload.fullname
                 };
             }
         };

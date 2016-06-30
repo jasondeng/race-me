@@ -15,9 +15,15 @@ angular.module('app', ['ngRoute', 'ngMessages'])
                 controller: 'SignupCtrl',
                 controllerAs: 'vm'
             })
+            .when('/about', {
+                templateUrl: 'views/about.html',
+                controller: 'AboutCtrl',
+                controllerAs: 'vm'
+            })
             .when('/help', {
                 templateUrl: 'views/help.html',
-                controller: 'HelpCtrl'
+                controller: 'HelpCtrl',
+                controllerAs: 'vm'
             })
 
     });
