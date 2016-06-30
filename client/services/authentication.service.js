@@ -31,8 +31,7 @@
             var token = getToken();
             if (token) {
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
-                // TODO EXP DATE
-                return true;
+                return payload.exp > Date.now() / 1000;
             } else {
                 return false;
             }
@@ -41,10 +40,7 @@
         var currentUser = function () {
             if (isLoggedIn()) {
                 var token = getToken();
-                console.log(token);
-
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
-                console.log(payload);
                 return {
                     username : payload.username,
                     fullname : payload.fullname

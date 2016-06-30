@@ -1,12 +1,13 @@
-angular.module('app')
-    .controller('HomeCtrl', function($scope) {
+angular
+    .module('app')
+    .controller('HomeCtrl', HomeCtrl);
+    HomeCtrl.$inject = ['$scope', 'authentication'];
+    function HomeCtrl($scope, authentication) {
+        var vm = this;
 
-        $scope.isAuthenticated = function() {
-            // check if logged in
-        };
+        vm.isLoggedIn = authentication.isLoggedIn();
 
-        $scope.linkInstagram = function() {
-            // connect email account with instagram
-        };
+        vm.currentUser = authentication.currentUser();
 
-    });
+    }
+
