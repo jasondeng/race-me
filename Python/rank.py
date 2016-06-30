@@ -137,16 +137,14 @@ with open("../env.json") as json_file:
 from pymongo import MongoClient
 connection = MongoClient(json_data["MONGODB_URI"])
 #Call a collection
-db = connection.heroku_czw9k6mx.Test_ranking
+db = connection.heroku_czw9k6mx.USER_RANKING
 
 #itrate DB and update rank
 go_over_db = db.find()
 for doc in go_over_db:
 	User_id = doc['_id']
-	print User_id
 	User_Speed = int(doc['Avg_Speed'])
 	User_Distance = int(doc['Avg_Distance'])
 	User_rank = give_user_rank(User_Speed,User_Distance)
-	print(User_rank)
 	db.update_one({"_id": User_id}, {"$set": {"rank": User_rank}})
 connection.close()
