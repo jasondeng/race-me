@@ -1,5 +1,5 @@
 var passport = require('passport'),
-    localStrategy = require('passport-local');
+    localStrategy = require('passport-local'),
     JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt,
     User = require('../models/user'),
@@ -51,7 +51,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
     } else {
       done(null, false);
     }
-  })
+  });
 });
 
 passport.use(jwtLogin);

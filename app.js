@@ -12,6 +12,7 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
+var PythonShell = require('python-shell');
 // MODELS
 var User = require('./models/user');
 var Health = require('./models/health');
@@ -34,6 +35,14 @@ catch (e) {
     console.log("CANNOT LOAD env.json");
   }
 }
+/*
+var options = {
+  mode: 'text',
+  pythonPath: 'C:\\Python27',
+  pythonOptions: ['-u'],
+  scriptPath: './Python',
+};*/
+
 
 // connect to database
 
@@ -106,5 +115,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+PythonShell.run('Python/Match_Python_v2_random.py', function (err) {
+  if (err) throw err;
+  console.log('success');
+});
 
 module.exports = app;
