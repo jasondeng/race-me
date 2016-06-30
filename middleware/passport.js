@@ -1,5 +1,5 @@
 var passport = require('passport'),
-    localStrategy = require('passport-local');
+    localStrategy = require('passport-local'),
     JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt,
     User = require('../models/user'),
@@ -44,14 +44,16 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
   // otherwise, call done without a user object
   User.findById(payload.sub, function(error, user) {
     if (error) {
+      console.log("error: ", error);
       return done(error, false);
     }
     if (user) {
+      console.log("GOT USER");
       done(null, user);
     } else {
       done(null, false);
     }
-  })
+  });
 });
 
 passport.use(jwtLogin);

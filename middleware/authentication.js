@@ -1,13 +1,16 @@
 const User = require('../models/user'),
-  jwt = require('jwt-simple'),
-  config = require('../env.json');
+    jwt = require('jsonwebtoken'),
+    config = require('../env.json');
 
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
   // iat = issued at time
-  return jwt.encode({sub: user.id, username: user.username, fullname:user.fullname ,iat: timestamp}, config.SECRET_KEY);
-};
+  return jwt.sign({sub: user.id, fullname: user.fullname ,username: user.username ,iat: timestamp}, config.SECRET_KEY, {expiresIn: '7d'});
+  // return jwt.encode({sub: user.id, iat: timestamp}, config.SECRET_KEY);
+}
+
+
 
 
 exports.signUp = function(req, res, next) {
@@ -40,9 +43,9 @@ exports.signUp = function(req, res, next) {
       }
 
       res.json({token: tokenForUser(user)});
-    })
+    });
 
-  })
+  });
 };
 
 exports.signIn = function(req, res, next) {
