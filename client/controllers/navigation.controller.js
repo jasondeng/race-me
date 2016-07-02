@@ -2,19 +2,19 @@
     angular
         .module('app')
         .controller('navigationCtrl', navigationCtrl);
-    navigationCtrl.$inject = ['$location', 'authentication'];
-    function navigationCtrl($location, authentication) {
-        var vm = this;
+    navigationCtrl.$inject = ['$route','$location', 'authentication'];
+    function navigationCtrl($route, $location, authentication) {
+        var navvm = this;
 
-        vm.currentPath = $location.path();
+        navvm.currentPath = $location.path();
 
-        vm.isLoggedIn = authentication.isLoggedIn();
+        navvm.isLoggedIn = authentication.isLoggedIn();
 
-        vm.currentUser = authentication.currentUser();
-
-        vm.logout = function() {
+        navvm.currentUser = authentication.currentUser();
+        navvm.logout = function() {
             authentication.logout();
             $location.path('/');
+            $route.reload();
         };
     }
 })();
