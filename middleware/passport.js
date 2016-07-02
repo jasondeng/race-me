@@ -2,8 +2,18 @@ var passport = require('passport'),
     localStrategy = require('passport-local'),
     JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt,
-    User = require('../models/user'),
-    config = require('../env.json');
+    User = require('../models/user');
+
+var config;
+try {
+  config = require('../env.json');
+}
+catch (e) {
+  if(e.code === 'MODULE_NOT_FOUND') {
+    console.log("CANNOT LOAD env.json");
+  }
+  config = process.env;
+}
 
 const localOptions = {
   usernameField: 'username'
