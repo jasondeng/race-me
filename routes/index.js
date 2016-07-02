@@ -13,16 +13,26 @@ var User = require("../models/user");
 var Health = require("../models/health");
 
 /* GET home page. */
+/*
 router.get('/' , requireAuth ,function(req, res, next) {
   // res.send({hi: 'there'});
   console.log(req.user);
   res.render('index', { title: 'Express' });
-});
+});*/
 
 // Get register page
+/*
 router.get("/register", function(req, res) {
   res.render("register");
 });
+
+
+*/
+
+router.get('/', function(req, res, next) {
+    res.render('index');
+});
+
 
 router.post("/register", Authenticate.signUp);
 
@@ -45,9 +55,10 @@ router.post("/register", Authenticate.signUp);
 });*/
 
 // Get login page
+/*
 router.get("/login", function(req, res) {
   res.render("login");
-});
+});*/
 
 router.post("/login", requireSignin, Authenticate.signIn);
 
@@ -96,13 +107,14 @@ router.post("/upload", requireAuth, function(req, res) {
   });
   console.log(user);
   res.send(data);
-  
+
 });
 
+/*
 router.get("/logout", function(req, res){
   req.logout();
   req.flash("success", "LOGGED OUT!");
   res.redirect("/");
-});
+});*/
 
 module.exports = router;
