@@ -1,0 +1,16 @@
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <a href="#/" class="navbar-brand"><i class="ion-location"></i> Beat Me!</a>
+            <li><a href="#/">Home</a></li>
+            <li ng-hide="navvm.isLoggedIn"><a href="#/signup/?page={{ navvm.currentPath }}">Sign Up</a></li>
+            <li ng-hide="navvm.isLoggedIn"><a href="#/login?page={{ navvm.currentPath }}">Login</a></li>
+
+            <li ng-show="navvm.isLoggedIn"><a href="" >{{ navvm.currentUser.fullname }}</a></li>
+
+            <li><a ng-show="navvm.isLoggedIn" href="" ng-click="navvm.logout()">Logout</a></li>
+            <li><a href="#/about">About Us</a></li>
+            <li><a href="#/help">Help</a></li>
+        </ul>
+    </div>
+</div>
