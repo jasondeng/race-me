@@ -1,37 +1,36 @@
 <navigation></navigation>
+    <div class="container">
 
-<div class="container">
-
-    <div ng-if="isAuthenticated() && currentUser.username">
-        <div class="row">
-            <div ng-repeat="photo in photos" class="col-lg-2 col-sm-3 col-xs-4">
-                <a href="#/photo/{{photo.id}}">
-                    <img ng-src="{{photo.images.standard_resolution.url}}" class="thumbnail img-responsive">
-                </a>
+            <div ng-if="isAuthenticated() && currentUser.username">
+                <div class="row">
+                    <div ng-repeat="photo in photos" class="col-lg-2 col-sm-3 col-xs-4">
+                        <a href="#/photo/{{photo.id}}">
+                            <img ng-src="{{photo.images.standard_resolution.url}}" class="thumbnail img-responsive">
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div ng-if="!isAuthenticated()">
-        <div class="jumbotron">
-            <h2><i class="ion-locations"></i> Beat Me!</h2>
-            <p>Leave a footprint for challenge</p>
-            <p>
-                <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
-                <a class="btn btn-lg btn-primary" href="#/signup"><i class="ion-person-add"></i> Create account</a>
-            </p>
-        </div>
-    </div>
+            <div ng-if="!isAuthenticated()">
+                <div class="jumbotron">
+                    <h2><i class="ion-locations"></i> Beat Me!</h2>
+                    <p>Leave a footprint for challenge</p>
+                    <p>
+                        <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
+                        <a class="btn btn-lg btn-primary" href="#/signup"><i class="ion-person-add"></i> Create account</a>
+                    </p>
+                </div>
+            </div>
 
-    <div ng-if="isAuthenticated() && !currentUser.username" class="center-form panel">
-        <div class="panel-body">
-            <h5 class="text-center"><i class="ion-link"></i> Link Account</h5>
-            <p>To complete the registration process you must link your Instagram account.</p>
-            <button class="btn btn-block btn-instagram" ng-click="linkInstagram()">
-                <i class="ion-social-instagram"></i> Sign in with Instagram
-            </button>
-        </div>
-    </div>
+            <div ng-if="isAuthenticated() && !currentUser.username" class="center-form panel">
+                <div class="panel-body">
+                    <h5 class="text-center"><i class="ion-link"></i> Link Account</h5>
+                    <p>To complete the registration process you must link your Instagram account.</p>
+                    <button class="btn btn-block btn-instagram" ng-click="linkInstagram()">
+                        <i class="ion-social-instagram"></i> Sign in with Instagram
+                    </button>
+                </div>
+            </div>
 
-</div>
+    </div>
 <footer-generic></footer-generic>
