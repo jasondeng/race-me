@@ -44,9 +44,11 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
   // otherwise, call done without a user object
   User.findById(payload.sub, function(error, user) {
     if (error) {
+      console.log("error: ", error);
       return done(error, false);
     }
     if (user) {
+      console.log("GOT USER");
       done(null, user);
     } else {
       done(null, false);
