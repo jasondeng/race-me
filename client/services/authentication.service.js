@@ -16,7 +16,7 @@
                 return $window.localStorage['token'];
             };
 
-            register = function (user) {
+            var register = function (user) {
                 return $http.post('/register', user)
                     .success(function (response) {
                         saveToken(response.token);
@@ -24,7 +24,7 @@
                     });
             };
 
-            login = function (user) {
+            var login = function (user) {
                 return $http.post('/login', user)
                     .success(function (response) {
                         saveToken(response.token);
@@ -32,7 +32,7 @@
                     });
             };
 
-            logout = function () {
+            var logout = function () {
                 $window.localStorage.removeItem('token');
                 $http.defaults.headers.common.Authorization = '';
             };
