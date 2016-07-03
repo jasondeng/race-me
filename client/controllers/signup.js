@@ -32,8 +32,7 @@
                     vm.formError = err.error;
                 })
                 .then(function(){
-                    $location.search('page', null);
-                    $location.path(vm.returnPage);
+                    $location.path('/');
                 });
         };
     }
