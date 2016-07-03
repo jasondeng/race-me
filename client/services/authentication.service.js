@@ -38,6 +38,7 @@
         };
 
         var currentUser = function () {
+
             if (isLoggedIn()) {
                 var token = getToken();
                 var payload = JSON.parse($window.atob(token.split('.')[1]));
@@ -49,13 +50,13 @@
         };
 
         return {
-            currentUser : currentUser,
             saveToken : saveToken,
             getToken : getToken,
-            isLoggedIn : isLoggedIn,
             register : register,
             login : login,
-            logout : logout
+            logout : logout,
+            isLoggedIn : isLoggedIn,
+            currentUser : currentUser
         };
     }
 
