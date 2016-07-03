@@ -10,6 +10,7 @@ const requireSignin = passport.authenticate('local', {session: false});
 
 // Import User schema
 var User = require("../models/user");
+var Health = require("../models/health");
 
 /* GET home page. */
 /*
@@ -75,6 +76,49 @@ router.post("/login", requireSignin, Authenticate.signIn);
     res.redirect("/");
   }
 });*/
+
+router.get("/profile", requireAuth, function(req, res) {
+  var user = {
+    id: req.user.id,
+    fullname: req.user.fullname,
+    username: req.user.username,
+  };
+
+  res.json(user);
+});
+
+router.post("/upload", requireAuth, function(req, res) {
+  var user = req.user;
+  console.log(user);
+  var data = req.body;
+  var health = new Health({
+    totalWalkRunDistance: data.totalWalkRunDistance,
+    incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
+    totalFlights: data.totalFlights,
+    incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
+    biologicalSex: data.biologicalSex,
+    bloodType: data.bloodType,
+    totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
+    totalSteps: data.totalSteps,
+    incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
+    totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
+    totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+  });
+  health.save(function(error) {
+    if (error) {
+      return error;
+    }
+  });
+  user.health.push(health);
+  user.save(function(error) {
+    if (error) {
+      return error;
+    }
+  });
+  console.log(user);
+  res.send(data);
+
+});
 
 /*
 router.get("/logout", function(req, res){
