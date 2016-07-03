@@ -1,5 +1,9 @@
-angular.module('app')
-    .controller('AboutCtrl', function($scope) {
+(function () {
+    'use strict';
 
+    angular
+        .module('app')
+        .controller('AboutCtrl', function() {
 
-    });
+        });
+}) ();

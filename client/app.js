@@ -6,7 +6,7 @@
         .config(config)
         .run(run);
 
-    function config($routeProvider, $locationProvider) {
+    function config($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -33,7 +33,7 @@
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo:'/'});
-    };
+    }
 
     function run($http, $window) {
         if ($window.localStorage['token']) {

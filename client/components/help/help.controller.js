@@ -1,10 +1,13 @@
-angular
-    .module('app')
-    .controller('HelpCtrl', HelpCtrl);
-    HelpCtrl.$inject = ['$scope','authentication'];
-    function HelpCtrl($scope, authentication) {
+(function () {
+    'use strict';
 
-        var vm = this;
+    angular
+        .module('app')
+        .controller('HelpCtrl', HelpCtrl);
 
-    }
+        HelpCtrl.$inject = ['$scope','authentication'];
+        function HelpCtrl($scope, authentication) {
+            var vm = this;
 
+        }
+}) ();
