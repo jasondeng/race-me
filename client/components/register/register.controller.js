@@ -1,9 +1,9 @@
 (function () {
     angular
         .module('app')
-        .controller('SignupCtrl', SignupCtrl);
-    SignupCtrl.$inject = ['$location', '$window', 'authentication'];
-    function SignupCtrl($location, $window,authentication) {
+        .controller('RegisterCtrl', RegisterCtrl);
+    RegisterCtrl.$inject = ['$location', '$window', 'authentication'];
+    function RegisterCtrl($location, $window,authentication) {
         var vm = this;
 
         vm.credentials = {

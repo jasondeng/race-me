@@ -5,7 +5,7 @@
     function navigation () {
         return {
             restrict: 'EA',
-            templateUrl: '/directives/navigation.html',
+            templateUrl: '/components/navigation/navigation.view.html',
             controller: 'navigationCtrl as navvm'
         };
     }

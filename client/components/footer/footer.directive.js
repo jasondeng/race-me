@@ -5,7 +5,7 @@
     function footerGeneric () {
         return {
             restrict: 'EA',
-            templateUrl: '/directives/footer.html'
+            templateUrl: '/components/footer/footer.view.html'
     };
     }
 })();

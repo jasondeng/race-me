@@ -2,9 +2,13 @@
     angular
         .module('app')
         .controller('navigationCtrl', navigationCtrl);
-    navigationCtrl.$inject = ['$route','$location', 'authentication'];
-    function navigationCtrl($route, $location, authentication) {
+    navigationCtrl.$inject = ['$route','$location', '$scope', 'authentication'];
+    function navigationCtrl($route, $location, $scope, authentication) {
         var navvm = this;
+
+        $scope.isActive = function (viewLocation) {
+            return viewLocation === $location.path();
+        };
 
         navvm.currentPath = $location.path();
 

@@ -12,19 +12,24 @@
         };
 
         register = function (user) {
-            return $http.post('/register', user).success(function (data) {
-                saveToken(data.token);
-            });
+            return $http.post('/register', user)
+                .success(function (response) {
+                    saveToken(response.token);
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+                });
         };
 
         login = function (user) {
-            return $http.post('/login', user).success(function (data) {
-                saveToken(data.token);
-            });
+            return $http.post('/login', user)
+                .success(function (response) {
+                    saveToken(response.token);
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+                });
         };
 
         logout = function () {
             $window.localStorage.removeItem('token');
+            $http.defaults.headers.common.Authorization = '';
         };
 
         var isLoggedIn = function () {

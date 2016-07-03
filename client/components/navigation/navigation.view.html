@@ -14,14 +14,17 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#/">Home</a></li>
 
-                <li ng-hide="navvm.isLoggedIn"><a href="#/signup/">Sign Up</a></li>
-                <li ng-hide="navvm.isLoggedIn"><a href="#/login/">Login</a></li>
-
                 <li ng-show="navvm.isLoggedIn"><a href="" >{{ navvm.currentUser.username }}</a></li>
 
+                <li ng-class="{active : isActive('/register')}" ng-hide="navvm.isLoggedIn"><a href="#/register">Register</a></li>
+                <li ng-class="{active : isActive('/login')}" ng-hide="navvm.isLoggedIn"><a href="#/login">Login</a></li>
+
+
+                <li ng-class="{active : isActive('/about')}"><a href="#/about">About Us</a></li>
+
+                <li ng-class="{active : isActive('/help')}"><a href="#/help">Help</a></li>
                 <li><a ng-show="navvm.isLoggedIn" href="" ng-click="navvm.logout()">Logout</a></li>
-                <li><a href="#/about">About Us</a></li>
-                <li><a href="#/help">Help</a></li>
+
             </ul>
         </div>
     </div>
