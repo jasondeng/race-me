@@ -6,7 +6,13 @@ var userSchema = new mongoose.Schema({
 	fullname: String,
 	username: {type: String, unique: true},
 	password: String,
-	created: {type: Date, default: new Date().toString()}
+	created: {type: Date, default: new Date().toString()},
+    health: [{
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Health"
+        }
+    }],
 });
 
 userSchema.pre('save', function(next) {
@@ -24,8 +30,8 @@ userSchema.pre('save', function(next) {
 
       user.password = hash;
       next();
-    })
-  })
+    });
+  });
 });
 
 userSchema.methods.comparePassword = function(candidatePassword, callback) {
