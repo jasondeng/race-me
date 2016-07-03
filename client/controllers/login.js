@@ -27,8 +27,7 @@ function LoginCtrl($location, authentication) {
                 vm.formError.error = err;
             })
             .then(function() {
-                $location.search('page', null);
-                $location.path(vm.returnPage);
+                $location.path('/');
             })
     }
 }
