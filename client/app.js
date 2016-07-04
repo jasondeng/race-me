@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngMessages'])
+        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize'])
         .config(config)
         .run(run);
 

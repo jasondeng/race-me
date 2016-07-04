@@ -170,12 +170,22 @@ body > .container {
     padding-left: 15px;
 }
 
-code {
-    font-size: 80%;
-}
 
 h4 {
     font-size:30px;
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    -webkit-border-radius: 50%;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 50%;
+    -moz-background-clip: padding;
+    border-radius: 50%;
+    background-clip: padding-box;
+    background-size: cover;
+    background-position: center center;
+
 }
