@@ -11,7 +11,7 @@
 
             vm.isLoggedIn = authentication.isLoggedIn();
 
-            vm.currentUser = authentication.currentUser();
+            $scope.currentUser = authentication.currentUser();
 
         }
 }) ();
