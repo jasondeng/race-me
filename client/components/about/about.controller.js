@@ -17,51 +17,56 @@
             vm.data = {
                 team: [{
                     name: 'Jason Deng',
-                    picture : 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+                    picture : 'vendor/img/profile-pics/jason.jpg',
                     github: {
-                        href : 'https://github.com/jasonCodeng',
-                        label :"Follow @jasonCodeng on GitHub",
-                        text : "Follow @jasonCodeng"
+                        href : 'https://github.com/jasonCodeng'
                     },
-                    role: 'Full Stack Developer',
+                    linkedin: {
+                        href : 'https://www.linkedin.com/in/jasondeng94'
+                    },
+                    role: 'Frontend Developer',
                     column:'col-sm-4'
                 }, {
                     name: 'Itzhak Koren Kloussner ',
                     picture : 'vendor/img/profile-pics/itzak.jpg',
                     github: {
-                        href : 'https://github.com/zackoren',
-                        label :"Follow @zackoren on GitHub",
-                        text : "Follow @zackoren"
+                        href : 'https://github.com/zackoren'
                     },
-                    role: 'Full Stack Developer',
+                    linkedin: {
+                        href : 'https://www.linkedin.com/in/isaac-koren-5101b9118'
+                    },
+                    role: 'iOS Developer',
                     column:'col-sm-4'
                 },{
                     name: 'Satbir Tanda',
                     picture : "vendor/img/profile-pics/satbir.png",
                     github: {
-                        href : 'https://github.com/sst-1',
-                        label :"Follow @sst-1 on GitHub",
-                        text : "Follow @sst-1"
+                        href : 'https://github.com/sst-1'
+                    },
+                    linkedin: {
+                        href : 'https://www.linkedin.com/in/satbir-singh-tanda-92751b116'
                     },
                     role: 'iOS Developer',
                     column:'col-sm-4'
                 },{
                     name: 'Cheng Pan',
-                    picture : 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+                    picture : "vendor/img/profile-pics/cheng.jpg",
                     github: {
-                        href : 'https://github.com/cpanz',
-                        label :"Follow @cpanz on GitHub",
-                        text : "Follow @cpanz"
+                        href : 'https://github.com/cpanz'
                     },
-                    role: 'Full Stack Developer',
+                    linkedin: {
+                        href : 'https://www.linkedin.com/in/cheng-pan-435047b8'
+                    },
+                    role: 'Backend Developer',
                     column:'col-sm-4 col-sm-offset-2'
                 },{
                     name: 'Lizhou Cao',
-                    picture : 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+                    picture : "vendor/img/profile-pics/alan3.png",
                     github: {
-                        href : 'https://github.com/newtext',
-                        label :"Follow @newtext on GitHub",
-                        text : "Follow @newtext"
+                        href : 'https://github.com/newtext'
+                    },
+                    linkedin: {
+                        href : 'https://www.linkedin.com/in/lizhou-cao-a69aabb6'
                     },
                     role: 'Data Visualization',
                     column:'col-sm-4'

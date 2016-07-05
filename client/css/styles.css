@@ -9,6 +9,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
 }
 
 a {
@@ -177,8 +178,8 @@ h4 {
     letter-spacing: 3px;
 }
 .profile-pic {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     -webkit-border-radius: 50%;
     -webkit-background-clip: padding-box;
     -moz-border-radius: 50%;
@@ -186,6 +187,6 @@ h4 {
     border-radius: 50%;
     background-clip: padding-box;
     background-size: cover;
-    background-position: center center;
+    background-position: 50% 30%;
 
 }
