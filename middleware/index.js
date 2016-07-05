@@ -4,10 +4,10 @@ var User = require('../models/user'),
 var middlewareObj = {};
 
 middlewareObj.isLoggedIn = function(req, res, next){
-    if(req.isAuthenticated()){
+  if(req.isAuthenticated()){
         return next();
     }
-    res.redirect("/login");
-}
+  res.redirect("/login");
+};
 
 module.exports = middlewareObj;
