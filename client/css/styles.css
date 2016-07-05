@@ -4,7 +4,7 @@ body {
     background-image: url("/vendor/img/background_1x.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;*/
-    background: url(/vendor/img/background_1x.png) no-repeat center center fixed;
+    background: url(../vendor/img/background_1x.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
