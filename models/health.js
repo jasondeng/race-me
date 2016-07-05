@@ -1,16 +1,17 @@
 var mongoose = require('mongoose');
 
 var healthSchema = mongoose.Schema({
-    user: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        username: String
-    },
-    walkRunDistance: Number,
-    flightsClimbed: Number,
-    steps: Number,
+    bloodType: String,
+    biologicalSex: String,
+    totalFlights: Number,
+    incrementsOfFlightsForEachDay: [Number],
+    totalFlightsForEachDayOfYear: [String],
+    totalWalkRunDistance: Number,
+    incrementsOfWalkRunDistanceForEachDay: [Number],
+    totalWalkRunDistanceForEachDayOfYear: [String],
+    totalSteps: Number,
+    incrementsOfStepsForEachDay: [Number],
+    totalStepsForEachDayOfYear: [String],
     created: {type: Date, default: Date.now}
 });
 

@@ -14,7 +14,7 @@ BeatMe allows users from all over the world, without geographical boundaries or 
  	2. iOS App - https://github.com/sst-1/capstone-beatme-ios
  	4. Statistics information - http://www.fitness.gov/resource-center/facts-and-statistics/
 
-The app will allow:
+##The app will allow:
     	1. Activity log - online fitness tracking and achievements.
     	2. Competition mode - users will be paired for a match. 
     	3. Route suggestions - routes will be stored and will be later suggested for users.

@@ -1,0 +1,21 @@
+<navigation></navigation>
+    <div class="container">
+        <div ng-if="!vm.isLoggedIn">
+            <div class="jumbotron">
+                <h2><i class="ion-locations"></i> Beat Me!</h2>
+                <p>Leave a footprint for challenge</p>
+                <p>
+                    <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
+                    <a class="btn btn-lg btn-primary" href="#/register"><i class="ion-person-add"></i> Create account</a>
+                </p>
+            </div>
+        </div>
+
+        <div ng-if="vm.isLoggedIn">
+            <div class="jumbotron">
+                {{ currentUser.username }}, you are logged in!
+            </div>
+        </div>
+
+    </div>
+<footer-generic></footer-generic>
