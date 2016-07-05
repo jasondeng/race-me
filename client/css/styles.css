@@ -9,6 +9,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+
 }
 
 a {
@@ -23,6 +24,7 @@ a:hover {
     color: #90939a;
 }
 
+/*
 .navbar {
     min-height: 50px;
     border: 0;
@@ -59,6 +61,7 @@ a:hover {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+*/
 
 .center-form {
     width: 315px;
@@ -168,12 +171,22 @@ body > .container {
     padding-left: 15px;
 }
 
-code {
-    font-size: 80%;
-}
 
 h4 {
     font-size:30px;
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+.profile-pic {
+    width: 250px;
+    height: 250px;
+    -webkit-border-radius: 50%;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 50%;
+    -moz-background-clip: padding;
+    border-radius: 50%;
+    background-clip: padding-box;
+    background-size: cover;
+    background-position: 50% 30%;
+
 }

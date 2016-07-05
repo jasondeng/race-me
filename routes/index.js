@@ -77,6 +77,16 @@ router.post("/login", requireSignin, Authenticate.signIn);
   }
 });*/
 
+router.get("/profile", requireAuth, function(req, res) {
+  var user = {
+    id: req.user.id,
+    fullname: req.user.fullname,
+    username: req.user.username,
+  };
+
+  res.json(user);
+});
+
 router.post("/upload", requireAuth, function(req, res) {
   var user = req.user;
   console.log(user);

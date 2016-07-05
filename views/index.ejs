@@ -1,37 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html ng-app="app">
-<head>
-    <base href="/">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BeatMe</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <head>
+        <base href="/">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Beat Me</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/social-icons.css">
+    </head>
+    <body>
+        <div ng-view></div>
 
-</head>
-<body>
-
-<div ng-view></div>
-
-
-<script src="vendor/angular.js"></script>
-<script src="vendor/angular-route.js"></script>
-<script src="vendor/angular-messages.js"></script>
-<script src="vendor/angular-jwt.min.js"></script>
-<script src="app.js"></script>
-<script src="controllers/home.js"></script>
-<script src="controllers/navbar.js"></script>
-<script src="controllers/login.js"></script>
-<script src="controllers/signup.js"></script>
-<script src="controllers/help.js"></script>
-<script src="controllers/about.js"></script>
-<script src="controllers/navigation.controller.js"></script>
-<script src="directives/footer.js"></script>
-<script src="directives/navigation.js"></script>
-
-<script src="services/authentication.service.js"></script>
-
-</body>
+        <script src="vendor/angular.js"></script>
+        <script src="vendor/angular-route.js"></script>
+        <script src="vendor/angular-messages.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.7/angular-sanitize.min.js"></script>
+        <script src="app.js"></script>
+        <script src="components/home/home.controller.js"></script>
+        <script src="components/login/login.controller.js"></script>
+        <script src="components/register/register.controller.js"></script>
+        <script src="components/help/help.controller.js"></script>
+        <script src="components/about/about.controller.js"></script>
+        <script src="components/navigation/navigation.controller.js"></script>
+        <script src="components/footer/footer.directive.js"></script>
+        <script src="components/navigation/navigation.directive.js"></script>
+        <script src="services/authentication.service.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </body>
 </html>
