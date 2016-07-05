@@ -25,7 +25,7 @@
                         href : 'https://www.linkedin.com/in/jasondeng94'
                     },
                     role: 'Frontend Developer',
-                    column:'col-sm-4'
+                    column:'col-md-4'
                 }, {
                     name: 'Itzhak Koren Kloussner ',
                     picture : 'vendor/img/profile-pics/itzak.jpg',
@@ -36,7 +36,7 @@
                         href : 'https://www.linkedin.com/in/isaac-koren-5101b9118'
                     },
                     role: 'iOS Developer',
-                    column:'col-sm-4'
+                    column:'col-md-4'
                 },{
                     name: 'Satbir Tanda',
                     picture : "vendor/img/profile-pics/satbir.png",
@@ -47,7 +47,7 @@
                         href : 'https://www.linkedin.com/in/satbir-singh-tanda-92751b116'
                     },
                     role: 'iOS Developer',
-                    column:'col-sm-4'
+                    column:'col-md-4'
                 },{
                     name: 'Cheng Pan',
                     picture : "vendor/img/profile-pics/cheng.jpg",
@@ -58,7 +58,7 @@
                         href : 'https://www.linkedin.com/in/cheng-pan-435047b8'
                     },
                     role: 'Backend Developer',
-                    column:'col-sm-4 col-sm-offset-2'
+                    column:'col-md-4 col-sm-offset-2'
                 },{
                     name: 'Lizhou Cao',
                     picture : "vendor/img/profile-pics/alan3.png",
@@ -69,7 +69,7 @@
                         href : 'https://www.linkedin.com/in/lizhou-cao-a69aabb6'
                     },
                     role: 'Data Visualization',
-                    column:'col-sm-4'
+                    column:'col-md-4'
                 }]
             };
         }
