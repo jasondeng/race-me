@@ -22,18 +22,23 @@ const localOptions = {
 const localLogin = new localStrategy(localOptions, function(username, password, done) {
   User.findOne({username: username}, function(error, user) {
     if (error) {
+      console.log("error: ",error);
       return done(error);
     }
     if (!user) {
+      console.log("error:", error);
       return done(null, false);
     }
 
     // Compare hashed password
+    console.log(user);
     user.comparePassword(password, function(error, isMatch) {
       if (error) {
+        console.log("error1:", error);
         return done(error);
       }
       if (!isMatch) {
+        console.log("error2:", error);
         return done(null, false);
       }
 
