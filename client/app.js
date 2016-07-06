@@ -2,11 +2,11 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize'])
+        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize','satellizer'])
         .config(config)
         .run(run);
 
-    function config($routeProvider) {
+    function config($routeProvider, $authProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -31,6 +31,26 @@
             .when('/help', {
                 templateUrl: 'components/help/help.view.html',
                 controller: 'HelpCtrl',
+                controllerAs: 'vm'
+            })
+            .when('/activity', {
+                templateUrl: 'components/activity/activity.view.html',
+                controller: 'ActivityLogCtrl',
+                controllerAs: 'vm'
+            })
+            .when('/achievements', {
+                templateUrl: 'components/achievements/achievements.view.html',
+                controller: 'AchievementCtrl',
+                controllerAs: 'vm'
+            })
+            .when('/gear', {
+                templateUrl: 'components/gear/gear.view.html',
+                controller: 'GearCtrl',
+                controllerAs: 'vm'
+            })
+            .when('/social', {
+                templateUrl: 'components/social/social.view.html',
+                controller: 'SocialCtrl',
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo:'/'});

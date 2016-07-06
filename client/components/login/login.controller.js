@@ -25,9 +25,11 @@
             };
             vm.doLogin = function() {
                 vm.formError = "";
+                console.log(vm.credentials);
                 authentication
                     .login(vm.credentials)
                     .error(function(err){
+                        console.log(err);
                         vm.formError.error = err;
                     })
                     .then(function() {
