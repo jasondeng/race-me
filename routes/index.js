@@ -109,12 +109,19 @@ router.post("/upload", requireAuth, function(req, res) {
       return error;
     }
   });
-  user.health.push(health);
+  User.findOneAndUpdate({username: user.username}, {$push: {"health": health}}, {new: true},function(error, res) {
+    if (error) {
+      console.log(error);
+      return error;
+    }
+    console.log(res);
+  });
+/*  user.health.push(health);
   user.save(function(error) {
     if (error) {
       return error;
     }
-  });
+  });*/
   console.log(user);
   res.send(data);
 
