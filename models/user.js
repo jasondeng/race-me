@@ -6,6 +6,7 @@ var userSchema = new mongoose.Schema({
 	fullname: String,
 	username: {type: String, unique: true},
 	password: String,
+  facebook: String,
 	created: {type: Date, default: new Date().toString()},
     health: [{
         id: {
