@@ -1,5 +1,6 @@
 var mongoose = require("mongoose"),
 	passportMongoose = require("passport-local-mongoose"),
+  moment = require('moment'),
   bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
@@ -8,7 +9,9 @@ var userSchema = new mongoose.Schema({
 	password: String,
   facebook: String,
   google: String,
-	created: {type: Date, default: new Date().toString()},
+  first_name: String,
+  picture: String,
+	created: {type: Number, default: moment().unix()},
     health: [{
         id: {
             type: mongoose.Schema.Types.ObjectId,

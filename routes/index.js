@@ -19,6 +19,8 @@ var Health = require("../models/health");
 function createJWT(user) {
   var payload = {
     sub: user._id,
+    fullname: user.fullname,
+    first_name: user.first_name,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
@@ -257,14 +259,15 @@ router.post('/auth/google', function(req, res) {
             return res.status(409).send({ message: 'There is already a Google account that belongs to you' });
           }
           var token = req.header('Authorization').split(' ')[1];
-          var payload = jwt.decode(token, config.TOKEN_SECRET);
+          var payload = jwt.verify(token, config.TOKEN_SECRET);
           User.findById(payload.sub, function(err, user) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
             }
             user.google = profile.sub;
             user.picture = user.picture || profile.picture.replace('sz=50', 'sz=200');
-            user.displayName = user.displayName || profile.name;
+            user.fullname = user.fullname || profile.name;
+            user.first_name = user.fullname || profile.given_name;
             user.save(function() {
               var token = createJWT(user);
               res.send({ token: token });
@@ -280,7 +283,8 @@ router.post('/auth/google', function(req, res) {
           var user = new User();
           user.google = profile.sub;
           user.picture = profile.picture.replace('sz=50', 'sz=200');
-          user.displayName = profile.name;
+          user.fullname = profile.name;
+          user.first_name = profile.given_name;
           user.save(function(err) {
             var token = createJWT(user);
             res.send({ token: token });

@@ -25,7 +25,6 @@
             };
             vm.doLogin = function() {
                 vm.formError = "";
-                console.log(vm.credentials);
                 authentication
                     .login(vm.credentials)
                     .error(function(err){

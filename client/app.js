@@ -55,9 +55,9 @@
             })
             .otherwise({redirectTo:'/'});
 
-                $authProvider.google({
-                    clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
-                    });
+            $authProvider.google({
+                clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
+                });
     }
 
 
