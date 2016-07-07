@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize','satellizer'])
+        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize', 'toastr' ,'satellizer'])
         .config(config)
         .run(run);
 
@@ -54,7 +54,12 @@
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo:'/'});
+
+                $authProvider.google({
+                    clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
+                    });
     }
+
 
     function run($http, $window) {
         if ($window.localStorage['token']) {

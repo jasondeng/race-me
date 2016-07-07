@@ -5,8 +5,8 @@
         .module('app')
         .controller('LoginCtrl', LoginCtrl);
 
-        LoginCtrl.$inject = ['$location','authentication'];
-        function LoginCtrl($location, authentication) {
+        LoginCtrl.$inject = ['$location','authentication', '$scope', 'toastr', '$auth'];
+        function LoginCtrl($location, authentication, $scope, toastr, $auth) {
             var vm = this;
 
             vm.credentials = {
@@ -35,6 +35,24 @@
                     .then(function() {
                         $location.path('/');
                     })
-            }
+            };
+            $scope.authenticate = function(provider) {
+                $auth.authenticate(provider)
+                    .then(function() {
+                    toastr.success('You have successfully signed in with ' + provider + '!');
+                    $location.path('/');
+                    })
+                    .catch(function(error) {
+                    if (error.error) {
+                        // Popup error - invalid redirect_uri, pressed cancel button, etc.
+                        toastr.error(error.error);
+                    } else if (error.data) {
+                        // HTTP response error from server
+                        toastr.error(error.data.message, error.status);
+                    } else {
+                        toastr.error(error);
+                    }
+                    });
+                };
         }
 }) ();
