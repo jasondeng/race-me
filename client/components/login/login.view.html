@@ -5,7 +5,7 @@
                     <h4 class="text-center"><i class="ion-log-in"></i> race me</h4>
                     <p class="text-center">Not a member? Please <a href="/#signup?page={{vm.returnPage }}">sign up</a> here.</p>
                     <form class="form" ng-submit="vm.onSubmit()">
-                        <div role="alert" ng-show="vm.formError" class="alert alert-danger">{{ vm.formError }}</div>
+                        <div role="alert" ng-show="vm.formError" class="alert alert-danger text-center">{{ vm.formError }}</div>
                         <div class="form-group has-feedback">
                             <input ng-model="vm.credentials.username" class="form-control input-lg" type="text" name="username" placeholder="Username" required autofocus>
                             <span class="ion-at form-control-feedback"></span>
