@@ -113,7 +113,7 @@ router.post("/login", requireSignin, Authenticate.signIn);
   }
 });*/
 
-router.get("/profile", requireAuth, function(req, res) {
+router.get("/profile", ensureAuthenticated, function(req, res) {
   var user = {
     id: req.user.id,
     fullname: req.user.fullname,
@@ -267,7 +267,8 @@ router.post('/auth/google', function(req, res) {
             user.google = profile.sub;
             user.picture = user.picture || profile.picture.replace('sz=50', 'sz=200');
             user.fullname = user.fullname || profile.name;
-            user.first_name = user.fullname || profile.given_name;
+            user.first_name = user.first_name || profile.given_name;
+            user.username = user.username || profile.email;
             user.save(function() {
               var token = createJWT(user);
               res.send({ token: token });
@@ -285,7 +286,11 @@ router.post('/auth/google', function(req, res) {
           user.picture = profile.picture.replace('sz=50', 'sz=200');
           user.fullname = profile.name;
           user.first_name = profile.given_name;
+          user.username = profile.email;
           user.save(function(err) {
+            if (err) {
+              console.log(err);
+            }
             var token = createJWT(user);
             res.send({ token: token });
           });
