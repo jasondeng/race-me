@@ -1,12 +1,17 @@
 var mongoose = require("mongoose"),
 	passportMongoose = require("passport-local-mongoose"),
+  moment = require('moment'),
   bcrypt = require('bcrypt-nodejs');
 
 var userSchema = new mongoose.Schema({
 	fullname: String,
 	username: {type: String, unique: true},
 	password: String,
-	created: {type: Date, default: new Date().toString()},
+  facebook: String,
+  google: String,
+  first_name: String,
+  picture: String,
+	created: {type: Number, default: moment().unix()},
     health: [{
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +22,11 @@ var userSchema = new mongoose.Schema({
 
 userSchema.pre('save', function(next) {
   const user = this;
+
+  if (!user.isModified('password')) {
+    console.log('password not modified');
+    return next();
+  }
 
   bcrypt.genSalt(32, function(error, salt) {
     if (error) {
