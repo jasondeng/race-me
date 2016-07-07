@@ -38,5 +38,9 @@
                         $location.path('/');
                     });
             };
+
+            vm.oauth2 = function(provider) {
+                authentication.oauth2(provider);
+            };
         }
 })();
