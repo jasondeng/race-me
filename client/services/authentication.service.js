@@ -5,15 +5,20 @@
         .module('app')
         .service('authentication', authentication);
 
-        authentication.$inject = ['$http', '$window'];
-        function authentication ($http, $window) {
+        authentication.$inject = ['$http', '$window', '$location' ,'$auth', 'toastr'];
+        function authentication ($http, $window, $location ,$auth, toastr) {
 
             var saveToken = function (token) {
                 $window.localStorage['token'] = token;
             };
 
             var getToken = function () {
-                return $window.localStorage['token'];
+                if($window.localStorage['token'] !== undefined) {
+                    return $window.localStorage['token'];
+                }
+                else if($window.localStorage['satellizer_token'] !== undefined) {
+                    return $window.localStorage['satellizer_token'];
+                }
             };
 
             var register = function (user) {
@@ -33,8 +38,19 @@
             };
 
             var logout = function () {
-                $window.localStorage.removeItem('token');
-                $http.defaults.headers.common.Authorization = '';
+                if ($auth.isAuthenticated()) {
+                    $auth.logout()
+                    .then(function() {
+                        toastr.info('You have been logged out');
+                        $location.path('/');
+                    });
+                }
+                else {
+                    $window.localStorage.removeItem('token');
+                    // $window.localStorage.removeItem('satellizer_token');
+                    // $window.localStorage.removeItem('google_state');
+                    $http.defaults.headers.common.Authorization = '';
+                }
             };
 
             var isLoggedIn = function () {
@@ -53,9 +69,29 @@
                     var payload = JSON.parse($window.atob(token.split('.')[1]));
                     return {
                         username : payload.username,
-                        fullname : payload.fullname
+                        fullname : payload.fullname,
+                        first_name : payload.first_name
                     };
                 }
+            };
+
+            var oauth2 = function(provider) {
+                $auth.authenticate(provider)
+                    .then(function() {
+                        toastr.success('You have successfully signed in with ' + provider + '!');
+                        $location.path('/');
+                    })
+                    .catch(function(error) {
+                        if (error.error) {
+                            // Popup error - invalid redirect_uri, pressed cancel button, etc.
+                            toastr.error(error.error);
+                        } else if (error.data) {
+                            // HTTP response error from server
+                            toastr.error(error.data.message, error.status);
+                        } else {
+                            toastr.error(error);
+                        }
+                    });
             };
 
             return {
@@ -65,7 +101,8 @@
                 login : login,
                 logout : logout,
                 isLoggedIn : isLoggedIn,
-                currentUser : currentUser
+                currentUser : currentUser,
+                oauth2 : oauth2
             };
         }
 })();
