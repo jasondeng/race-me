@@ -5,9 +5,19 @@ var middleware = require('../middleware/index');
 var Authenticate = require('../middleware/authentication');
 var request = require('request');
 var moment = require('moment');
-var config = require('../env.json');
 var jwt = require('jsonwebtoken');
 var passportConfig = require('../middleware/passport');
+
+var config;
+try {
+  config = require('../env.json');
+}
+catch (e) {
+  if(e.code === 'MODULE_NOT_FOUND') {
+    console.log("CANNOT LOAD env.json");
+  }
+  config = process.env;
+}
 
 const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', {session: false});
