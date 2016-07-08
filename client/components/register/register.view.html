@@ -20,7 +20,17 @@
                         <input ng-model="vm.credentials.password" class="form-control" type="password" name="password" placeholder="Password">
                         <span class="ion-key form-control-feedback"></span>
                     </div>
+
                     <input class="btn btn-primary btn-lg btn-block" type="submit" value="JOIN RACE ME">
+
+                    <div class="signup-or-separator">
+                        <h6 class="text">or</h6>
+                        <hr>
+                    </div>
+
+
+                    <button class="btn btn-block btn-google-plus" ng-click="vm.oauth2('google')"><i class="ion-social-googleplus"></i>Register with Google</button>
+
                 </form>
             </div>
         </div>

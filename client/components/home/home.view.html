@@ -13,7 +13,7 @@
 
         <div ng-if="vm.isLoggedIn">
             <div class="jumbotron">
-                {{ currentUser.username }}, you are logged in!
+                {{ currentUser.username || currentUser.fullname }}, you are logged in!
             </div>
         </div>
     </div>
