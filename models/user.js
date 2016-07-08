@@ -12,7 +12,7 @@ var userSchema = new mongoose.Schema({
   first_name: String,
   picture: String,
 	created: {type: Number, default: moment().unix()},
-    health: [{
+  health: [{
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Health"

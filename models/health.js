@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    moment = require('moment');
 
 var healthSchema = mongoose.Schema({
     bloodType: String,
@@ -12,7 +13,7 @@ var healthSchema = mongoose.Schema({
     totalSteps: Number,
     incrementsOfStepsForEachDay: [Number],
     totalStepsForEachDayOfYear: [String],
-    created: {type: Date, default: Date.now}
+    created: {type: Number, default: moment().unix()}
 });
 
 module.exports = mongoose.model("Health", healthSchema);
