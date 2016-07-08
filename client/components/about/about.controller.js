@@ -5,10 +5,12 @@
         .module('app')
         .controller('AboutCtrl', AboutCtrl);
 
-        AboutCtrl.$inject = ['$sce'];
+        AboutCtrl.$inject = ['$sce','authentication'];
 
-        function AboutCtrl($sce) {
+        function AboutCtrl($sce, authentication) {
             var vm = this;
+
+            vm.isLoggedIn = authentication.isLoggedIn();
 
             vm.trustSrc = function(src) {
                 return $sce.trustAsResourceUrl(src);
