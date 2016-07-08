@@ -13,7 +13,7 @@ var raceSchema = mongoose.Schema([{
     status: String,
     start: {type: Number, default: moment().unix()},
     end: Number,
-    duration: end - start,
+    duration: Number,
     created: {type: Number, default: moment().unix()}
 }]);
 
