@@ -198,6 +198,10 @@ h4 {
 * Social Buttons
 *********************/
 
+[class^='ion-'] {
+    font-size: 1.2em;
+}
+
 .btn-google-plus {
   color: #fff;
   background-color: #dd4b39;
@@ -208,4 +212,29 @@ h4 {
 .btn-google-plus:focus {
   color: #fff;
   background-color: #cb3927;
+}
+
+
+.btn-facebook {
+    color: #fff;
+    background-color: #3b5998;
+    border: 1px solid #335190;
+}
+
+.btn-facebook:hover,
+.btn-facebook:focus {
+    color: #fff;
+    background-color: #294786;
+}
+
+
+.btn-instagram {
+    color: #fff;
+    background-color: #3f729b;
+}
+
+.btn-instagram:hover,
+.btn-instagram:focus {
+    color: #fff;
+    background-color: #305777;
 }
