@@ -1,13 +1,10 @@
-README V0.0/ 20 JUNE 2016
-
-
-# BeatMe
+# RaceMe
 Capstone Project for Hunter College CSCI 499 Summer 2016
 
 ##Introduction 
-BeatMe is a fitness app that use reinforcements in order to generate self discipline, motivation and persistence in the user.
-BeatMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
-BeatMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
+RaceMe is a fitness app that use reinforcements in order to generate self discipline, motivation and persistence in the user.
+RaceMe introduce a new way of viewing workout, adding to it incentives, competition and as so make it more available and joy able.
+RaceMe allows users from all over the world, without geographical boundaries or time limitations to stay in fitness, compete, and meet new friends. 
 
 ##Links
  	1. Website - https://capstone-beatme.herokuapp.com.
