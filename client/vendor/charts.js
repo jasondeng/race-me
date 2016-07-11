@@ -1,5 +1,4 @@
-var highcharts = require('highcharts');
-
+git
 function convertMonthNameToNumber(monthName) {
     var myDate = new Date(monthName + " 1, 2000");
     var monthDigit = myDate.getMonth();
