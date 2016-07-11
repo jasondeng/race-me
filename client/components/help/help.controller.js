@@ -1,19 +1,14 @@
-function convertMonthNameToNumber(monthName) {
-    var myDate = new Date(monthName + " 1, 2000");
-    var monthDigit = myDate.getMonth();
-    return isNaN(monthDigit) ? 0 : (monthDigit + 1);
-}
+// function convertMonthNameToNumber(monthName) {
+//     var myDate = new Date(monthName + " 1, 2000");
+//     var monthDigit = myDate.getMonth();
+//     return isNaN(monthDigit) ? 0 : (monthDigit + 1);
+// }
 
 // function convertNumberToMonth(monthNumber) {
 //     var month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 //     return month[monthNumber - 1];
 // }
 
-Highcharts.setOptions({
-    lang: {
-        thousandsSep: ','
-    }
-});
 
 (function () {
     'use strict';
@@ -34,6 +29,12 @@ Highcharts.setOptions({
                 var monthDigit = myDate.getMonth();
                 return isNaN(monthDigit) ? 0 : (monthDigit + 1);
             };
+
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
 
             $http.get('/profile')
                 .success(function (result){
