@@ -4,10 +4,16 @@ function convertMonthNameToNumber(monthName) {
     return isNaN(monthDigit) ? 0 : (monthDigit + 1);
 }
 
-function convertNumberToMonth(monthNumber) {
-    var month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return month[monthNumber - 1];
-}
+// function convertNumberToMonth(monthNumber) {
+//     var month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//     return month[monthNumber - 1];
+// }
+
+Highcharts.setOptions({
+    lang: {
+        thousandsSep: ','
+    }
+});
 
 (function () {
     'use strict';
@@ -18,6 +24,17 @@ function convertNumberToMonth(monthNumber) {
 
         HelpCtrl.$inject = ['$scope','authentication','$log','$http'];
         function HelpCtrl($scope, authentication ,$log , $http) {
+            $scope.convertNumberToMonth = function (monthNumber){
+                var month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                return month[monthNumber - 1];
+            };
+
+            $scope.convertMonthNameToNumber = function (monthName){
+                var myDate = new Date(monthName + " 1, 2000");
+                var monthDigit = myDate.getMonth();
+                return isNaN(monthDigit) ? 0 : (monthDigit + 1);
+            };
+
             $http.get('/profile')
                 .success(function (result){
                     $scope.highchartsNG = {
@@ -28,9 +45,7 @@ function convertNumberToMonth(monthNumber) {
                                 verticalAlign: 'top'
                               },
                               relativeTo: 'chart'
-                            }
-                            // height: 300,
-                            // width: 700
+                          }
                         },
                         title: {
                             text: 'Healthkit'
@@ -53,7 +68,7 @@ function convertNumberToMonth(monthNumber) {
                         yAxis: {
                             labels: {
                               formatter: function() {
-                                return convertNumberToMonth(this.value);
+                                return $scope.convertNumberToMonth(this.value);
                               },
                               ordinal: false
                             },
@@ -75,7 +90,7 @@ function convertNumberToMonth(monthNumber) {
                             useHTML: true,
                             headerFormat: '<thead><tr>',
                             pointFormatter: function () {
-                                return '<th> <center><strong>' + convertNumberToMonth(this.y) + ' ' + this.x +
+                                return '<th> <center><strong>' + $scope.convertNumberToMonth(this.y) + ' ' + this.x +
                                 '</strong></center> </th> <th>' + this.z + ' Steps </th>';
                             },
                             footFormat: '</tr></thead>',
@@ -88,8 +103,8 @@ function convertNumberToMonth(monthNumber) {
                         },
                         plotOptions: {
                             bubble:{
-                                minSize: '2',
-                                maxSize: '12',
+                                minSize: '1',
+                                maxSize: '50%'
                             }
                         },
                         series: [{
@@ -113,7 +128,7 @@ function convertNumberToMonth(monthNumber) {
                                         //  var dateandYr = HoldTest[0].slice(4,HoldTest[0].length);
                                         //  console.log(res);
                                         var Hold0 = Number(HoldTest[1]);
-                                        var Hold1 = convertMonthNameToNumber(res);
+                                        var Hold1 = $scope.convertMonthNameToNumber(res);
                                         // var Hold1 = Date.parse(convertMonthNameToNumber(res)+ ' ' + dateandYr);
                                         // console.log(Hold0);
 
@@ -128,7 +143,8 @@ function convertNumberToMonth(monthNumber) {
                         }],
                         credits: {
                           enabled: false
-                        }
+                        },
+                        loading: false
                     };
                     $log.log(result);
                 });
