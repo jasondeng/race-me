@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize', 'toastr' ,'satellizer'])
+        .module('app', ['ngRoute', 'ngMessages', 'ngSanitize', 'toastr' ,'satellizer', 'highcharts-ng'])
         .config(config)
         .run(run);
 
