@@ -53,17 +53,29 @@
                 controller: 'SocialCtrl',
                 controllerAs: 'vm'
             })
-            .otherwise({redirectTo:'/'});
+            .otherwise({redirectTo: '/'});
 
-            $authProvider.google({
-                clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
-                });
+        $authProvider.facebook({
+            clientId: '1009093145865215'
+        });
+
+        $authProvider.google({
+            clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
+        });
+
+        /*
+        $authProvider.instagram({
+            clientId: '6ad0ab54caa24d559173c957bdcfaa58'
+        });*/
     }
 
 
     function run($http, $window) {
         if ($window.localStorage['token']) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $window.localStorage['token'];
+        }
+        else if($window.localStorage['satellizer_token']) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $window.localStorage['satellizer_token'];
         }
     }
 

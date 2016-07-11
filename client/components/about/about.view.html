@@ -1,50 +1,54 @@
 <navigation></navigation>
-    <div class="container">
-        <div class = "panel panel-default">
-            <div class = "panel-heading text-center">
-                <h3>
-                    What is BeatMe?
-                </h3>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3>
+                What is RaceMe?
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <p style="font-size:16px">
+                    RaceMe is a fitness app targeted runners or joggers. It uses reinforcements to generate self
+                    discipline, motivation and persistence in the user.
+                    It introduces a new way of running by adding to it both incentives and competition as well as make
+                    it more available and enjoyable.
+                    RaceMe will help users from all around the world to stay fit, compete, and meet new friends.
+                </p>
             </div>
-            <div class = "panel-body">
-                <div class="col-md-6">
-                    <p style="font-size:16px">
-                    BeatMe is a fitness app targeted runners or joggers. It uses reinforcements to generate self discipline, motivation and persistence in the user.
-                    It introduces a new way of running by adding to it both incentives and competition as well as make it more available and enjoyable.
-                    BeatMe will help users from all around the world to stay fit, compete, and meet new friends.
-                    </p>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="btn-group">
+                    <a ng-if="!vm.isLoggedIn" class="btn btn-block btn-lg btn-primary" href="#/register">Join RaceMe</a>
+                    <a ng-if="!vm.isLoggedIn" class="btn btn-block btn-lg" href="#/login">Sign In</a>
                 </div>
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="btn-group">
-                        <a ng-if="!vm.isLoggedIn" class="btn btn-block btn-lg btn-primary" href="#/register">Join BeatMe</a>
-                        <a ng-if="!vm.isLoggedIn" class="btn btn-block btn-lg" href="#/login">Sign In</a>
-                    </div>
-                </div>
-
             </div>
 
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading text-center"><h3>Meet the Team</h3></div>
 
-            <div class="panel-body text-center row">
-                <div ng-repeat="person in vm.data.team">
-                    <div class="{{person.column}} ">
-                        <!--
-                        <img class="profile-pic img-circle" src="{{person.picture}}">-->
-                        <div class="profile-pic center-block " ng-style="{'background-image': 'url({{ person.picture }})'}"></div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading text-center"><h3>Meet the Team</h3></div>
 
-                        <h5>{{person.name}}</h5>
-                        <h6>{{person.role}}</h6>
-                        <!--
-                        <a class="github-button" href="{{person.github.href}}" aria-label="{{person.github.aria}}">{{person.github.text}}</a>-->
-                        <ul class="soc">
-                            <li><a class="soc-github soc-icon-last" target="_blank" href="{{person.github.href}}"></a></li>
-                            <li><a class="soc-linkedin soc-icon-last" target="_blank" href="{{person.linkedin.href}}"></a></li>
-                        </ul>
-                    </div>
+        <div class="panel-body text-center row">
+            <div ng-repeat="person in vm.data.team">
+                <div class="{{person.column}} ">
+                    <!--
+                    <img class="profile-pic img-circle" src="{{person.picture}}">-->
+                    <div class="profile-pic center-block "
+                         ng-style="{'background-image': 'url({{ person.picture }})'}"></div>
+
+                    <h5>{{person.name}}</h5>
+                    <h6>{{person.role}}</h6>
+                    <!--
+                    <a class="github-button" href="{{person.github.href}}" aria-label="{{person.github.aria}}">{{person.github.text}}</a>-->
+                    <ul class="soc">
+                        <li><a class="soc-github soc-icon-last" target="_blank" href="{{person.github.href}}"></a></li>
+                        <li><a class="soc-linkedin soc-icon-last" target="_blank" href="{{person.linkedin.href}}"></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <footer-generic></footer-generic>

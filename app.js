@@ -64,6 +64,10 @@ app.use(logger('dev'));
 app.use(morgan('combined'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
+//app.use(morgan('combined'));
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
