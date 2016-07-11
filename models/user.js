@@ -7,10 +7,10 @@ var userSchema = new mongoose.Schema({
 	fullname: String,
 	username: {type: String, unique: true},
 	password: String,
-  facebook: String,
-  google: String,
-  first_name: String,
-  picture: String,
+    facebook: String,
+    google: String,
+    first_name: String,
+    picture: String,
 	created: {type: Number, default: moment().unix()},
     health: [{
         id: {
