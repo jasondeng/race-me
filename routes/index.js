@@ -126,12 +126,14 @@ router.post("/login", requireSignin, Authenticate.signIn);
 router.get("/profile", ensureAuthenticated, function(req, res) {
   var user = req.user;
 
-  User.findById(user.sub, {password: 0}).populate("health").exec(function(err, foundUser) {
-    if (err) {
-      console.log(err);
-    }
-      res.json(foundUser);
-  });
+  User.findById(user.sub, {password: 0})
+      .populate("health")
+      .exec(function(err, foundUser) {
+        if (err) {
+          console.log(err);
+        }
+          res.json(foundUser);
+      });
 
 });
 
