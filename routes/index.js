@@ -145,47 +145,56 @@ router.post("/upload", requireAuth, function(req, res) {
   //     totalSteps: data.totalSteps,
 
   // };
-  Health.findOne({ totalWalkRunDistance: {$exists: true}}, function(err, result) {
+  Health.findOne({ totalWalkRunDistance: {$exists: true, $ne: null}}, function(err, result) {
     if (err) {
-      //   var health = new Health({
-      //     totalWalkRunDistance: data.totalWalkRunDistance,
-      //     incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
-      //     totalFlights: data.totalFlights,
-      //     incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
-      //     biologicalSex: data.biologicalSex,
-      //     bloodType: data.bloodType,
-      //     totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
-      //     totalSteps: data.totalSteps,
-      //     incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
-      //     totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-      //     totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
-      //   });
-      //   health.save(function(error) {
-      //     if (error) {
-      //       res.send(error);
-      //     }
-      // });   
+      console.log('error');
+
       res.send(err);
     }
-      var options = {
-        totalWalkRunDistance: data.totalWalkRunDistance || result.totalWalkRunDistance,
-        totalFlights: data.totalFlights || result.totalFlights,
-        biologicalSex: data.biologicalSex || result.biologicalSex,
-        bloodType: data.bloodType || result.bloodType,
-        totalSteps: data.totalSteps || result.totalSteps,
-        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || result.incrementsOfWalkRunDistanceForEachDay || [],
-        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || result.incrementsOfFlightsForEachDay || [],
-        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || result.totalStepsForEachDayOfYear || [],
-        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || result.incrementsOfStepsForEachDay || [],
-        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || result.totalWalkRunDistanceForEachDayOfYear || [],
-        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || result.totalFlightsForEachDayOfYear || []
-      };
-      result.update({$set: options}, {upsert: true}, function(err, result) {
-        if (err) {
-          res.send(err);
-        }
-        res.send(result);
-      });
+    else {
+      if (result === null) {
+        var health = new Health({
+          totalWalkRunDistance: data.totalWalkRunDistance,
+          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
+          totalFlights: data.totalFlights,
+          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
+          biologicalSex: data.biologicalSex,
+          bloodType: data.bloodType,
+          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
+          totalSteps: data.totalSteps,
+          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
+          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
+          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+        });
+        health.save(function(error) {
+          if (error) {
+            res.send(error);
+          }
+          res.status(201).send({message: "Health collection successfully created!"});
+        });
+      }
+      else{
+        var options = {
+          totalWalkRunDistance: data.totalWalkRunDistance || result.totalWalkRunDistance,
+          totalFlights: data.totalFlights || result.totalFlights,
+          biologicalSex: data.biologicalSex || result.biologicalSex,
+          bloodType: data.bloodType || result.bloodType,
+          totalSteps: data.totalSteps || result.totalSteps,
+          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || result.incrementsOfWalkRunDistanceForEachDay || [],
+          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || result.incrementsOfFlightsForEachDay || [],
+          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || result.totalStepsForEachDayOfYear || [],
+          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || result.incrementsOfStepsForEachDay || [],
+          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || result.totalWalkRunDistanceForEachDayOfYear || [],
+          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || result.totalFlightsForEachDayOfYear || []
+        };
+        result.update({$set: options}, {upsert: true}, function(err, result) {
+          if (err) {
+            res.send(err);
+          }
+          res.send(result);
+        });
+      }
+    }
   });
   // var arrOptions = {
   //   incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
