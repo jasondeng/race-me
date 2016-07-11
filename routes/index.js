@@ -145,7 +145,7 @@ router.post("/upload", requireAuth, function(req, res) {
   //     totalSteps: data.totalSteps,
 
   // };
-  Health.findOne({ totalWalkRunDistance: {$exists: true}},function(err, result) {
+  Health.findOne({ totalWalkRunDistance: {$exists: true}}, function(err, result) {
     if (err) {
       //   var health = new Health({
       //     totalWalkRunDistance: data.totalWalkRunDistance,
@@ -172,17 +172,15 @@ router.post("/upload", requireAuth, function(req, res) {
         totalFlights: data.totalFlights || result.totalFlights,
         biologicalSex: data.biologicalSex || result.biologicalSex,
         bloodType: data.bloodType || result.bloodType,
-        totalSteps: data.totalSteps || result.totalSteps
+        totalSteps: data.totalSteps || result.totalSteps,
+        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || [],
+        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || [],
+        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || [],
+        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || [],
+        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || [],
+        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || []
       };
-      var arrOptions = {
-        incrementsOfWalkRunDistanceForEachDay: {$each: data.incrementsOfWalkRunDistanceForEachDay || []},
-        incrementsOfFlightsForEachDay: {$each: data.incrementsOfFlightsForEachDay || []},
-        totalStepsForEachDayOfYear: {$each: data.totalStepsForEachDayOfYear || []},
-        incrementsOfStepsForEachDay: {$each: data.incrementsOfStepsForEachDay || []},
-        totalWalkRunDistanceForEachDayOfYear: {$each: data.totalWalkRunDistanceForEachDayOfYear || []},
-        totalFlightsForEachDayOfYear: {$each: data.totalFlightsForEachDayOfYear || []}
-      };
-      result.update({$set: options, $push: arrOptions}, {upsert: true}, function(err, result) {
+      result.update({$set: options}, {upsert: true}, function(err, result) {
         if (err) {
           res.send(err);
         }
@@ -198,12 +196,12 @@ router.post("/upload", requireAuth, function(req, res) {
   //   totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
   // }
   // Health.findOneAndUpdate({ totalWalkRunDistance: {$exists: true} }, {$set: options, $push:{
-  //   incrementsOfWalkRunDistanceForEachDay: {$each: data.incrementsOfWalkRunDistanceForEachDay || []},
-  //   incrementsOfFlightsForEachDay: {$each: data.incrementsOfFlightsForEachDay || []},
-  //   totalStepsForEachDayOfYear: {$each: data.totalStepsForEachDayOfYear || []},
-  //   incrementsOfStepsForEachDay: {$each: data.incrementsOfStepsForEachDay || []},
-  //   totalWalkRunDistanceForEachDayOfYear: {$each: data.totalWalkRunDistanceForEachDayOfYear || []},
-  //   totalFlightsForEachDayOfYear: {$each: data.totalFlightsForEachDayOfYear || []}
+  //   incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || []},
+  //   incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || []},
+  //   totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || []},
+  //   incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || []},
+  //   totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || []},
+  //   totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || []}
   // }}, {new:true, upsert: true} ,function(err, result) {
   //   if (err) {
   //     console.log(err);
