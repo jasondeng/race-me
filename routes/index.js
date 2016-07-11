@@ -137,22 +137,13 @@ router.post("/upload", requireAuth, function(req, res) {
   var user = req.user;
   console.log(user);
   var data = req.body;
-  // var options = {
-  //     totalWalkRunDistance: data.totalWalkRunDistance,
-  //     totalFlights: data.totalFlights || ,
-  //     biologicalSex: data.biologicalSex,
-  //     bloodType: data.bloodType,
-  //     totalSteps: data.totalSteps,
 
-  // };
-  Health.findOne({ totalWalkRunDistance: {$exists: true, $ne: null}}, function(err, result) {
+  Health.findById(user.health, function(err, foundHealth) {
     if (err) {
-      console.log('error');
-
       res.send(err);
     }
     else {
-      if (result === null) {
+      if (foundHealth === null) {
         var health = new Health({
           totalWalkRunDistance: data.totalWalkRunDistance,
           incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
@@ -172,22 +163,28 @@ router.post("/upload", requireAuth, function(req, res) {
           }
           res.status(201).send({message: "Health collection successfully created!"});
         });
+        user.update({health: health._id}, function(err, raw) {
+          if (err) {
+            res.send(error);
+          }
+          console.log(raw);
+        });
       }
-      else{
+      else {
         var options = {
-          totalWalkRunDistance: data.totalWalkRunDistance || result.totalWalkRunDistance,
-          totalFlights: data.totalFlights || result.totalFlights,
-          biologicalSex: data.biologicalSex || result.biologicalSex,
-          bloodType: data.bloodType || result.bloodType,
-          totalSteps: data.totalSteps || result.totalSteps,
-          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || result.incrementsOfWalkRunDistanceForEachDay || [],
-          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || result.incrementsOfFlightsForEachDay || [],
-          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || result.totalStepsForEachDayOfYear || [],
-          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || result.incrementsOfStepsForEachDay || [],
-          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || result.totalWalkRunDistanceForEachDayOfYear || [],
-          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || result.totalFlightsForEachDayOfYear || []
+          totalWalkRunDistance: data.totalWalkRunDistance || foundHealth.totalWalkRunDistance,
+          totalFlights: data.totalFlights || foundHealth.totalFlights,
+          biologicalSex: data.biologicalSex || foundHealth.biologicalSex,
+          bloodType: data.bloodType || foundHealth.bloodType,
+          totalSteps: data.totalSteps || foundHealth.totalSteps,
+          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || foundHealth.incrementsOfWalkRunDistanceForEachDay || [],
+          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || foundHealth.incrementsOfFlightsForEachDay || [],
+          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
+          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
+          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
+          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
         };
-        result.update({$set: options}, {upsert: true}, function(err, result) {
+        foundHealth.update({$set: options}, {upsert: true}, function(err, result) {
           if (err) {
             res.send(err);
           }
@@ -196,64 +193,6 @@ router.post("/upload", requireAuth, function(req, res) {
       }
     }
   });
-  // var arrOptions = {
-  //   incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
-  //   incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
-  //   totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-  //   incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
-  //   totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
-  //   totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
-  // }
-  // Health.findOneAndUpdate({ totalWalkRunDistance: {$exists: true} }, {$set: options, $push:{
-  //   incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || []},
-  //   incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || []},
-  //   totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || []},
-  //   incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || []},
-  //   totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || []},
-  //   totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || []}
-  // }}, {new:true, upsert: true} ,function(err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //     res.send(err);
-  //   } else {
-  //     console.log(result);
-  //     res.send(result);
-  //     // var health = new Health({
-  //     //   totalWalkRunDistance: data.totalWalkRunDistance,
-  //     //   incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
-  //     //   totalFlights: data.totalFlights,
-  //     //   incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
-  //     //   biologicalSex: data.biologicalSex,
-  //     //   bloodType: data.bloodType,
-  //     //   totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
-  //     //   totalSteps: data.totalSteps,
-  //     //   incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
-  //     //   totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-  //     //   totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
-  //     // });
-  //     // health.save(function(error) {
-  //     //   if (error) {
-  //     //     return error;
-  //     //   }
-  //     // });   
-  //   }
-  // });
-/*  User.findOneAndUpdate({username: user.username}, {$push: {"health": health}}, {new: true},function(error, res) {
-    if (error) {
-      console.log(error);
-      return error;
-    }
-    console.log(res);
-  });*/
-
-/*  user.health.push(health);
-  user.save(function(error) {
-    if (error) {
-      return error;
-    }
-  });*/
-  // console.log(user);
-  // res.send(data);
 
 });
 
