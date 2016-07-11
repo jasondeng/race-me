@@ -173,12 +173,12 @@ router.post("/upload", requireAuth, function(req, res) {
         biologicalSex: data.biologicalSex || result.biologicalSex,
         bloodType: data.bloodType || result.bloodType,
         totalSteps: data.totalSteps || result.totalSteps,
-        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || [],
-        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || [],
-        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || [],
-        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || [],
-        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || [],
-        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || []
+        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || result.incrementsOfWalkRunDistanceForEachDay || [],
+        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || result.incrementsOfFlightsForEachDay || [],
+        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || result.totalStepsForEachDayOfYear || [],
+        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || result.incrementsOfStepsForEachDay || [],
+        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || result.totalWalkRunDistanceForEachDayOfYear || [],
+        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || result.totalFlightsForEachDayOfYear || []
       };
       result.update({$set: options}, {upsert: true}, function(err, result) {
         if (err) {
