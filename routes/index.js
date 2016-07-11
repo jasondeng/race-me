@@ -45,7 +45,7 @@ function ensureAuthenticated(req, res, next) {
 
   var payload = null;
   try {
-    payload = jwt.decode(token, config.TOKEN_SECRET);
+    payload = jwt.decode(token, config.SECRET_KEY);
   }
   catch (err) {
     return res.status(401).send({ message: err.message });
@@ -54,7 +54,7 @@ function ensureAuthenticated(req, res, next) {
   if (payload.exp <= moment().unix()) {
     return res.status(401).send({ message: 'Token has expired' });
   }
-  req.user = payload.sub;
+  req.user = payload;
   next();
 }
 
@@ -124,13 +124,15 @@ router.post("/login", requireSignin, Authenticate.signIn);
 });*/
 
 router.get("/profile", ensureAuthenticated, function(req, res) {
-  var user = {
-    id: req.user.id,
-    fullname: req.user.fullname,
-    username: req.user.username,
-  };
+  var user = req.user;
 
-  res.json(user);
+  User.findById(user.sub, {password: 0}).populate("health").exec(function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    }
+      res.json(foundUser);
+  });
+
 });
 
 router.post("/upload", requireAuth, function(req, res) {
