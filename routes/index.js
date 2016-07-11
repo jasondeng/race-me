@@ -79,6 +79,9 @@ router.get('/', function(req, res, next) {
     res.render('index');
 });
 
+// router.get("/charts", function (req, res) {
+//   res.sendFile('./public/index.html');
+// });
 
 router.post("/register", Authenticate.signUp);
 
