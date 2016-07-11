@@ -5,11 +5,12 @@
 # match groups.
 
 import json
+import random
+import sys
 
 with open("env.json") as json_file:
 	json_data = json.load(json_file)
 
-import random
 #Make the connection
 from pymongo import MongoClient
 connection = MongoClient(json_data["MONGODB_URI"])
@@ -95,36 +96,35 @@ def return_oppenent_by_rank_level(Fitness_rank,current_user_id,index_x,high,low,
 
 print("Test Oppenent match")
 print("-------------------")
-x = True
-while (x):
-	op_rank = input("Please enter rank")
-	index = db.find({"rank": op_rank})
-	xyz = index.next()
-	print("Current user id - ", xyz["_id"])
-	print("------------------")
-	chose = raw_input("Enter r(ank), rand(om),h(igh),l(ow),ro(w)")
-	if chose == "r":
-		listx = return_oppenent_by_rank_v2(op_rank,xyz["_id"])
-		print ("By rank")
-		print listx
-	elif chose == "rand":	
-		listx = return_oppenent_by_random_rank(op_rank,xyz["_id"])
-		print ("Random level")
-		print listx
-	elif chose == "h":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,True,False,False)
-		print ("High level")
-		print listx
-	elif chose == "l":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,True,False)
-		print ("Low level")
-		print listx
-	elif chose == "ro":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,False,True)
-		print ("Same speed level op")
-		print listx
-	x = input("True/False")
-connection.close()
+# op_rank = int(input("Please enter rank: "))
+op_rank = int(sys.argv[1])
+index = db.find({"rank": op_rank})
+xyz = index.next()
+print("Current user id - ", xyz["_id"])
+print("------------------")
+chose = str(sys.argv[2])
+# chose = input("Enter r(ank), rand(om),h(igh),l(ow),ro(w):\n")
+if chose == "r":
+	listx = return_oppenent_by_rank_v2(op_rank,xyz["_id"])
+	print ("By rank")
+	print (listx)
+elif chose == "rand":	
+	listx = return_oppenent_by_random_rank(op_rank,xyz["_id"])
+	print ("Random level")
+	print (listx)
+elif chose == "h":	
+	listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,True,False,False)
+	print ("High level")
+	print (listx)
+elif chose == "l":	
+	listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,True,False)
+	print ("Low level")
+	print (listx)
+elif chose == "ro":	
+	listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,False,True)
+	print ("Same speed level op")
+	print (listx)
+exit()
 
 
 
