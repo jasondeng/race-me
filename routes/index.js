@@ -45,7 +45,7 @@ function ensureAuthenticated(req, res, next) {
 
   var payload = null;
   try {
-    payload = jwt.decode(token, config.SECRET_KEY);
+    payload = jwt.verify(token, config.SECRET_KEY);
   }
   catch (err) {
     return res.status(401).send({ message: err.message });
