@@ -4,13 +4,13 @@ var healthSchema = mongoose.Schema({
     bloodType: String,
     biologicalSex: String,
     totalFlights: Number,
-    incrementsOfFlightsForEachDay: [Number],
+    incrementsOfFlightsForEachDay: [String],
     totalFlightsForEachDayOfYear: [String],
     totalWalkRunDistance: Number,
-    incrementsOfWalkRunDistanceForEachDay: [Number],
+    incrementsOfWalkRunDistanceForEachDay: [String],
     totalWalkRunDistanceForEachDayOfYear: [String],
     totalSteps: Number,
-    incrementsOfStepsForEachDay: [Number],
+    incrementsOfStepsForEachDay: [String],
     totalStepsForEachDayOfYear: [String],
     created: {type: Date, default: Date.now}
 });
