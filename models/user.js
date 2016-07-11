@@ -9,16 +9,13 @@ var userSchema = new mongoose.Schema({
     password: String,
     facebook: String,
     google: String,
-    instagram: String,
     first_name: String,
     picture: String,
     created: {type: Number, default: moment().unix()},
-    health: [{
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Health"
-        }
-    }],
+    health: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Health"
+    }
 });
 
 userSchema.pre('save', function (next) {

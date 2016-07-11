@@ -52,7 +52,6 @@ var options = {
 mongoose.connect(url);
 
 
-
 // view engine setup
 
 app.set('view engine','ejs');
@@ -62,6 +61,9 @@ app.set('views', path.join(__dirname, 'views'));
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(morgan('combined'));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 //app.use(morgan('combined'));
 app.use(bodyParser.json());
 

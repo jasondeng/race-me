@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+%\usepackage[utf8x]{inputenc}
+%\usepackage{amsmath}
+%\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage{sectsty}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\allsectionsfont{\centering}	
+
+\begin{document}
+
+\begin{titlepage}
+
+ % Defines a new command for the horizontal lines, change thickness here
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+ % Center everything on the page
+\center
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Hunter College}\\[1.5cm] 
+\textsc{\Large Computer Science}\\[0.5cm] 
+\textsc{\large }\\[0.5cm]
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+% Title of your document
+{ \huge \bfseries RaceMe}\\[0.4cm] 
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{center} \large
+\emph{Created By}\\
+\textsc{Jason Lizhou Cheng Satbir Itzhak}
+\end{center}
+\end{minipage}\\[2cm]
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+% Date, change the \today to a set date if you want to be precise
+{\large \today}\\[2cm] 
+
+
+\end{titlepage}
+
+\tableofcontents
+
+\begin{abstract}
+
+Many people surrender to modern high pace way of life, placing their health and body second to cultural demands. This is pity, because with a daily routine of 30 min, one can contribute to his/her health, be more productive and eliminate daily stressors. By introducing the user with proper incentives (compete against others, accomplish achievements) to conduct fitness activity, together with the ability to see progress and socialize, ones quality of life may improve dramatically. Hence, potential and current users will find in fitness activity a joy-able necessity, a way of life, improving their life in varied ways.
+
+\end{abstract}
+
+\section{Introduction}
+
+Your introduction 
+
+\subsection{Introduction B}
+
+Introduction Part 2
+
+\end{document}
