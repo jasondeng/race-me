@@ -7,9 +7,14 @@
 import json
 import random
 import sys
+import os
 
-with open("env.json") as json_file:
-	json_data = json.load(json_file)
+if os.path.exists("env.json"):
+	with open("env.json") as json_file:
+		json_data = json.load(json_file)
+else:
+	json_data.MONGODB_URI = process.env.MONGODB_URI
+		
 
 #Make the connection
 from pymongo import MongoClient
