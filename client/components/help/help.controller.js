@@ -30,118 +30,82 @@
                 return isNaN(monthDigit) ? 0 : (monthDigit + 1);
             };
 
-            Highcharts.setOptions({
-                lang: {
-                    thousandsSep: ','
-                }
-            });
+            // $scope.getDaysinMonth = function (month,year){
+            //     var date = new Date(year, month, 1);
+            //     var days  = [];
+            //
+            //     while(date.getMonth() === month){
+            //         days.push(new Date(date));
+            //         date.setDate(date.getDate() + 1);
+            //     }
+            //     console.log(days[1]);
+            // };
+
 
             $http.get('/profile')
                 .success(function (result){
+                    Highcharts.setOptions({
+                        lang: {
+                            thousandsSep: ','
+                        }
+                    });
                     $scope.highchartsNG = {
-                        chart: {
-                            zoomType: 'xy',
-                            resetZoomButton: {
-                              position: {
-                                verticalAlign: 'top'
-                              },
-                              relativeTo: 'chart'
-                          }
-                        },
-                        title: {
-                            text: 'Healthkit'
-                        },
-                        xAxis: {
-                            title: {
-                                enabled: true,
-                                text: 'Days'
-                            },
-                            tickInterval: 2,
-                            gridLineWidth: 0.5,
-                            lineWidth: 0,
-                            minorGridLineWidth: 0,
-                            tickLength: 0,
-                            minorTickLength: 0,
-                            // startOnTick: true,
-                            // endOnTick: false
-                            // showLastLabel: true
-                        },
-                        yAxis: {
-                            labels: {
-                              formatter: function() {
-                                return $scope.convertNumberToMonth(this.value);
-                              },
-                              ordinal: false
-                            },
-                            title: {
-                                enabled: false
-                                // text: 'Month'
-                            },
-                            // startOnTick: true,
-                            // showLastLabel: true
-                            startOnTick: false,
-                            endOnTick: false,
-                            tickPixelInterval: 15,
-                            gridLineWidth: 0
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        tooltip: {
-                            useHTML: true,
-                            headerFormat: '<thead><tr>',
-                            pointFormatter: function () {
-                                return '<th> <center><strong>' + $scope.convertNumberToMonth(this.y) + ' ' + this.x +
-                                '</strong></center> </th> <th>' + this.z + ' Steps </th>';
-                            },
-                            footFormat: '</tr></thead>',
-                            positioner: function () {
-                                return { x: 40, y:0 };
-                            },
-                            shadow: false,
-                            borderWidth: 0,
-                            backgroundColor: 'rgba(255,255,255,0)'
-                        },
-                        plotOptions: {
-                            bubble:{
-                                minSize: '1',
-                                maxSize: '50%'
-                            }
-                        },
-                        series: [{
-                            type: 'bubble',
-                            name: 'Steps Per Day',
-                            // color: 'rgba(223, 83, 83, .5)',
-                            data: function() {
-                                     var dataArr =[];
-                                     //Date.UTC(1970, 9, 21)
-                                     for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++) {
-                                         var test = result.health.totalStepsForEachDayOfYear[i];
-                                        //
-                                         var HoldTest = test.split(":");
-                                         var res = HoldTest[0].slice(0,4);
+                        options: {
+                                   chart: {
+                                       type: 'heatmap',
+                                       marginTop: 40,
+                                       marginBottom: 80
+                                   },
+                                   colorAxis: {
+                                       min: 0,
+                                       minColor: '#FFFFFF',
+                                       maxColor: Highcharts.getOptions().colors[0]
+                                   }
+                               },
 
-                                        //  console.log(res);
-                                        var month = HoldTest[0].split(" ");
-                                        var monthNum = month[1].slice(0,month[1].length - 1);
-                                        // console.log(monthNum);
-                                        //  console.log(HoldTest);
-                                        //  var dateandYr = HoldTest[0].slice(4,HoldTest[0].length);
-                                        //  console.log(res);
-                                        var Hold0 = Number(HoldTest[1]);
-                                        var Hold1 = $scope.convertMonthNameToNumber(res);
-                                        // var Hold1 = Date.parse(convertMonthNameToNumber(res)+ ' ' + dateandYr);
-                                        // console.log(Hold0);
+                               tooltip: {
+                                   formatter: function () {
+                                       return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+                                           this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+                                   }
+                               },
 
-                                         HoldTest[0] = Number(monthNum);//DAYS
-                                         HoldTest[1] = Hold1;//MONTH
-                                         HoldTest[2] = Hold0;//STEPS
-                                         dataArr.push(HoldTest);
-                                     }
-                                    //   console.log(dataArr[1]);
-                                      return dataArr;
-                            }()
-                        }],
+                               title: {
+                                   text: 'Sales per employee per weekday'
+                               },
+
+                               xAxis: {
+                                   categories: ['S','M', 'T', 'W', 'Th', 'F', 'S']
+                               },
+
+                               yAxis: {
+                                   categories: ['Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura'],
+                                   title: null
+                               },
+                               legend: {
+                                   align: 'right',
+                                   layout: 'vertical',
+                                   margin: 0,
+                                   verticalAlign: 'top',
+                                   y: 25,
+                                   symbolHeight: 280
+                               },
+
+                               series: [{
+                                   name: 'Sales per employee',
+                                   borderWidth: 1,
+                                   data: function() {
+                                    //    $scope.getDaysinMonth(5,1994);
+                                    //     var dataArr =[];
+                                            // $scope.getDaysinMonth(5,1994);
+                                    //     }
+                                    // return dataArr;
+                               }(),
+                                   dataLabels: {
+                                       enabled: true,
+                                       color: '#000000'
+                                   }
+                               }],
                         credits: {
                           enabled: false
                         },
