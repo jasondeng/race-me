@@ -259,7 +259,7 @@ router.post('/auth/facebook', function(req, res) {
         // Step 3. Create a new user account or return an existing one.
         User.findOne({ facebook: profile.id }, function(err, existingUser) {
           if (existingUser) {
-            var healthBool = existingUser === undefined ? false : true
+            var healthBool = existingUser === undefined ? false : true;
             var token = createJWT(existingUser, healthBool);
             return res.send({ token: token });
           }
@@ -326,7 +326,7 @@ router.post('/auth/google', function(req, res) {
             user.first_name = user.first_name || profile.given_name;
             user.username = user.username || profile.email;
             user.save(function() {
-              var token = createJWT(user);
+              var token = createJWT(user, false);
               res.send({ token: token });
             });
           });
@@ -335,7 +335,7 @@ router.post('/auth/google', function(req, res) {
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ google: profile.sub }, function(err, existingUser) {
           if (existingUser) {
-            var healthBool = existingUser === undefined ? false : true
+            var healthBool = existingUser === undefined ? false : true;
             return res.send({ token: createJWT(existingUser, healthBool) });
           }
           var user = new User();
@@ -403,7 +403,7 @@ router.post('/auth/instagram', function(req, res) {
       // Step 2b. Create a new user account or return an existing one.
       User.findOne({ instagram: body.user.id }, function(err, existingUser) {
         if (existingUser) {
-          var healthBool = existingUser === undefined ? false : true
+          var healthBool = existingUser === undefined ? false : true;
           return res.send({ token: createJWT(existingUser, healthBool) });
         }
 

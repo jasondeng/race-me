@@ -62,10 +62,6 @@ exports.signIn = function(req, res, next) {
   // Give token
   // req.user is from passport done(user)
   console.log(req.user);
-  var healthBool = false;
-  if(req.user.health !== undefined) {
-    console.log("fsafasfsa");
-    healthBool = true;
-  }
+  var healthBool = req.user.health === undefined ? false : true;
   res.send({token: tokenForUser(req.user, healthBool)});
 };
