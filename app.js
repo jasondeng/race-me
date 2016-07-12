@@ -132,11 +132,11 @@ var pyOptions = {
   args: [50, 'r']
 };
  
-PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
-  if (err) throw err;
-  // results is an array consisting of messages collected during execution 
-  console.log('results: %j', results);
-});
+// PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
+//   if (err) throw err;
+//   // results is an array consisting of messages collected during execution 
+//   console.log('results: %j', results);
+// });
 
 
 module.exports = app;

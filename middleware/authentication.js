@@ -13,10 +13,10 @@ catch (e) {
 }
 
 
-function tokenForUser(user) {
+function tokenForUser(user, healthBool) {
   const timestamp = new Date().getTime();
   // iat = issued at time
-  return jwt.sign({sub: user.id, fullname: user.fullname ,username: user.username ,iat: timestamp}, config.SECRET_KEY, {expiresIn: '7d'});
+  return jwt.sign({sub: user.id, fullname: user.fullname ,username: user.username ,iat: timestamp, health: healthBool}, config.SECRET_KEY, {expiresIn: '7d'});
   // return jwt.encode({sub: user.id, iat: timestamp}, config.SECRET_KEY);
 }
 
@@ -62,5 +62,10 @@ exports.signIn = function(req, res, next) {
   // Give token
   // req.user is from passport done(user)
   console.log(req.user);
-  res.send({token: tokenForUser(req.user)});
+  var healthBool = false;
+  if(req.user.health !== undefined) {
+    console.log("fsafasfsa");
+    healthBool = true;
+  }
+  res.send({token: tokenForUser(req.user, healthBool)});
 };
