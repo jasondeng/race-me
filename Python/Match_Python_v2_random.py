@@ -8,6 +8,7 @@ import json
 import random
 import sys
 import os
+from pymongo import MongoClient
 
 dbURI = 0
 if os.environ.get('NODE_ENV') == 'production':
@@ -18,7 +19,7 @@ else:
 		dbURI = json_data["MONGODB_URI"]
 
 #Make the connection
-from pymongo import MongoClient
+
 connection = MongoClient(dbURI)
 #Call a collection
 db = connection.heroku_czw9k6mx.USER_RANKING
