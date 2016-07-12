@@ -26,11 +26,12 @@ const requireSignin = passport.authenticate('local', {session: false});
 var User = require("../models/user");
 var Health = require("../models/health");
 
-function createJWT(user) {
+function createJWT(user, healthBool) {
   var payload = {
     sub: user._id,
     fullname: user.fullname,
     first_name: user.first_name,
+    health: healthBool,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
@@ -133,11 +134,13 @@ router.get("/profile", ensureAuthenticated, function(req, res) {
       .populate("health")
       .exec(function(err, foundUser) {
         if (err) {
-          console.log(err);
+          return res.send(err);
+        }
+        if(foundUser.health === undefined){
+          return res.send
         }
           res.json(foundUser);
       });
-
 });
 
 router.post("/upload", requireAuth, function(req, res) {
@@ -247,7 +250,7 @@ router.post('/auth/facebook', function(req, res) {
             user.first_name = user.first_name || profile.given_name;
             user.username = user.username || profile.email;
             user.save(function() {
-              var token = createJWT(user);
+              var token = createJWT(user, false);
               res.send({ token: token });
             });
           });
@@ -256,7 +259,8 @@ router.post('/auth/facebook', function(req, res) {
         // Step 3. Create a new user account or return an existing one.
         User.findOne({ facebook: profile.id }, function(err, existingUser) {
           if (existingUser) {
-            var token = createJWT(existingUser);
+            var healthBool = existingUser === undefined ? false : true
+            var token = createJWT(existingUser, healthBool);
             return res.send({ token: token });
           }
           var user = new User();
@@ -269,7 +273,7 @@ router.post('/auth/facebook', function(req, res) {
           console.log(user);
 
           user.save(function() {
-            var token = createJWT(user);
+            var token = createJWT(user, false);
             res.send({ token: token });
           });
         });
@@ -331,7 +335,8 @@ router.post('/auth/google', function(req, res) {
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ google: profile.sub }, function(err, existingUser) {
           if (existingUser) {
-            return res.send({ token: createJWT(existingUser) });
+            var healthBool = existingUser === undefined ? false : true
+            return res.send({ token: createJWT(existingUser, healthBool) });
           }
           var user = new User();
           user.google = profile.sub;
@@ -343,7 +348,7 @@ router.post('/auth/google', function(req, res) {
             if (err) {
               console.log(err);
             }
-            var token = createJWT(user);
+            var token = createJWT(user, false);
             res.send({ token: token });
           });
         });
@@ -389,7 +394,7 @@ router.post('/auth/instagram', function(req, res) {
           user.picture = user.picture || body.user.profile_picture;
           user.fullname = user.displayName || body.user.username;
           user.save(function() {
-            var token = createJWT(user);
+            var token = createJWT(user, false);
             res.send({ token: token });
           });
         });
@@ -398,7 +403,8 @@ router.post('/auth/instagram', function(req, res) {
       // Step 2b. Create a new user account or return an existing one.
       User.findOne({ instagram: body.user.id }, function(err, existingUser) {
         if (existingUser) {
-          return res.send({ token: createJWT(existingUser) });
+          var healthBool = existingUser === undefined ? false : true
+          return res.send({ token: createJWT(existingUser, healthBool) });
         }
 
         var user = new User({
@@ -408,7 +414,7 @@ router.post('/auth/instagram', function(req, res) {
         });
 
         user.save(function() {
-          var token = createJWT(user);
+          var token = createJWT(user, false);
           res.send({ token: token, user: user });
         });
       });
