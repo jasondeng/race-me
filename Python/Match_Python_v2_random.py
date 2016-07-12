@@ -5,20 +5,27 @@
 # match groups.
 
 import json
-
-with open("env.json") as json_file:
-	json_data = json.load(json_file)
-
 import random
+import sys
+import os
+
+dbURI = 0
+if os.environ.get('NODE_ENV') == 'production':
+	dbURI = os.environ.get('MONGODB_URI')
+else:
+	with open("env.json") as json_file:
+		json_data = json.load(json_file)
+		dbURI = json_data["MONGODB_URI"]
+
 #Make the connection
 from pymongo import MongoClient
-connection = MongoClient(json_data["MONGODB_URI"])
+connection = MongoClient(dbURI)
 #Call a collection
 db = connection.heroku_czw9k6mx.USER_RANKING
 
 #take p@ra Fitness_rank and current_user_id and return random  op with that rank. 
 #also check that current user is not matched with himself/herself
-def return_oppenent_by_rank_v2(Fitness_rank,current_user_id):
+def return_opponent_by_rank_v2(Fitness_rank,current_user_id):
 	random_index = random.random()
 	user = db.find_one({"rand_index": { "$gte": random_index, "$lte": random_index + 0.009}, "rank": Fitness_rank})
 	while (user == None) or (user["_id"] == current_user_id):
@@ -31,14 +38,14 @@ def return_oppenent_by_rank_v2(Fitness_rank,current_user_id):
 
 #input p@ra user_id and cursor db
 #output op by random rank.
-def return_oppenent_by_random_rank(Fitness_rank,current_user_id):
+def return_opponent_by_random_rank(Fitness_rank,current_user_id):
 	flag = True	
 	while (flag):	
 		rand_rank = random.randint(1,59)
 		while (rand_rank == Fitness_rank):
 			rand_rank = random.randint(1,59)
 		if db.find_one({"rank": rand_rank}) != None:
-			op_list = return_oppenent_by_rank_v2(rand_rank,current_user_id)
+			op_list = return_opponent_by_rank_v2(rand_rank,current_user_id)
 			return op_list
 
 
@@ -77,7 +84,7 @@ def calc_groups_by_rank_high_low(rank,high,low,same_speed):
 			return list_for_storing_rank
 			
 
-def return_oppenent_by_rank_level(Fitness_rank,current_user_id,index_x,high,low,same_speed):
+def return_opponent_by_rank_level(Fitness_rank,current_user_id,index_x,high,low,same_speed):
 	list_rank = calc_groups_by_rank_high_low(Fitness_rank,high,low,same_speed)
 	list_len = len(list_rank)
 	if list_len == 0:
@@ -86,45 +93,44 @@ def return_oppenent_by_rank_level(Fitness_rank,current_user_id,index_x,high,low,
 	while (count < list_len):	
 		rand_cursor = int(random.randrange(0,list_len,1))
 		new_rank = list_rank[rand_cursor]
-		op_list = return_oppenent_by_rank_v2(new_rank,current_user_id)
+		op_list = return_opponent_by_rank_v2(new_rank,current_user_id)
 		if (op_list == None):
 			count += 1
 		else:
 			return op_list
 
 
-print("Test Oppenent match")
+print("Test opponent match")
 print("-------------------")
-x = True
-while (x):
-	op_rank = input("Please enter rank")
-	index = db.find({"rank": op_rank})
-	xyz = index.next()
-	print("Current user id - ", xyz["_id"])
-	print("------------------")
-	chose = raw_input("Enter r(ank), rand(om),h(igh),l(ow),ro(w)")
-	if chose == "r":
-		listx = return_oppenent_by_rank_v2(op_rank,xyz["_id"])
-		print ("By rank")
-		print listx
-	elif chose == "rand":	
-		listx = return_oppenent_by_random_rank(op_rank,xyz["_id"])
-		print ("Random level")
-		print listx
-	elif chose == "h":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,True,False,False)
-		print ("High level")
-		print listx
-	elif chose == "l":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,True,False)
-		print ("Low level")
-		print listx
-	elif chose == "ro":	
-		listx = return_oppenent_by_rank_level(op_rank,xyz["_id"],index,False,False,True)
-		print ("Same speed level op")
-		print listx
-	x = input("True/False")
-connection.close()
+# op_rank = int(input("Please enter rank: "))
+op_rank = int(sys.argv[1])
+index = db.find({"rank": op_rank})
+xyz = index.next()
+print("Current user id - ", xyz["_id"])
+print("------------------")
+chose = str(sys.argv[2])
+# chose = input("Enter r(ank), rand(om),h(igh),l(ow),ro(w):\n")
+if chose == "r":
+	listx = return_opponent_by_rank_v2(op_rank,xyz["_id"])
+	print ("By rank")
+	print (listx)
+elif chose == "rand":	
+	listx = return_opponent_by_random_rank(op_rank,xyz["_id"])
+	print ("Random level")
+	print (listx)
+elif chose == "h":	
+	listx = return_opponent_by_rank_level(op_rank,xyz["_id"],index,True,False,False)
+	print ("High level")
+	print (listx)
+elif chose == "l":	
+	listx = return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,True,False)
+	print ("Low level")
+	print (listx)
+elif chose == "ro":	
+	listx = return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,False,True)
+	print ("Same speed level op")
+	print (listx)
+exit()
 
 
 

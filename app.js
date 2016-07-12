@@ -3,7 +3,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -14,7 +13,6 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 var PythonShell = require('python-shell');
 var cors = require('cors');
-
 
 // MODELS
 var User = require('./models/user');
@@ -60,8 +58,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 //app.use(morgan('combined'));
@@ -130,11 +127,16 @@ app.use(function(err, req, res, next) {
 });
 
 
-/*
-PythonShell.run('Python/Match_Python_v2_random.py', function (err) {
+var pyOptions = {
+  mode: 'text',
+  args: [50, 'r']
+};
+ 
+PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
   if (err) throw err;
-  console.log('success');
+  // results is an array consisting of messages collected during execution 
+  console.log('results: %j', results);
 });
-*/
+
 
 module.exports = app;
