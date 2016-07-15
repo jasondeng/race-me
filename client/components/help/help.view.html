@@ -18,7 +18,15 @@
                  <highchart config="highchartsNG"></highchart>
             </div>
         </div>
+
+            <form name="myForm">
+               <label for="mySelect">Make a choice:</label>
+               <select name="mySelect" id="mySelect"
+                 ng-options="month.name for month in data.availableMonth track by month.id"
+                 ng-model="data.selectedMonth" ng-change="update()"></select>
+            </form>
     </div>
+
 
 </div>
 <footer-generic></footer-generic>
