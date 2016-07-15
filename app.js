@@ -11,7 +11,6 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-var PythonShell = require('python-shell');
 var cors = require('cors');
 
 // MODELS
@@ -125,18 +124,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
-var pyOptions = {
-  mode: 'text',
-  args: [50, 'r']
-};
- 
-// PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
-//   if (err) throw err;
-//   // results is an array consisting of messages collected during execution 
-//   console.log('results: %j', results);
-// });
 
 
 module.exports = app;

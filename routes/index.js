@@ -7,6 +7,7 @@ var request = require('request');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var passportConfig = require('../middleware/passport');
+var PythonShell = require('python-shell');
 
 var config;
 try {
@@ -59,73 +60,21 @@ function ensureAuthenticated(req, res, next) {
   next();
 }
 
-/* GET home page. */
-/*
-router.get('/' , requireAuth ,function(req, res, next) {
-  // res.send({hi: 'there'});
-  console.log(req.user);
-  res.render('index', { title: 'Express' });
-});*/
-
-// Get register page
-/*
-router.get("/register", function(req, res) {
-  res.render("register");
-});
-
-
-*/
+// INDEX ROUTE
 
 router.get('/', function(req, res, next) {
     res.render('index');
 });
 
-// router.get("/charts", function (req, res) {
-//   res.sendFile('./public/index.html');
-// });
+// REGISTER ROUTE
 
 router.post("/register", Authenticate.signUp);
 
-/*router.post("/register", function(req, res) {
-  var newUser = new User({username: req.body.username, fullname: req.body.fullname});
-  User.register(newUser, req.body.password, function(error, user){
-    if(error) {
-      req.flash("error", error.message);
-      console.log(error);
-      return res.redirect("register");
-    }
-    passport.authenticate("local")(req, res, function(){
-      req.flash("success", "Welcome " + user.username);
-      console.log("SUCCESS");
-      res.json({token: middleware.tokenForUser(user)});
-      //res.redirect("/");
-    });
-
-  });
-});*/
-
-// Get login page
-/*
-router.get("/login", function(req, res) {
-  res.render("login");
-});*/
+// LOGIN ROUTE
 
 router.post("/login", requireSignin, Authenticate.signIn);
 
-/*router.post("/login", passport.authenticate("local",
-  {
-    failureRedirect: "/login"
-  }) ,function(req, res){
-  if (req.session.returnTo) {
-    req.flash("success", "Welcome back!");
-    res.redirect("/");
-    // console.log(req.session.returnTo);
-    // delete req.session.returnTo;
-  } else {
-    req.flash("success", "Welcome back!");
-    res.redirect("/");
-  }
-});*/
+// PROFILE ROUTE
 
 router.get("/profile", ensureAuthenticated, function(req, res) {
   var user = req.user;
@@ -142,6 +91,8 @@ router.get("/profile", ensureAuthenticated, function(req, res) {
           res.json(foundUser);
       });
 });
+
+// UPLOAD ROUTE
 
 router.post("/upload", requireAuth, function(req, res) {
   var user = req.user;
@@ -205,6 +156,22 @@ router.post("/upload", requireAuth, function(req, res) {
   });
 
 });
+
+// MATCH ROUTE
+
+router.get("/match", ensureAuthenticated, (req, res) => {
+  var pyOptions = {
+    mode: 'text',
+    args: [50, 'r']
+  };
+  PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution 
+    console.log(results);
+    res.send(JSON.parse(results[0]));
+  });
+});
+
 
 /*
  |--------------------------------------------------------------------------
