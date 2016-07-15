@@ -30,17 +30,11 @@
                 return isNaN(monthDigit) ? 0 : (monthDigit + 1);
             };
 
-            // $scope.getDaysinMonth = function (month,year){
-            //     var date = new Date(year, month, 1);
-            //     var days  = [];
-            //
-            //     while(date.getMonth() === month){
-            //         days.push(new Date(date));
-            //         date.setDate(date.getDate() + 1);
-            //     }
-            //     console.log(days[1]);
-            // };
+            $scope.getDaysinMonth = function (month,year){
+                 return new Date(year, month, 0).getDate();
+            };
 
+            $scope.dataCounter = 4;
 
             $http.get('/profile')
                 .success(function (result){
@@ -51,10 +45,11 @@
                     });
                     $scope.highchartsNG = {
                         options: {
-                                   chart: {
+                               chart: {
                                        type: 'heatmap',
-                                       marginTop: 40,
-                                       marginBottom: 80
+                                       marginTop: 70,
+                                       marginBottom: 80,
+                                       width: 500
                                    },
                                    colorAxis: {
                                        min: 0,
@@ -71,15 +66,16 @@
                                },
 
                                title: {
-                                   text: 'Sales per employee per weekday'
+                                   text: 'Steps per day'
                                },
 
                                xAxis: {
-                                   categories: ['S','M', 'T', 'W', 'Th', 'F', 'S']
+                                   opposite: true,
+                                   categories: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
                                },
 
                                yAxis: {
-                                   categories: ['Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura'],
+                                   categories: ['Week 4','Week 3','Week 2','Week 1','Week 0',],
                                    title: null
                                },
                                legend: {
@@ -95,11 +91,34 @@
                                    name: 'Sales per employee',
                                    borderWidth: 1,
                                    data: function() {
-                                    //    $scope.getDaysinMonth(5,1994);
-                                    //     var dataArr =[];
-                                            // $scope.getDaysinMonth(5,1994);
-                                    //     }
-                                    // return dataArr;
+                                       var dataArr =[];
+                                       for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++) {
+                                           var test = result.health.totalStepsForEachDayOfYear[i];
+
+                                           var dataSplit = test.split("-");
+                                           var dataMonth = dataSplit[0].slice(0,3);
+                                           var dataStep = dataSplit[1];
+
+                                           var dataDay = (new Date(dataSplit[0])).getDay();
+                                           if (dataMonth === 'May'){
+                                               //X
+                                               dataSplit[0] = Number(dataDay);
+                                               console.log(dataSplit[0]);
+                                               //Y
+                                            //    dataSplit[1] = $scope.convertMonthNameToNumber(dataMonth);
+                                               console.log(dataSplit[1]);
+                                               //Z
+                                               dataSplit[1] = $scope.dataCounter;
+
+                                               if (dataSplit[0] === 6){
+                                                   $scope.dataCounter -= 1;
+                                               }
+                                               dataSplit[2] = Number(dataStep);
+                                               console.log(dataSplit[2]);
+                                               dataArr.push(dataSplit);
+                                           }
+                                       }
+                                       return dataArr;
                                }(),
                                    dataLabels: {
                                        enabled: true,
@@ -111,7 +130,6 @@
                         },
                         loading: false
                     };
-                    $log.log(result);
                 });
         }
 }) ();
