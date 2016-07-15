@@ -5,14 +5,14 @@ var raceSchema = mongoose.Schema([{
     challenger: String,
     challenged: String,
     route: {
-            id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Route"
-        }
+        route: Array,
+        created: {type: Number, default: moment().unix()}
     },
     status: String,
     start: {type: Number, default: moment().unix()},
     end: Number,
+    distance: Number,
+    speed: Number,
     duration: Number,
     created: {type: Number, default: moment().unix()}
 }]);

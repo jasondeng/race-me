@@ -26,6 +26,7 @@ const requireSignin = passport.authenticate('local', {session: false});
 // Import User schema
 var User = require("../models/user");
 var Health = require("../models/health");
+var Race = require("../models/race");
 
 function createJWT(user, healthBool) {
   var payload = {
@@ -98,62 +99,93 @@ router.post("/upload", requireAuth, function(req, res) {
   var user = req.user;
   console.log(user);
   var data = req.body;
+  var mode = req.header('mode');
 
-  Health.findById(user.health, function(err, foundHealth) {
-    if (err) {
-      res.send(err);
-    }
-    else {
-      if (foundHealth === null) {
-        var health = new Health({
-          totalWalkRunDistance: data.totalWalkRunDistance,
-          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
-          totalFlights: data.totalFlights,
-          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
-          biologicalSex: data.biologicalSex,
-          bloodType: data.bloodType,
-          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
-          totalSteps: data.totalSteps,
-          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
-          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+  if(mode === 'health' || mode === 'both') {
+
+    Health.findById(user.health, function(err, foundHealth) {
+      if (err) {
+        res.send(err);
+      } else {
+        if (foundHealth === null) {
+          var health = new Health({
+            totalWalkRunDistance: data.totalWalkRunDistance,
+            incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
+            totalFlights: data.totalFlights,
+            incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
+            biologicalSex: data.biologicalSex,
+            bloodType: data.bloodType,
+            totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
+            totalSteps: data.totalSteps,
+            incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
+            totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
+            totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+          });
+          health.save(function(err) {
+            if (err) {
+              res.send(err);
+            }
+            res.status(201).send({message: "Health collection successfully created!"});
+          });
+          user.update({health: health._id}, function(err, raw) {
+            if (err) {
+              res.send(err);
+            }
+            console.log(raw);
+          });
+        } else {
+          var options = {
+            totalWalkRunDistance: data.totalWalkRunDistance || foundHealth.totalWalkRunDistance,
+            totalFlights: data.totalFlights || foundHealth.totalFlights,
+            biologicalSex: data.biologicalSex || foundHealth.biologicalSex,
+            bloodType: data.bloodType || foundHealth.bloodType,
+            totalSteps: data.totalSteps || foundHealth.totalSteps,
+            incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || foundHealth.incrementsOfWalkRunDistanceForEachDay || [],
+            incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || foundHealth.incrementsOfFlightsForEachDay || [],
+            totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
+            incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
+            totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
+            totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
+          };
+          foundHealth.update({$set: options}, {upsert: true}, function(err, result) {
+            if (err) {
+              res.send(err);
+            }
+            res.send(result);
+          });
+        }
+      }
+    });
+
+  }
+
+  if(mode === 'race' || mode === 'both') {
+    User.findById(user.sub, (err, foundUser) => {
+      if (user.race === null) {
+        var race = new Race ({
+          challenger: user.username,
+          challenged: String,
+          distance: Number,
         });
-        health.save(function(error) {
+        race.save((error) => {
           if (error) {
             res.send(error);
           }
-          res.status(201).send({message: "Health collection successfully created!"});
+          res.status(201).send({message: "Race collection successfully created!"});
         });
-        user.update({health: health._id}, function(err, raw) {
-          if (err) {
-            res.send(error);
-          }
-          console.log(raw);
-        });
-      }
-      else {
-        var options = {
-          totalWalkRunDistance: data.totalWalkRunDistance || foundHealth.totalWalkRunDistance,
-          totalFlights: data.totalFlights || foundHealth.totalFlights,
-          biologicalSex: data.biologicalSex || foundHealth.biologicalSex,
-          bloodType: data.bloodType || foundHealth.bloodType,
-          totalSteps: data.totalSteps || foundHealth.totalSteps,
-          incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || foundHealth.incrementsOfWalkRunDistanceForEachDay || [],
-          incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || foundHealth.incrementsOfFlightsForEachDay || [],
-          totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
-          incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
-          totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
-          totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
-        };
-        foundHealth.update({$set: options}, {upsert: true}, function(err, result) {
+        user.update({race: race._id}, (err, raw) => {
           if (err) {
             res.send(err);
           }
-          res.send(result);
+          console.log(raw);
         });
+      } else {
+        // When the race ends, find the race and update the fields
       }
-    }
-  });
+
+    });
+
+  }
 
 });
 
@@ -164,7 +196,7 @@ router.get("/match", ensureAuthenticated, (req, res) => {
     mode: 'text',
     args: [50, 'r']
   };
-  PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, function (err, results) {
+  PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
     if (err) throw err;
     // results is an array consisting of messages collected during execution 
     console.log(results);
