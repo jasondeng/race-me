@@ -59,21 +59,28 @@
             };
 
             $scope.dataCounter = 4;
+            $scope.dataArr = [];
+            $scope.dayValue = [];
 
             $scope.getDataHC = function(result, selectedMonthName) {
-                var dataArr = [];
+                $scope.dataArr = [];
                 var dataCounter = 4;
-                for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++) {
+
+                for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length -1; i++) {
                     var test = result.health.totalStepsForEachDayOfYear[i];
 
                     var dataSplit = test.split("-");
                     var dataMonth = dataSplit[0].slice(0,3);
                     var dataStep = dataSplit[1];
 
+                    var currentDayHolder = dataSplit[0].split(",");
+
                     // ///////////
                     // X 0-6 = Sunday to Monday
+
                     var dataDay = (new Date(dataSplit[0])).getDay();
                     //
+
                     //     dataSplit[0] = Number(dataDay);
                     //  //    console.log(dataSplit[0]);
                     //     //Y Month Number
@@ -85,30 +92,60 @@
 
                         // ////////////////////////////////////////////////
 
-                    if (dataMonth === selectedMonthName){
+                    if (dataMonth === selectedMonthName && dataDay !== undefined){
+                        $scope.dayValue.push(currentDayHolder[0].slice(4));
                         //X
-                        console.log();
-                        dataSplit[0] = Number(dataDay);
+                        dataSplit[0] = dataDay;
                      //    console.log(dataSplit[0]);
                         //Y
                      //    dataSplit[1] = $scope.convertMonthNameToNumber(dataMonth);
                      //    console.log(dataSplit[1]);
-                        //Z
+                        //Y
                         dataSplit[1] = dataCounter;
 
                         if (dataSplit[0] === 6){
                             dataCounter -= 1;
                         }
+
+                        //Value
                         dataSplit[2] = Number(dataStep);
                      //    console.log(dataSplit[2]);
-                        dataArr.push(dataSplit);
+                        $scope.dataArr.push(dataSplit);
                     }
+
                 }
-                return dataArr;
+                return $scope.dataArr;
+            };
+
+            $scope.getDataLabel = function (x,y) {
+                for (var i = 0; i < $scope.dataArr.length; i++) {
+                    if (x === $scope.dataArr[i][0] && y === $scope.dataArr[i][1])
+                        return $scope.dataArr[i][3];
+                }
+            };
+
+            $scope.returnDayValue = function () {
+
             };
 
             $scope.highchartsNG = {
                 options: {
+                       plotOptions: {
+                            heatmap: {
+                                tooltip:{
+                                    pointFormatter: function () {
+                                        return this.value;
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    formatter: function () {
+                                        return $scope.dayValue.shift();
+                                    }
+                                }
+                            }
+                       },
                        chart: {
                                type: 'heatmap',
                                marginTop: 70,
@@ -122,10 +159,7 @@
                            }
                        },
                        tooltip: {
-                           formatter: function () {
-                               return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                                   this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
-                           }
+                          enabled: false
                        },
                        title: {
                            text: 'Steps per day'
@@ -135,8 +169,11 @@
                            categories: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
                        },
                        yAxis: {
-                           categories: ['Week 4','Week 3','Week 2','Week 1','Week 0',],
-                           title: null
+                        //    gridLineWidth: 0,
+                        //    labels: {
+                        //        enabled: false
+                        //    },
+                        //    title: null
                        },
                        legend: {
                            align: 'right',
@@ -147,13 +184,9 @@
                            symbolHeight: 280
                        },
                        series: [{
-                           name: 'Sales per employee',
+                           name: 'Daily Step',
                            borderWidth: 1,
                            data: [{}],
-                           dataLabels: {
-                               enabled: true,
-                               color: '#000000'
-                           }
                        }],
                 credits: {
                   enabled: false
@@ -163,7 +196,6 @@
 
 
             $scope.resultData = [];
-
 
             $scope.update = function () {
                 var selectedMonthNumber = $scope.data.selectedMonth.id;
