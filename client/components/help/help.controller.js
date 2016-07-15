@@ -42,12 +42,17 @@
             //     var date = new Date().getMonth();
             //     return $scope.convertNumberToMonth(date);
             // };
+
+
+            //GET CURRENT MONTH NUMBER FOR DEFAULT CHART MONTH
             $scope.currentMonth = new Date().getMonth();
 
+            //GET CURRENT DATE TO DISPLAY ON PANEL
             $scope.current = {
                 currentDate:{date: new Date().toDateString()}
             };
 
+            //A FORM SELECTION SO USER CAN CHANGE BETWEEN MONTH
             $scope.data = {
                 availableMonth: [
                   {id: '0', name: 'January'},
@@ -95,16 +100,22 @@
                 for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length -1; i++) {
                     var test = result.health.totalStepsForEachDayOfYear[i];
 
+                    //SPLIT THE dataSplit[0] = MON NUM, YEAR AND dataSplit[1] = STEPS WALKED
                     var dataSplit = test.split("-");
+
+                    //GET THE MONTH NAME FROM THE DATE
                     var dataMonth = dataSplit[0].slice(0,3);
+
+                    //STORE THE STEPS
                     var dataStep = dataSplit[1];
 
+                    // GET THE X FOR CHART, GET THE Sunday to Monday OF DATE IN (0-6)
+                    var dataDay = (new Date(dataSplit[0])).getDay();
+
+                    //SPLIT THE DATE currentDayHolder[0] = MON NUM AND currentDayHolder[1] = YEAR
                     var currentDayHolder = dataSplit[0].split(",");
 
                     // ///////////
-                    // X 0-6 = Sunday to Monday
-
-                    var dataDay = (new Date(dataSplit[0])).getDay();
                     //
 
                     //     dataSplit[0] = Number(dataDay);
@@ -119,36 +130,44 @@
                         // ////////////////////////////////////////////////
 
                     if (dataMonth === selectedMonthName && dataDay !== undefined){
+
+                        //REMOVE THE FIRST 4 LETTERS IN currentDayHolder = (MON Number)
+                        //STORE DAY NUMBER IN MONTH DAY YEAR
                         $scope.dayValue.push(currentDayHolder[0].slice(4));
-                        //X
+
+                        //MAKE dataSplit[0] Sunday to Monday OF DATE IN (0-6)
                         dataSplit[0] = dataDay;
                      //    console.log(dataSplit[0]);
                         //Y
                      //    dataSplit[1] = $scope.convertMonthNameToNumber(dataMonth);
                      //    console.log(dataSplit[1]);
-                        //Y
+
+                        //Y DEFAULT DATACOUNTER IS 4 SO IT STARTS AT THE TOP ROW
                         dataSplit[1] = dataCounter;
 
+                        //ONCE THE ONCE ROW REACHES 7TH CELL GO DOWN A ROW
                         if (dataSplit[0] === 6){
                             dataCounter -= 1;
                         }
 
-                        //Value
+                        //STORE THE STEPS/Value OF USER
                         dataSplit[2] = Number(dataStep);
                      //    console.log(dataSplit[2]);
+
+                        //PUSH dataSplit INTO $scope.dataArr [0] = 0-6 ROW, [1] = COLUMN, [2] = STEPS/VALUE
                         $scope.dataArr.push(dataSplit);
                     }
-
                 }
                 return $scope.dataArr;
             };
 
-            $scope.getDataLabel = function (x,y) {
-                for (var i = 0; i < $scope.dataArr.length; i++) {
-                    if (x === $scope.dataArr[i][0] && y === $scope.dataArr[i][1])
-                        return $scope.dataArr[i][3];
-                }
-            };
+            // NOT USED
+            // $scope.getDataLabel = function (x,y) {
+            //     for (var i = 0; i < $scope.dataArr.length; i++) {
+            //         if (x === $scope.dataArr[i][0] && y === $scope.dataArr[i][1])
+            //             return $scope.dataArr[i][3];
+            //     }
+            // };
 
             $scope.highchartsNG = {
                 options: {
@@ -219,7 +238,7 @@
                 loading: false
             };
 
-
+            //USED TO STORED DATA GOTTEN FROM HTTP GET REQUEST
             $scope.resultData = [];
 
             $scope.update = function () {
