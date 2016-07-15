@@ -38,25 +38,51 @@
                 return new Date(year, month, 0).getDate();
             };
 
+            // $scope.currentMonth = function () {
+            //     var date = new Date().getMonth();
+            //     return $scope.convertNumberToMonth(date);
+            // };
             $scope.currentMonth = new Date().getMonth();
 
-            $scope.data = {
-            availableMonth: [
-              {id: '0', name: 'January'},
-              {id: '1', name: 'February'},
-              {id: '2', name: 'March'},
-              {id: '3', name: 'April'},
-              {id: '4', name: 'May'},
-              {id: '5', name: 'June'},
-              {id: '6', name: 'July'},
-              {id: '7', name: 'August'},
-              {id: '8', name: 'September'},
-              {id: '9', name: 'October'},
-              {id: '10', name: 'November'},
-              {id: '11', name: 'December'}
-            ],
-            selectedMonth: {id: $scope.currentMonth} //This sets the default value of the select in the ui
+            $scope.current = {
+                currentDate:{date: new Date().toDateString()}
             };
+
+            $scope.data = {
+                availableMonth: [
+                  {id: '0', name: 'January'},
+                  {id: '1', name: 'February'},
+                  {id: '2', name: 'March'},
+                  {id: '3', name: 'April'},
+                  {id: '4', name: 'May'},
+                  {id: '5', name: 'June'},
+                  {id: '6', name: 'July'},
+                  {id: '7', name: 'August'},
+                  {id: '8', name: 'September'},
+                  {id: '9', name: 'October'},
+                  {id: '10', name: 'November'},
+                  {id: '11', name: 'December'}
+                ],
+                selectedMonth: {id: $scope.currentMonth} //This sets the default value of the select in the ui
+            };
+
+            // $scope.data = {
+            //     availableMonth: [
+            //       {name: 'Jan'},
+            //       {name: 'Feb'},
+            //       {name: 'Mar'},
+            //       {name: 'Apr'},
+            //       {name: 'May'},
+            //       {name: 'Jun'},
+            //       {name: 'Jul'},
+            //       {name: 'Aug'},
+            //       {name: 'Sep'},
+            //       {name: 'Oct'},
+            //       {name: 'Nov'},
+            //       {name: 'Dec'}
+            //     ],
+            //     selectedMonth: {name: $scope.currentMonth()} //This sets the default value of the select in the ui
+            // };
 
             $scope.dataCounter = 4;
             $scope.dataArr = [];
@@ -124,24 +150,23 @@
                 }
             };
 
-            $scope.returnDayValue = function () {
-
-            };
-
             $scope.highchartsNG = {
                 options: {
                        plotOptions: {
                             heatmap: {
                                 tooltip:{
+                                    useHTML: true,
+                                    headerFormat: 'Daily Step: ',
                                     pointFormatter: function () {
-                                        return this.value;
+                                        return "<strong>" + this.value + "</strong>";
                                     }
                                 },
                                 dataLabels: {
                                     enabled: true,
                                     color: '#000000',
+                                    useHTML: true,
                                     formatter: function () {
-                                        return $scope.dayValue.shift();
+                                        return "<center>" + $scope.dayValue.shift() + "</center>" + this.point.value;
                                     }
                                 }
                             }
@@ -162,18 +187,18 @@
                           enabled: false
                        },
                        title: {
-                           text: 'Steps per day'
+                           text: ''
                        },
                        xAxis: {
                            opposite: true,
                            categories: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
                        },
                        yAxis: {
-                        //    gridLineWidth: 0,
-                        //    labels: {
-                        //        enabled: false
-                        //    },
-                        //    title: null
+                           gridLineWidth: 0,
+                           labels: {
+                               enabled: false
+                           },
+                           title: null
                        },
                        legend: {
                            align: 'right',
@@ -198,6 +223,7 @@
             $scope.resultData = [];
 
             $scope.update = function () {
+                // var selectedMonthName = $scope.data.selectedMonth.name;
                 var selectedMonthNumber = $scope.data.selectedMonth.id;
                 var selectedMonthName = $scope.convertNumberToMonth(selectedMonthNumber);
 
@@ -209,8 +235,10 @@
             $http.get('/profile')
                 .success(function (result){
                     $scope.resultData = result;
+                    // var selectedMonthName = $scope.data.selectedMonth.name;
                     var selectedMonthNumber = $scope.data.selectedMonth.id;
                     var selectedMonthName = $scope.convertNumberToMonth(selectedMonthNumber);
+
 
                     var dataArr = $scope.getDataHC(result,selectedMonthName);
 
