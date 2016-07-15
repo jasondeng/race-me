@@ -156,7 +156,7 @@
                             heatmap: {
                                 tooltip:{
                                     useHTML: true,
-                                    headerFormat: 'Daily Step: ',
+                                    headerFormat: 'Daily Step <br>',
                                     pointFormatter: function () {
                                         return "<strong>" + this.value + "</strong>";
                                     }
@@ -170,6 +170,13 @@
                                     }
                                 }
                             }
+                       },
+                       legend: {
+                           align: 'right',
+                           layout: 'vertical',
+                           verticalAlign: 'top',
+                           y: 25,
+                           symbolHeight: 280
                        },
                        chart: {
                                type: 'heatmap',
@@ -200,14 +207,7 @@
                            },
                            title: null
                        },
-                       legend: {
-                           align: 'right',
-                           layout: 'vertical',
-                           margin: 0,
-                           verticalAlign: 'top',
-                           y: 25,
-                           symbolHeight: 280
-                       },
+
                        series: [{
                            name: 'Daily Step',
                            borderWidth: 1,
@@ -234,6 +234,12 @@
 
             $http.get('/profile')
                 .success(function (result){
+                    Highcharts.setOptions({
+                      lang: {
+                        numericSymbols: null, //otherwise by default ['k', 'M', 'G', 'T', 'P', 'E']
+                        thousandsSep: ','
+                        },
+                    });
                     $scope.resultData = result;
                     // var selectedMonthName = $scope.data.selectedMonth.name;
                     var selectedMonthNumber = $scope.data.selectedMonth.id;
