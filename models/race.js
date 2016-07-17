@@ -17,4 +17,4 @@ var raceSchema = mongoose.Schema({
     created: {type: Number, default: moment().unix()}
 });
 
-module.exports = mongoose.model("Race", healthSchema);
+module.exports = mongoose.model("Race", raceSchema);
