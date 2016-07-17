@@ -10,8 +10,20 @@ function initMap() {
     });
 
     // Create a renderer for directions and bind it to the map.
-    var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
-    directionsDisplay.setPanel(document.getElementById('right-panel'));
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable:true,
+        map: map,
+        panel: document.getElementById('right-panel')
+    });
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map: map,
+        panel: document.getElementById('right-panel')
+    });
+    directionsDisplay.addListener('directions_changed', function() {
+        console.log('directions_changed');
+        computeTotalDistance(directionsDisplay.getDirections());
+    });
 
     var onClickHandler = function () {
         calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -32,28 +44,59 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 
             console.log("running get location");
-            var newPos = getLocation(pos.lng, pos.lat, 1000);
 
-
-            directionsService.route({
-                origin: pos,
-                destination: newPos,
-                travelMode: google.maps.TravelMode.WALKING,
-                unitSystem: google.maps.UnitSystem.METRIC
-            }, function (response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    console.log('route', response)
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            });
+            displayRoute(pos, pos, directionsService, directionsDisplay)
+            // directionsService.route({
+            //     origin: pos,
+            //     destination: pos,
+            //     waypoints: [{location:secPos, stopover:true}, {location:newPos, stopover: true}],
+            //     provideRouteAlternatives: true,
+            //     travelMode: google.maps.TravelMode.WALKING,
+            //     unitSystem: google.maps.UnitSystem.METRIC
+            // }, function (response, status) {
+            //     if (status === google.maps.DirectionsStatus.OK) {
+            //         directionsDisplay.setDirections(response);
+            //         console.log('route', response)
+            //     } else {
+            //         window.alert('Directions request failed due to ' + status);
+            //     }
+            // });
         })
     }
     else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+}
+
+function displayRoute(origin, destination, service, display) {
+    var newPos = getLocation(origin.lng, origin.lat, 3000);
+    var secPos = getLocation(newPos.lng, newPos.lat, 3000);
+    console.log('secPos: ', secPos);
+    service.route({
+        origin: origin,
+        destination: destination,
+        waypoints: [{location:newPos, stopover:true}, {location:secPos, stopover: true}],
+        travelMode: google.maps.TravelMode.WALKING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidTolls: true
+    }, function(response, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+        display.setDirections(response);
+        } else {
+        alert('Could not display directions due to: ' + status);
+        }
+    });
+}
+
+function computeTotalDistance(result) {
+    var total = 0;
+    var myroute = result.routes[0];
+    for (var i = 0; i < myroute.legs.length; i++) {
+        total += myroute.legs[i].distance.value;
+    }
+    total = total / 1000;
+    document.getElementById('total').innerHTML = total + ' km';
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
