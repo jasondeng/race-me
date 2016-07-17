@@ -60,7 +60,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }
     else {
         // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
+        handleLocationError(false, maps.infoWindow, map.getCenter());
     }
 }
 
@@ -104,7 +104,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
 }
 
-function getLocation(lng, lat, radius) {
+/*function getLocation(lng, lat, radius) {
     // Convert radius from meters to degrees
     var radiusInDegrees = radius / 111300;
 
@@ -132,7 +132,7 @@ function getLocation(lng, lat, radius) {
     console.log(new_lat, new_lng);
 
     return newPos;
-}
+}*/
 
 function rectangleRoute(length, BaseLocation) {
     var direction = 0;
@@ -146,7 +146,7 @@ function rectangleRoute(length, BaseLocation) {
     var height = width * ratio;
     var diagonal = Math.sqrt(width * width + height * height);
     var theta = Math.acos(height / diagonal);
-    var direction = Math.random() * 2 * Math.PI;
+    direction = Math.random() * 2 * Math.PI;
     var sign = -1;
     angle = 0 + direction;
     var dx = height * Math.cos(angle);
@@ -155,16 +155,16 @@ function rectangleRoute(length, BaseLocation) {
     var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[0] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     angle = sign * theta + direction;
-    var dx = diagonal * Math.cos(angle);
-    var dy = diagonal * Math.sin(angle);
-    var delta_lat = dy / 110540;
-    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    dx = diagonal * Math.cos(angle);
+    dy = diagonal * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[1] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     angle = sign * Math.PI / 2 + direction;
-    var dx = width * Math.cos(angle);
-    var dy = width * Math.sin(angle);
-    var delta_lat = dy / 110540;
-    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    dx = width * Math.cos(angle);
+    dy = width * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[2] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     var wayPoints = [];
     for (var i = 0; i < rlPoints.length; i++) {

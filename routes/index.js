@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var passport = require("passport");
-var middleware = require('../middleware/index');
+// var middleware = require('../middleware/index');
 var Authenticate = require('../middleware/authentication');
 var request = require('request');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
-var passportConfig = require('../middleware/passport');
+// var passportConfig = require('../middleware/passport');
 var PythonShell = require('python-shell');
 
 var config;
@@ -20,13 +20,13 @@ catch (e) {
     config = process.env;
 }
 
-const requireAuth = passport.authenticate('jwt', {session: false});
-const requireSignin = passport.authenticate('local', {session: false});
+var requireAuth = passport.authenticate('jwt', {session: false});
+var requireSignin = passport.authenticate('local', {session: false});
 
 // Import User schema
 var User = require("../models/user");
 var Health = require("../models/health");
-var Race = require("../models/race");
+// var Race = require("../models/race");
 
 function createJWT(user, healthBool) {
     var payload = {
@@ -63,7 +63,7 @@ function ensureAuthenticated(req, res, next) {
 
 // INDEX ROUTE
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     res.render('index');
 });
 
@@ -159,39 +159,33 @@ router.post("/upload", requireAuth, function (req, res) {
 
     }
 
-    if (mode === 'race' || mode === 'both') {
-        User.findById(user.sub, (err, foundUser) => {
-            if (user.race === null
-    )
-        {
-            var race = new Race({
-                challenger: user.username,
-                challenged: String,
-                distance: Number,
-            });
-            race.save((error) => {
-                if (error) {
-                    res.send(error);
-                }
-                res.status(201).send({message: "Race collection successfully created!"});
-        })
-            ;
-            user.update({race: race._id}, (err, raw) => {
-                if (err) {
-                    res.send(err);
-                }
-                console.log(raw);
-        })
-            ;
-        }
-    else
-        {
-            // When the race ends, find the race and update the fields
-        }
-    })
-        ;
+/*  if(mode === 'race' || mode === 'both') {
+    User.findById(user.sub, (err, foundUser) => {
+      if (user.race === null) {
+        var race = new Race ({
+          challenger: user.username,
+          challenged: String,
+          distance: Number,
+        });
+        race.save((error) => {
+          if (error) {
+            res.send(error);
+          }
+          res.status(201).send({message: "Race collection successfully created!"});
+        });
+        user.update({race: race._id}, (err, raw) => {
+          if (err) {
+            res.send(err);
+          }
+          console.log(raw);
+        });
+      } else {
+        // When the race ends, find the race and update the fields
+      }
 
-    }
+    });
+
+  }*/
 
 });
 
@@ -375,7 +369,7 @@ router.post('/auth/instagram', function (req, res) {
     var params = {
         client_id: req.body.clientId,
         redirect_uri: req.body.redirectUri,
-        client_secret: config.INSTAGRAM_SECRET || INSTAGRAM_SECRET,
+        client_secret: config.INSTAGRAM_SECRET || process.en.INSTAGRAM_SECRET,
         code: req.body.code,
         grant_type: 'authorization_code'
     };
