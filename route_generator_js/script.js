@@ -15,11 +15,6 @@ function initMap() {
         map: map,
         panel: document.getElementById('right-panel')
     });
-    var directionsDisplay = new google.maps.DirectionsRenderer({
-        draggable: true,
-        map: map,
-        panel: document.getElementById('right-panel')
-    });
     directionsDisplay.addListener('directions_changed', function() {
         console.log('directions_changed');
         computeTotalDistance(directionsDisplay.getDirections());
