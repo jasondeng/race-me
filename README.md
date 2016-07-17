@@ -1,3 +1,5 @@
+[![Build Status][travis-image]][travis-url]
+
 # RaceMe
 Capstone Project for Hunter College CSCI 499 Summer 2016
 
@@ -49,4 +51,5 @@ RaceMe allows users from all over the world, without geographical boundaries or 
   	4. Lizhou Cao - Data visualization.
 
 
-
+[travis-image]:https://travis-ci.org/jasonCodeng/capstone-beatme.svg?branch=master
+[travis-url]:https://travis-ci.org/jasonCodeng/capstone-beatme
