@@ -70,15 +70,18 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function displayRoute(origin, destination, service, display) {
-    var newPos = getLocation(origin.lng, origin.lat, 3000);
-    var secPos = getLocation(newPos.lng, newPos.lat, 3000);
-    console.log('secPos: ', secPos);
+    var wayPoints = rectangleRoute(10000, origin)
+    // var newPos = getLocation(origin.lng, origin.lat, 3000);
+    // var secPos = getLocation(newPos.lng, newPos.lat, 3000);
+    // var thirdPos = getLocation(newPos.lng, newPos.lat, 3000);
+    // console.log('secPos: ', secPos);
     service.route({
         origin: origin,
         destination: destination,
-        waypoints: [{location:newPos, stopover:true}, {location:secPos, stopover: true}],
+        waypoints: wayPoints,
         travelMode: google.maps.TravelMode.WALKING,
-        unitSystem: google.maps.UnitSystem.METRIC,
+        unitSystem: google.maps.UnitSystem.IMPERIAL,
+        avoidHighways: true,
         avoidTolls: true
     }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
@@ -96,7 +99,7 @@ function computeTotalDistance(result) {
         total += myroute.legs[i].distance.value;
     }
     total = total / 1000;
-    document.getElementById('total').innerHTML = total + ' km';
+    document.getElementById('total').innerHTML = total + ' miles';
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -136,3 +139,44 @@ function getLocation(lng, lat, radius) {
     return newPos;
 }
 
+function rectangleRoute(length, BaseLocation) {
+    var direction = 0;
+    var angle = 0;
+    var rlPoints = [];
+    var maxRatio = 5;
+    var minRatio = 1. / maxRatio;
+    var deltaRatio = maxRatio - minRatio;
+    var ratio = Math.random() * deltaRatio + minRatio;
+    var width = length / (2 * ratio + 2);
+    var height = width * ratio;
+    var diagonal = Math.sqrt(width * width + height * height);
+    var theta = Math.acos(height / diagonal);
+    var direction = Math.random() * 2 * Math.PI;
+    var sign = -1;
+    angle = 0 + direction;
+    var dx = height * Math.cos(angle);
+    var dy = height * Math.sin(angle);
+    var delta_lat = dy / 110540;
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    rlPoints[0] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+    angle = sign * theta + direction;
+    var dx = diagonal * Math.cos(angle);
+    var dy = diagonal * Math.sin(angle);
+    var delta_lat = dy / 110540;
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    rlPoints[1] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+    angle = sign * Math.PI / 2 + direction;
+    var dx = width * Math.cos(angle);
+    var dy = width * Math.sin(angle);
+    var delta_lat = dy / 110540;
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    rlPoints[2] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+    var wayPoints = [];
+    for (var i = 0; i < rlPoints.length; i++) {
+        wayPoints.push({
+            location: rlPoints[i],
+            stopover: false
+        });
+    }
+    return wayPoints;
+}
