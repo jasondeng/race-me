@@ -9,16 +9,23 @@
 
     <div class = "panel panel-default">
         <div class = "panel-heading text-center">
-            <h3>
-                Chart
+            <h3 ng-model="current.currentDate">
+                {{current.currentDate.date}}
             </h3>
         </div>
         <div class = "panel-body">
+            <form>
+                    <label for="mySelect"></label>
+                    <select class="form-control" name="mySelect" id="mySelect"
+                      ng-options="month.name for month in data.availableMonth track by month.id"
+                      ng-model="data.selectedMonth" ng-change="update()"></select>
+            </form>
             <div>
                  <highchart config="highchartsNG"></highchart>
             </div>
         </div>
     </div>
+
 
 </div>
 <footer-generic></footer-generic>
