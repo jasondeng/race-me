@@ -6,7 +6,7 @@ var Authenticate = require('../middleware/authentication');
 var request = require('request');
 var moment = require('moment');
 var jwt = require('jsonwebtoken');
-// var passportConfig = require('../middleware/passport');
+var passportConfig = require('../middleware/passport');
 var PythonShell = require('python-shell');
 
 var config;
