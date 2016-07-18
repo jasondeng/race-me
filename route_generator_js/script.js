@@ -60,7 +60,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }
     else {
         // Browser doesn't support Geolocation
-        handleLocationError(false, maps.infoWindow, map.getCenter());
+        handleLocationError(false, infoWindow, map.getCenter());
     }
 }
 
@@ -81,6 +81,7 @@ function displayRoute(origin, destination, service, display) {
     }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
         display.setDirections(response);
+        console.log("RESPONSE: ", response);
         } else {
         alert('Could not display directions due to: ' + status);
         }
@@ -89,12 +90,19 @@ function displayRoute(origin, destination, service, display) {
 
 function computeTotalDistance(result) {
     var total = 0;
+    var duration = 0;
     var myroute = result.routes[0];
     for (var i = 0; i < myroute.legs.length; i++) {
         total += myroute.legs[i].distance.value;
+        duration += myroute.legs[i].duration.value;
     }
     total = total / 1000;
+    duration = moment.duration(duration, 'seconds');
+    var hours =  duration.hours();
+    var mins =  duration.minutes();
+    var seconds = duration.seconds();
     document.getElementById('total').innerHTML = total + ' miles';
+    document.getElementById('duration').innerHTML = hours + " hours " + mins + " mins " + seconds + " seconds";
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -104,7 +112,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
 }
 
-/*function getLocation(lng, lat, radius) {
+function getLocation(lng, lat, radius) {
     // Convert radius from meters to degrees
     var radiusInDegrees = radius / 111300;
 
@@ -132,7 +140,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     console.log(new_lat, new_lng);
 
     return newPos;
-}*/
+}
 
 function rectangleRoute(length, BaseLocation) {
     var direction = 0;
@@ -146,7 +154,7 @@ function rectangleRoute(length, BaseLocation) {
     var height = width * ratio;
     var diagonal = Math.sqrt(width * width + height * height);
     var theta = Math.acos(height / diagonal);
-    direction = Math.random() * 2 * Math.PI;
+    var direction = Math.random() * 2 * Math.PI;
     var sign = -1;
     angle = 0 + direction;
     var dx = height * Math.cos(angle);
@@ -155,22 +163,22 @@ function rectangleRoute(length, BaseLocation) {
     var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[0] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     angle = sign * theta + direction;
-    dx = diagonal * Math.cos(angle);
-    dy = diagonal * Math.sin(angle);
-    delta_lat = dy / 110540;
-    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    var dx = diagonal * Math.cos(angle);
+    var dy = diagonal * Math.sin(angle);
+    var delta_lat = dy / 110540;
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[1] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     angle = sign * Math.PI / 2 + direction;
-    dx = width * Math.cos(angle);
-    dy = width * Math.sin(angle);
-    delta_lat = dy / 110540;
-    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    var dx = width * Math.cos(angle);
+    var dy = width * Math.sin(angle);
+    var delta_lat = dy / 110540;
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
     rlPoints[2] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
     var wayPoints = [];
     for (var i = 0; i < rlPoints.length; i++) {
         wayPoints.push({
             location: rlPoints[i],
-            stopover: false
+            stopover: true
         });
     }
     console.log(wayPoints);
