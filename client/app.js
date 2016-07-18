@@ -6,7 +6,7 @@
         .config(config)
         .run(run);
 
-    function config($routeProvider, $authProvider) {
+    function config($routeProvider, $authProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -54,6 +54,8 @@
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo: '/'});
+
+
 
         $authProvider.facebook({
             clientId: '1009093145865215'

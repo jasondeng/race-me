@@ -10,6 +10,8 @@
             var vm = this;
 
             vm.isLoggedIn = authentication.isLoggedIn();
+            
+            vm.hasHealthData = authentication.hasHealthData();
 
             $scope.currentUser = authentication.currentUser();
 

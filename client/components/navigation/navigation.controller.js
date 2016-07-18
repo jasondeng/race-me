@@ -18,6 +18,9 @@
             navvm.isLoggedIn = authentication.isLoggedIn();
 
             navvm.currentUser = authentication.currentUser();
+
+            navvm.hasHealthData = authentication.hasHealthData();
+
             navvm.logout = function() {
                 authentication.logout();
                 $location.path('/');

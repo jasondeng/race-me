@@ -75,6 +75,14 @@
                 }
             };
 
+            var hasHealthData = function () {
+                if (isLoggedIn()) {
+                    var token = getToken();
+                    var payload = JSON.parse($window.atob(token.split('.')[1]));
+                    return payload.health;
+                }
+            };
+
             var oauth2 = function(provider) {
                 $auth.authenticate(provider)
                     .then(function() {
@@ -102,6 +110,7 @@
                 logout : logout,
                 isLoggedIn : isLoggedIn,
                 currentUser : currentUser,
+                hasHealthData : hasHealthData,
                 oauth2 : oauth2
             };
         }
