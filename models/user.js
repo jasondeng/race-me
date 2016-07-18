@@ -15,7 +15,14 @@ var userSchema = new mongoose.Schema({
     health: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Health"
-    }
+    },
+    race: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Race"
+    }],
+    avgSpeed: Number,
+    avgDistance: Number,
+    avgDuration: Number,
 });
 
 userSchema.pre('save', function (next) {

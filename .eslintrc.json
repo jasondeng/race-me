@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "google": true,
+        "maps": true,
+        "map": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+        "no-console": 0
+    }
+}
