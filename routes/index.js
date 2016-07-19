@@ -99,93 +99,105 @@ router.post("/upload", requireAuth, function (req, res) {
     var user = req.user;
     console.log(user);
     var data = req.body;
-    var mode = req.header('mode');
 
-    if (mode === 'health' || mode === 'both') {
-
-        Health.findById(user.health, function (err, foundHealth) {
-            if (err) {
-                res.send(err);
-            } else {
-                if (foundHealth === null) {
-                    var health = new Health({
-                        totalWalkRunDistance: data.totalWalkRunDistance,
-                        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
-                        totalFlights: data.totalFlights,
-                        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
-                        biologicalSex: data.biologicalSex,
-                        bloodType: data.bloodType,
-                        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
-                        totalSteps: data.totalSteps,
-                        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
-                        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
-                    });
-                    health.save(function (err) {
-                        if (err) {
-                            res.send(err);
-                        }
-                        res.status(201).send({message: "Health collection successfully created!"});
-                    });
-                    user.update({health: health._id}, function (err, raw) {
-                        if (err) {
-                            res.send(err);
-                        }
-                        console.log(raw);
-                    });
-                } else {
-                    var options = {
-                        totalWalkRunDistance: data.totalWalkRunDistance || foundHealth.totalWalkRunDistance,
-                        totalFlights: data.totalFlights || foundHealth.totalFlights,
-                        biologicalSex: data.biologicalSex || foundHealth.biologicalSex,
-                        bloodType: data.bloodType || foundHealth.bloodType,
-                        totalSteps: data.totalSteps || foundHealth.totalSteps,
-                        incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || foundHealth.incrementsOfWalkRunDistanceForEachDay || [],
-                        incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || foundHealth.incrementsOfFlightsForEachDay || [],
-                        totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
-                        incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
-                        totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
-                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
-                    };
-                    foundHealth.update({$set: options}, {upsert: true}, function (err, result) {
-                        if (err) {
-                            res.send(err);
-                        }
-                        res.send(result);
-                    });
-                }
-            }
-        });
-
-    }
-
-/*  if(mode === 'race' || mode === 'both') {
-    User.findById(user.sub, (err, foundUser) => {
-      if (user.race === null) {
-        var race = new Race ({
-          challenger: user.username,
-          challenged: String,
-          distance: Number,
-        });
-        race.save((error) => {
-          if (error) {
-            res.send(error);
-          }
-          res.status(201).send({message: "Race collection successfully created!"});
-        });
-        user.update({race: race._id}, (err, raw) => {
-          if (err) {
+    Health.findById(user.health, function (err, foundHealth) {
+        if (err) {
             res.send(err);
-          }
-          console.log(raw);
+        } else {
+            if (foundHealth === null) {
+                var health = new Health({
+                    totalWalkRunDistance: data.totalWalkRunDistance,
+                    incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay,
+                    totalFlights: data.totalFlights,
+                    incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay,
+                    biologicalSex: data.biologicalSex,
+                    bloodType: data.bloodType,
+                    totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear,
+                    totalSteps: data.totalSteps,
+                    incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
+                    totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
+                    totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+                });
+                health.save(function (err) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.status(201).send({message: "Health collection successfully created!"});
+                });
+                user.update({health: health._id}, function (err, raw) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    console.log(raw);
+                });
+            } else {
+                var options = {
+                    totalWalkRunDistance: data.totalWalkRunDistance || foundHealth.totalWalkRunDistance,
+                    totalFlights: data.totalFlights || foundHealth.totalFlights,
+                    biologicalSex: data.biologicalSex || foundHealth.biologicalSex,
+                    bloodType: data.bloodType || foundHealth.bloodType,
+                    totalSteps: data.totalSteps || foundHealth.totalSteps,
+                    incrementsOfWalkRunDistanceForEachDay: data.incrementsOfWalkRunDistanceForEachDay || foundHealth.incrementsOfWalkRunDistanceForEachDay || [],
+                    incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay || foundHealth.incrementsOfFlightsForEachDay || [],
+                    totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
+                    incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
+                    totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
+                    totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
+                };
+                foundHealth.update({$set: options}, {upsert: true}, function (err, result) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.send(result);
+                });
+            }
+        }
+    });
+
+
+});
+
+// RACE ROUTE
+
+router.post("/race", ensureAuthenticated, (req, res) => {
+
+    let user = req.user;
+    let data = req.body;
+
+    User.findById(user.sub, (err, foundUser) => {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        }
+        var race = new Race ({
+            challenger: user.username,
+            opponent: data.opponent,
+            route: data.route,
+            status: data.status,
+            start: data.start,
+            end: data.end,
+            distance: data.distance,
+            speed: data.speed,
+            duration: data.duration
         });
-      } else {
-        // When the race ends, find the race and update the fields
-      }
+        race.save((error, product) => {
+            if (error) {
+            res.send(error);
+            }
+            res.status(201).send({
+                message: "Race collection successfully created!",
+                result: product
+            });
+        });
+        user.update({$push: {race: race._id}}, (err, raw) => {
+            if (err) {
+            res.send(err);
+            }
+            console.log(raw);
+        });
 
     });
 
-  }*/
 
 });
 
@@ -196,15 +208,14 @@ router.get("/match", ensureAuthenticated, (req, res) => {
         mode: 'text',
         args: [50, 'r']
     };
-PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
-    if (err) throw err;
-// results is an array consisting of messages collected during execution
-console.log(results);
-res.send(JSON.parse(results[0]));
-})
-;
-})
-;
+    PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
+        if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log(results);
+    res.send(JSON.parse(results[0]));
+    });
+
+});
 
 
 /*
