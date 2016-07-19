@@ -141,31 +141,31 @@
                                marginBottom: 80,
                                width: 500
                            },
-                           colorAxis: {
-                               min: 0,
-                               minColor: '#FFFFFF',
-                               maxColor: Highcharts.getOptions().colors[0]
-                           }
-                       },
-                       title: {
-                           text: ''
-                       },
-                       xAxis: {
-                           opposite: true,
-                           categories: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-                       },
-                       yAxis: {
-                           gridLineWidth: 0,
-                           labels: {
-                               enabled: false
-                           },
-                           title: null
-                       },
-                       series: [{
-                           name: 'Daily Step',
-                           borderWidth: 1,
-                           data: [{}],
-                       }],
+                       colorAxis: {
+                           min: 0,
+                           minColor: '#FFFFFF',
+                           maxColor: Highcharts.getOptions().colors[0]
+                       }
+                },
+                title: {
+                  text: ''
+                },
+                xAxis: {
+                  opposite: true,
+                  categories: ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+                },
+                yAxis: {
+                  gridLineWidth: 0,
+                  labels: {
+                    enabled: false
+                  },
+                  title: null
+                },
+                series: [{
+                  name: 'Daily Step',
+                  borderWidth: 1,
+                  data: [{}],
+                }],
                 credits: {
                   enabled: false
                 },
@@ -175,42 +175,27 @@
             $scope.timeChart = {
                 options: {
                     chart: {
-                        type: 'area'
+                        type: 'column'
+                    },
+                    tooltip: {
+                        useHTML: true,
+                        formatter: function() {
+                          return '<b>' + Highcharts.dateFormat('%m/%d/%Y',this.x) + '</b> <center> <b>' + this.y + '</b> </center>';
+                        }
                     }
                 },
                 xAxis: {
                     type: 'datetime',
-                    tickInterval: 60 * 24 * 3600 * 1000,
+                    tickInterval: 30 * 24 * 3600 * 1000,
+                    labels: {
+                        formatter: function() {
+                            return Highcharts.dateFormat('%b %Y', this.value);
+                        }
+                    }
                 },
                 yAxis:{
                   type: 'logarithmic',
                   minorTickInterval: 1
-                },
-                plotOptions: {
-                    area: {
-                      fillColor: {
-                      linearGradient: {
-                          x1: 0,
-                          y1: 0,
-                          x2: 0,
-                          y2: 1
-                      },
-                      stops: [
-                          [0, Highcharts.getOptions().colors[0]],
-                          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                      ]
-                      },
-                      marker: {
-                          radius: 2
-                      },
-                      lineWidth: 1,
-                      states: {
-                          hover: {
-                              lineWidth: 1
-                          }
-                      },
-                      threshold: null
-                    }
                 },
                 series: [{
                     data: [{}]
