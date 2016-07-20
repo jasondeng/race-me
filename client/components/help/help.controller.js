@@ -66,8 +66,15 @@
             $scope.yCounter = [4,4,4,4,4,4,4,4,4,4,4,4];
 
             $scope.timeChartData = [];
+            $scope.lastActivity = [];
             $scope.getDataHC = function(result) {
-                for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length -1 && i < 365; i++) {
+                var Flights = result.health.totalFlightsForEachDayOfYear[result.health.totalFlightsForEachDayOfYear.length -1].split("-");
+                var Steps = result.health.totalStepsForEachDayOfYear[result.health.totalStepsForEachDayOfYear.length-1].split("-");
+                var WalkRun = result.health.totalWalkRunDistanceForEachDayOfYear[result.health.totalWalkRunDistanceForEachDayOfYear.length-1].split("-");
+
+                $scope.lastActivity.push(Number(Flights[1]),Number(WalkRun[1]),Number(Steps[1]));
+
+                for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++) {
                     var test = result.health.totalStepsForEachDayOfYear[i];
 
                     //SPLIT THE dataSplit[0] = MON NUM, YEAR AND dataSplit[1] = STEPS WALKED
@@ -100,7 +107,6 @@
                     //DECREASE THE Y VALUE IF IT REACHES POSITION 6 OF X VALUE
                     if (dataDay === 6)
                       $scope.yCounter[dataMonthNumber] -= 1;
-
                 }
             };
 
@@ -206,6 +212,98 @@
                 loading: false
             };
 
+            $scope.activityChart = {
+                    options: {
+                        chart: {
+                            type: 'solidgauge',
+                            marginTop: 50,
+                            width: 500
+                        },
+                        tooltip: {
+                            borderWidth: 0,
+                            backgroundColor: 'none',
+                            shadow: false,
+                            style: {
+                                fontSize: '16px'
+                            },
+                            pointFormat: '{series.name}<br><span style="color: {point.color}; font-weight: bold">{point.y}</span>',
+                            positioner: function (labelWidth, labelHeight) {
+                                return {
+                                    x: 255 - labelWidth / 2,
+                                    y: 180
+                                };
+                            }
+                        },
+                        pane: {
+                            startAngle: 0,
+                            endAngle: 360,
+                            background: [{ // Track for Move
+                                outerRadius: '112%',
+                                innerRadius: '88%',
+                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+                                borderWidth: 0
+                            }, { // Track for Exercise
+                                outerRadius: '87%',
+                                innerRadius: '63%',
+                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.3).get(),
+                                borderWidth: 0
+                            }, { // Track for Stand
+                                outerRadius: '62%',
+                                innerRadius: '38%',
+                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[3]).setOpacity(0.3).get(),
+                                borderWidth: 0
+                            }]
+                        },
+                        plotOptions: {
+                            solidgauge: {
+                                borderWidth: '34px',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                linecap: 'round',
+                                stickyTracking: false
+                            }
+                        },
+                    },
+                    title: {
+                        text: 'Activity',
+                        style: {
+                            fontSize: '24px'
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        // max: 100,
+                        lineWidth: 0,
+                        tickPositions: []
+                    },
+                    series: [{
+                        name: 'Steps',
+                        borderColor: Highcharts.getOptions().colors[0],
+                        data: [{
+                            color: Highcharts.getOptions().colors[0],
+                            radius: '100%',
+                            innerRadius: '100%'
+                        }]
+                    }, {
+                        name: 'WalkRun',
+                        borderColor: Highcharts.getOptions().colors[2],
+                        data: [{
+                            color: Highcharts.getOptions().colors[2],
+                            radius: '75%',
+                            innerRadius: '75%'
+                        }]
+                    }, {
+                        name: 'Flights',
+                        borderColor: Highcharts.getOptions().colors[3],
+                        data: [{
+                            color: Highcharts.getOptions().colors[3],
+                            radius: '50%',
+                            innerRadius: '50%'
+                        }]
+                    }],
+            };
+
             //USED TO STORED DATA GOTTEN FROM HTTP GET REQUEST
             $scope.resultData = [];
 
@@ -225,8 +323,20 @@
                     var selectedMonthNumber = $scope.data.selectedMonth.id;
                     var selectedMonthName = $scope.convertNumberToMonth(selectedMonthNumber);
 
+                    Highcharts.setOptions({
+                        lang: {
+                            thousandsSep: ','
+                        }
+                    });
+
                     $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
                     $scope.timeChart.series[0].data = $scope.timeChartData;
+
+                    $scope.activityChart.yAxis.max = $scope.lastActivity[2] + $scope.lastActivity[1] + $scope.lastActivity[0];
+
+                    $scope.activityChart.series[0].data = [$scope.lastActivity[2]];
+                    $scope.activityChart.series[1].data = [$scope.lastActivity[1]];
+                    $scope.activityChart.series[2].data = [$scope.lastActivity[0]];
                 });
         }
 }) ();

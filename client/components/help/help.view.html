@@ -20,8 +20,9 @@
                       ng-options="month.name for month in data.availableMonth track by month.id"
                       ng-model="data.selectedMonth" ng-change="update()"></select>
             </form>
-            <div>
-                 <highchart config="highchartsNG"></highchart>
+            <div clas="row">
+                 <highchart style="float:left" config="highchartsNG"></highchart>
+                 <highchart config="activityChart"></highchart>
                  <highchart config="timeChart"></highchart>
             </div>
         </div>
