@@ -6,7 +6,8 @@
         .config(config)
         .run(run);
 
-    function config($routeProvider, $authProvider, $locationProvider) {
+
+    function config($routeProvider, $authProvider, $httpProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -64,6 +65,7 @@
         $authProvider.google({
             clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
         });
+        $httpProvider.defaults.cache = true;
 
         /*
         $authProvider.instagram({

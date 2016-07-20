@@ -5,8 +5,19 @@
         .module('app')
         .service('charts', charts);
 
-    charts.$inject = ['$http', '$window', '$location' ,'$auth'];
-    function charts($http, $window, $location ,$auth) {
+    charts.$inject = ['$http'];
+    function charts($http) {
 
+        var getHealthData = function (response) {
+            return $http.get('/profile')
+                .success(function (response) {
+                    return response;
+
+                });
+        };
+
+        return {
+            getHealthData: getHealthData
+        };
     }
 })();
