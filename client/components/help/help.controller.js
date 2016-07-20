@@ -62,84 +62,90 @@
                 Dec: []
             };
 
-            //USED TO SET THE Y POSITION OF HIGHCHART'S HEATMAP FOR THE YEAR
-            $scope.yCounter = [4,4,4,4,4,4,4,4,4,4,4,4];
+            $scope.getDaysinMonth = function (month, year){
+              return new Date(year, month, 0).getDate();
+            };
 
             $scope.timeChartData = [];
             $scope.lastActivity = [];
             $scope.getDataHC = function(result) {
+
                 var Flights = result.health.totalFlightsForEachDayOfYear[result.health.totalFlightsForEachDayOfYear.length -1].split("-");
                 var Steps = result.health.totalStepsForEachDayOfYear[result.health.totalStepsForEachDayOfYear.length-1].split("-");
                 var WalkRun = result.health.totalWalkRunDistanceForEachDayOfYear[result.health.totalWalkRunDistanceForEachDayOfYear.length-1].split("-");
 
+                //STORE INTO ARRAY FOR Activity CHART
                 $scope.lastActivity.push(Number(Flights[1]),Number(WalkRun[1]),Number(Steps[1]));
 
-                for (var i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++) {
-                    var test = result.health.totalStepsForEachDayOfYear[i];
+                //GET CURRENT YEAR
+                var year = new Date().getFullYear();
 
-                    //SPLIT THE dataSplit[0] = MON NUM, YEAR AND dataSplit[1] = STEPS WALKED
-                    var dataSplit = test.split("-");
-                    //GET THE MONTH/DAY NAME FROM THE DATE
-                    var currentDayHolder = dataSplit[0].split(",");
+                //CREATE CALENDAR FOR HEATMAP
+                for(let i = 1; i < 13; i++){
+                  var counter = 5;
 
-                    var dataMonth = currentDayHolder[0].slice(0,3);
-                    var dataMonthDay = Number(currentDayHolder[0].slice(4,currentDayHolder[0].length));
-                    var dayYear = Number(currentDayHolder[1]);
+                  var dayNumbers = $scope.getDaysinMonth(i, year);
 
-                    //STORE THE STEPS
-                    var dataStep = Number(dataSplit[1]);
+                  for(let j = 1; j < dayNumbers+ 1; j++){
+                    var day = i + " " + j + ", "+ year;
+                    var dataDay = (new Date(day).getDay());
 
-                    // GET THE X FOR CHART, GET THE Sunday to Monday OF DATE IN (0-6)
-                    var dataDay = (new Date(dataSplit[0])).getDay();
-
-                    //CONVERT THE CURRENT POSITION'S MONTH NAME INTO NUMBER
-                    var dataMonthNumber = $scope.convertMonthNameToNumber(dataMonth);
-                    //ONLY STORE INTO ARRAY IF ITS THE CURRENT YEAR AND DISPLAY
-
-                    //Store data into timechart [Date, steps]
-                    var holdDay = Date.parse(dataMonth + " " + dataMonthDay + ", " + dayYear);
-
-                    $scope.timeChartData.push([holdDay,dataStep]);
-
-                    if (dayYear === new Date().getFullYear())
-                      $scope.storedData[dataMonth].push([dataDay,$scope.yCounter[dataMonthNumber],dataStep,dataMonthDay,dayYear]);
-
-                    //DECREASE THE Y VALUE IF IT REACHES POSITION 6 OF X VALUE
-                    if (dataDay === 6)
-                      $scope.yCounter[dataMonthNumber] -= 1;
+                    var monthName = $scope.convertNumberToMonth(i - 1);
+                    $scope.storedData[monthName].push([dataDay,counter,0,j,year]);
+                    if(dataDay === 6)
+                      counter -= 1;
+                  }
                 }
+
+                //UPDATE CALENDAR VALUE STEPS
+                for(let i = 0; i < result.health.totalStepsForEachDayOfYear.length; i++){
+                  var dataSplit = result.health.totalStepsForEachDayOfYear[i].split("-");
+                  var currentDayHolder = dataSplit[0].split(",");
+                  //currentHolder[0] = Month Name currentHolder[1] = Month Day Number
+                  var currentHolder = currentDayHolder[0].split(" ");
+
+                  //Store data into timechart [Date, steps]
+                    var holdDay = Date.parse(currentHolder[0] + " " + currentHolder[1] + ", " + currentDayHolder[1]);
+                    $scope.timeChartData.push([holdDay,Number(dataSplit[1])]);
+
+                  if ($scope.storedData[currentHolder[0]][Number(currentHolder[1])] !== undefined && year === Number(currentDayHolder[1]))
+                    $scope.storedData[currentHolder[0]][Number(currentHolder[1])].splice(2, 1, Number(dataSplit[1]));
+                }
+
             };
 
             $scope.highchartsNG = {
                 options: {
+                      tooltip:{
+                           style: {
+                               fontSize: '16px'
+                           },
+                           useHTML: true,
+                           formatter: function () {
+                              return "<strong>" + this.point.value + "</strong> Steps";
+                           },
+                       },
                        plotOptions: {
                             heatmap: {
-                                tooltip:{
-                                    useHTML: true,
-                                    headerFormat: 'Daily Step <br>',
-                                    pointFormatter: function () {
-                                        return "<strong>" + this.value + "</strong>";
-                                    },
-                                    positioner: function () {
-                                        return { x: 0, y: 250 };
-                                    }
-                                },
                                 dataLabels: {
                                     enabled: true,
                                     color: '#000000',
-                                    useHTML: true,
                                     formatter: function () {
-                                        return "<center>" + $scope.highchartsNG.series[0].data[this.series.data.indexOf( this.point )][3] + "</center>" + this.point.value;
+                                        // return "<center>" + $scope.highchartsNG.series[0].data[this.series.data.indexOf( this.point )][3] + "</center>" + this.point.value;
+                                        return $scope.highchartsNG.series[0].data[this.series.data.indexOf( this.point )][3];
                                     }
                                 }
-                            }
+                              }
                        },
                        legend: {
+                           title:{
+                             text: 'Steps'
+                           },
                            align: 'right',
                            layout: 'vertical',
                            verticalAlign: 'top',
-                           y: 25,
-                           symbolHeight: 280
+                           y: 20,
+                           symbolHeight: 260
                        },
                        chart: {
                                type: 'heatmap',
@@ -154,7 +160,7 @@
                        }
                 },
                 title: {
-                  text: ''
+                  text: "UserName's " + $scope.data.availableMonth[$scope.data.selectedMonth.id].name + " Steps"
                 },
                 xAxis: {
                   opposite: true,
@@ -170,7 +176,7 @@
                 series: [{
                   name: 'Daily Step',
                   borderWidth: 1,
-                  data: [{}],
+                  data: [],
                 }],
                 credits: {
                   enabled: false
@@ -181,7 +187,7 @@
             $scope.timeChart = {
                 options: {
                     chart: {
-                        type: 'column'
+                        type: 'spline'
                     },
                     tooltip: {
                         useHTML: true,
@@ -204,7 +210,7 @@
                   minorTickInterval: 1
                 },
                 series: [{
-                    data: [{}]
+                    data: []
                 }],
                 title: {
                     text: 'Hello'
@@ -213,6 +219,7 @@
             };
 
             $scope.activityChart = {
+
                     options: {
                         chart: {
                             type: 'solidgauge',
@@ -226,8 +233,11 @@
                             style: {
                                 fontSize: '16px'
                             },
-                            pointFormat: '{series.name}<br><span style="color: {point.color}; font-weight: bold">{point.y}</span>',
-                            positioner: function (labelWidth, labelHeight) {
+                            // '{series.name}<br><span style="color: {point.color}; font-weight: bold">{value}</span>'
+                            pointFormatter: function(){
+                              return this.series.name + '<br><span style="color:'+ this.color +'; font-weight: bold">' +this.series.yData + '</span>';
+                            },
+                            positioner: function (labelWidth) {
                                 return {
                                     x: 255 - labelWidth / 2,
                                     y: 180
@@ -240,17 +250,17 @@
                             background: [{ // Track for Move
                                 outerRadius: '112%',
                                 innerRadius: '88%',
-                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+                                backgroundColor: Highcharts.Color('#B38867').setOpacity(0.3).get(),
                                 borderWidth: 0
                             }, { // Track for Exercise
                                 outerRadius: '87%',
                                 innerRadius: '63%',
-                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.3).get(),
+                                backgroundColor: Highcharts.Color('#DDBC95').setOpacity(0.3).get(),
                                 borderWidth: 0
                             }, { // Track for Stand
                                 outerRadius: '62%',
                                 innerRadius: '38%',
-                                backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[3]).setOpacity(0.3).get(),
+                                backgroundColor: Highcharts.Color('#CDCDC0').setOpacity(0.3).get(),
                                 borderWidth: 0
                             }]
                         },
@@ -266,10 +276,7 @@
                         },
                     },
                     title: {
-                        text: 'Activity',
-                        style: {
-                            fontSize: '24px'
-                        }
+                        text: "Yesterday's Activity"
                     },
                     yAxis: {
                         min: 0,
@@ -279,25 +286,25 @@
                     },
                     series: [{
                         name: 'Steps',
-                        borderColor: Highcharts.getOptions().colors[0],
+                        borderColor: '#B38867',
                         data: [{
-                            color: Highcharts.getOptions().colors[0],
+                            color: '#B38867',
                             radius: '100%',
                             innerRadius: '100%'
                         }]
                     }, {
                         name: 'WalkRun',
-                        borderColor: Highcharts.getOptions().colors[2],
+                        borderColor: '#DDBC95',
                         data: [{
-                            color: Highcharts.getOptions().colors[2],
+                            color: '#DDBC95',
                             radius: '75%',
                             innerRadius: '75%'
                         }]
                     }, {
                         name: 'Flights',
-                        borderColor: Highcharts.getOptions().colors[3],
+                        borderColor: '#CDCDC0',
                         data: [{
-                            color: Highcharts.getOptions().colors[3],
+                            color: '#CDCDC0',
                             radius: '50%',
                             innerRadius: '50%'
                         }]
@@ -308,32 +315,33 @@
             $scope.resultData = [];
 
             $scope.update = function () {
-                var selectedMonthNumber = $scope.data.selectedMonth.id;
-                var selectedMonthName = $scope.convertNumberToMonth(selectedMonthNumber);
-
+                var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
                 $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
             };
 
             $http.get('/profile')
                 .success(function (result){
+                    //STORE DATA INTO SCOPE
                     $scope.resultData = result;
+
 
                     $scope.getDataHC($scope.resultData);
 
-                    var selectedMonthNumber = $scope.data.selectedMonth.id;
-                    var selectedMonthName = $scope.convertNumberToMonth(selectedMonthNumber);
 
-                    Highcharts.setOptions({
-                        lang: {
-                            thousandsSep: ','
-                        }
-                    });
 
+                    //GET USER'S SELECTED MONTH FROM PAGE
+                    var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
+
+                    //SET CALENDAR DATA
                     $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
+
+                    //SET SPLINE CHART DATA
                     $scope.timeChart.series[0].data = $scope.timeChartData;
 
+                    //Y AXIS MAXIUM VALUE FOR EACH DATA
                     $scope.activityChart.yAxis.max = $scope.lastActivity[2] + $scope.lastActivity[1] + $scope.lastActivity[0];
 
+                    //SET Activity DATA
                     $scope.activityChart.series[0].data = [$scope.lastActivity[2]];
                     $scope.activityChart.series[1].data = [$scope.lastActivity[1]];
                     $scope.activityChart.series[2].data = [$scope.lastActivity[0]];
