@@ -6,7 +6,8 @@
         .config(config)
         .run(run);
 
-    function config($routeProvider, $authProvider) {
+
+    function config($routeProvider, $authProvider, $httpProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -55,6 +56,8 @@
             })
             .otherwise({redirectTo: '/'});
 
+
+
         $authProvider.facebook({
             clientId: '1009093145865215'
         });
@@ -62,6 +65,7 @@
         $authProvider.google({
             clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
         });
+        $httpProvider.defaults.cache = true;
 
         /*
         $authProvider.instagram({
