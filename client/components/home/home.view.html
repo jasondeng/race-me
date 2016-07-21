@@ -10,6 +10,8 @@
             </p>
         </div>
     </div>
+</div>
+
     <div ng-if="vm.isLoggedIn" class="panel panel-default" >
         <div class="panel-heading text-center">
             <h3>
@@ -20,7 +22,7 @@
 
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <form role="form">
                         <div class="form-group">
                             <label for="mySelect"> Select Month </label>
@@ -31,13 +33,14 @@
                     </form>
                     <highchart style="float:left" config="highchartsNG"></highchart>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
 
                     <highchart config="activityChart"></highchart>
                 </div>
-                <highchart config="timeChart"></highchart>
+                <div class="col-md-4">
+                                    <highchart config="timeChart"></highchart>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <footer-generic></footer-generic>
