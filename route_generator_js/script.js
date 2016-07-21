@@ -65,7 +65,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function displayRoute(origin, destination, service, display) {
-    var wayPoints = rectangleRoute(10000, origin);
+    var wayPoints = rectangleRoute(3000, origin);
     // var newPos = getLocation(origin.lng, origin.lat, 3000);
     // var secPos = getLocation(newPos.lng, newPos.lat, 3000);
     // var thirdPos = getLocation(newPos.lng, newPos.lat, 3000);

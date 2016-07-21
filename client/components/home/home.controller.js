@@ -341,8 +341,22 @@
         };
         
         $scope.update = function () {
+
             var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
             $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
+
+            let sum = 0;
+            let max = 0;
+            $scope.highchartsNG.series[0].data.forEach((entry) => {
+                max = Math.max(max, entry[2]);
+                sum += entry[2];
+            });
+            if(sum === 0) {
+                $scope.highchartsNG.options.colorAxis.max = 1000;
+            }
+            else {
+                $scope.highchartsNG.options.colorAxis.max = max;
+            }
         };
 
     }
