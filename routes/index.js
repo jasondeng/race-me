@@ -194,7 +194,7 @@ router.post("/upload", requireAuth, function (req, res) {
 router.get("/match", ensureAuthenticated, (req, res) => {
     var pyOptions = {
         mode: 'text',
-        args: [50, 'r']
+        args: [50, 'rand']
     };
 PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
     if (err) throw err;
