@@ -50,7 +50,6 @@ def return_opponent_by_random_rank(Fitness_rank,current_user_id):
 			rand_rank = random.randint(1,59)
 		if db.find_one({"rank": rand_rank}) != None:
 			op_list = return_opponent_by_rank_v2(rand_rank,current_user_id)
-			print ("dsadsadsa" + op_list)
 			return op_list
 
 
@@ -116,13 +115,13 @@ chose = str(sys.argv[2])
 if chose == "r":
 	print (return_opponent_by_rank_v2(op_rank,xyz["_id"]))
 elif chose == "rand":	
-	return_opponent_by_random_rank(op_rank,xyz["_id"])
+	print (return_opponent_by_random_rank(op_rank,xyz["_id"]))
 elif chose == "h":	
-	return_opponent_by_rank_level(op_rank,xyz["_id"],index,True,False,False)
+	print (return_opponent_by_rank_level(op_rank,xyz["_id"],index,True,False,False))
 elif chose == "l":	
-	return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,True,False)
+	print (return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,True,False))
 elif chose == "ro":	
-	return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,False,True)
+	print (return_opponent_by_rank_level(op_rank,xyz["_id"],index,False,False,True))
 exit()
 
 

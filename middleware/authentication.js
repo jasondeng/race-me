@@ -52,7 +52,7 @@ exports.signUp = function(req, res, next) {
         return next(error);
       }
 
-      res.json({token: tokenForUser(user)});
+      res.json({token: tokenForUser(user, false)});
     });
 
   });

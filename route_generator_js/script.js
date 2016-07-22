@@ -41,21 +41,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
             console.log("running get location");
 
             displayRoute(pos, pos, directionsService, directionsDisplay)
-            // directionsService.route({
-            //     origin: pos,
-            //     destination: pos,
-            //     waypoints: [{location:secPos, stopover:true}, {location:newPos, stopover: true}],
-            //     provideRouteAlternatives: true,
-            //     travelMode: google.maps.TravelMode.WALKING,
-            //     unitSystem: google.maps.UnitSystem.METRIC
-            // }, function (response, status) {
-            //     if (status === google.maps.DirectionsStatus.OK) {
-            //         directionsDisplay.setDirections(response);
-            //         console.log('route', response)
-            //     } else {
-            //         window.alert('Directions request failed due to ' + status);
-            //     }
-            // });
+
         })
     }
     else {
@@ -65,11 +51,9 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function displayRoute(origin, destination, service, display) {
-    var wayPoints = rectangleRoute(3000, origin);
-    // var newPos = getLocation(origin.lng, origin.lat, 3000);
-    // var secPos = getLocation(newPos.lng, newPos.lat, 3000);
-    // var thirdPos = getLocation(newPos.lng, newPos.lat, 3000);
-    // console.log('secPos: ', secPos);
+
+    var wayPoints = rectangleRoute(6000, origin);
+
     service.route({
         origin: origin,
         destination: destination,
@@ -112,72 +96,48 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
 }
 
-function getLocation(lng, lat, radius) {
-    // Convert radius from meters to degrees
-    var radiusInDegrees = radius / 111300;
-
-    var u = Math.random();
-    var v = Math.random();
-    var w = radiusInDegrees * Math.sqrt(u);
-    var t = 2 * Math.PI * v;
-    var x = w * Math.cos(t);
-    var y = w * Math.sin(t);
-
-    // Adjust the x-coordinate for the shrinking of the east-west distances
-    var new_x = x / Math.cos(lat);
-
-    var new_lat = y + lat;
-    var new_lng = new_x + lng;
-
-    var newPos = {
-        lat: new_lat,
-        lng: new_lng
-    };
-
-    //lat is y
-
-    console.log(newPos);
-    console.log(new_lat, new_lng);
-
-    return newPos;
-}
-
 function rectangleRoute(length, BaseLocation) {
-    var direction = 0;
-    var angle = 0;
-    var rlPoints = [];
-    var maxRatio = 5;
-    var minRatio = 1. / maxRatio;
-    var deltaRatio = maxRatio - minRatio;
-    var ratio = Math.random() * deltaRatio + minRatio;
-    var width = length / (2 * ratio + 2);
-    var height = width * ratio;
+    /*  
+        The algorithm was created based on the answers from these two stackoverflow links
+        http://stackoverflow.com/questions/2187657/calculate-second-point-knowing-the-starting-point-and-distance
+        http://stackoverflow.com/questions/30002372/given-point-of-latitude-longitude-distance-and-bearing-how-to-get-the-new-la
+    */
+
+    var pointArray = [];
+    var width = length / (Math.random() + 7);
+    var height = width * 2;
     var diagonal = Math.sqrt(width * width + height * height);
     var theta = Math.acos(height / diagonal);
     var direction = Math.random() * 2 * Math.PI;
-    var sign = -1;
-    angle = 0 + direction;
+    var angle = 0 + direction;
     var dx = height * Math.cos(angle);
     var dy = height * Math.sin(angle);
+
+    // One degree of latitude on the Earth's surface equals 110540 meters.
+    // One degree of longitude equals 111320 meters (at the equator)
     var delta_lat = dy / 110540;
+    // BaseLocation.lat * Math.PI / 180 = conversion of latitude from degrees to radians.
     var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
-    rlPoints[0] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
-    angle = sign * theta + direction;
-    var dx = diagonal * Math.cos(angle);
-    var dy = diagonal * Math.sin(angle);
-    var delta_lat = dy / 110540;
-    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
-    rlPoints[1] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
-    angle = sign * Math.PI / 2 + direction;
-    var dx = width * Math.cos(angle);
-    var dy = width * Math.sin(angle);
-    var delta_lat = dy / 110540;
-    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
-    rlPoints[2] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+    pointArray[0] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+
+    angle = -1 * theta + direction;
+    dx = diagonal * Math.cos(angle);
+    dy = diagonal * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    pointArray[1] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+
+    angle = -1 * Math.PI / 2 + direction;
+    dx = width * Math.cos(angle);
+    dy = width * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    pointArray[2] = new google.maps.LatLng(BaseLocation.lat + delta_lat,BaseLocation.lng + delta_lng);
+    
     var wayPoints = [];
-    for (var i = 0; i < rlPoints.length; i++) {
+    for (var i = 0; i < pointArray.length; i++) {
         wayPoints.push({
-            location: rlPoints[i],
+            location: pointArray[i],
             stopover: true
         });
     }
