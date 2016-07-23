@@ -1,6 +1,8 @@
 const User = require('../models/user'),
     jwt = require('jsonwebtoken');
 
+var moment = require('moment');
+
 var config;
 try {
   config = require('../env.json');
