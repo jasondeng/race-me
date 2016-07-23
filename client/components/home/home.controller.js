@@ -5,8 +5,8 @@
         .module('app')
         .controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['$scope', 'authentication', '$http', '$timeout', 'charts'];
-    function HomeCtrl($scope, authentication, $http, $timeout, charts) {
+    HomeCtrl.$inject = ['$scope', 'authentication', '$http', 'charts'];
+    function HomeCtrl($scope, authentication, $http, charts) {
         var vm = this;
 
         vm.isLoggedIn = authentication.isLoggedIn();
@@ -75,7 +75,6 @@
 
             let selectedMonthName = charts.convertNumberToMonth($scope.data.selectedMonth.id);
             $scope.calenderChart.series[0].data = $scope.calendarData[selectedMonthName];
-
 
             $scope.areaData2 = charts.areaChartData(selectedMonthName, $scope.calendarData);
             $scope.areaChart.series[1].data = $scope.areaData2;
@@ -161,12 +160,7 @@
           credits: {
               enabled: false
           },
-          loading: false,
-          func: function(chart) {
-              $timeout(function() {
-                  chart.reflow();
-              }, 0);
-          }
+          loading: false
       };
 
       $scope.areaChart = {
@@ -218,12 +212,7 @@
           title: {
               text: "This month vs Last Month"
           },
-          loading: false,
-          func: function(chart) {
-              $timeout(function() {
-                  chart.reflow();
-              }, 0);
-          }
+          loading: false
       };
 
     }

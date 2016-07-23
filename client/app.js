@@ -65,7 +65,7 @@
         $authProvider.google({
             clientId: '664613672592-cfog44p1k60pmnkbjatto449rgt74mgl.apps.googleusercontent.com'
         });
-        $httpProvider.defaults.cache = true;
+        // $httpProvider.defaults.cache = true;
 
         /*
         $authProvider.instagram({
