@@ -44,7 +44,8 @@ exports.signUp = function(req, res, next) {
     const user = new User({
       fullname: fullname,
       username: username,
-      password: password
+      password: password,
+      created: moment().unix()
     });
 
     user.save(function(error) {

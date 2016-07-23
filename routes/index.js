@@ -91,6 +91,7 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
             }
             res.json(foundUser);
         });
+
 });
 
 // UPLOAD ROUTE
@@ -119,7 +120,8 @@ router.post("/upload", requireAuth, function (req, res) {
                         totalSteps: data.totalSteps,
                         incrementsOfFlightsForEachDay: data.incrementsOfFlightsForEachDay,
                         totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear,
-                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear
+                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear,
+                        created: moment().unix()
                     });
                     health.save(function (err) {
                         if (err) {
@@ -145,7 +147,8 @@ router.post("/upload", requireAuth, function (req, res) {
                         totalStepsForEachDayOfYear: data.totalStepsForEachDayOfYear || foundHealth.totalStepsForEachDayOfYear || [],
                         incrementsOfStepsForEachDay: data.incrementsOfStepsForEachDay || foundHealth.incrementsOfStepsForEachDay || [],
                         totalWalkRunDistanceForEachDayOfYear: data.totalWalkRunDistanceForEachDayOfYear || foundHealth.totalWalkRunDistanceForEachDayOfYear || [],
-                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || []
+                        totalFlightsForEachDayOfYear: data.totalFlightsForEachDayOfYear || foundHealth.totalFlightsForEachDayOfYear || [],
+                        created: moment().unix()
                     };
                     foundHealth.update({$set: options}, {upsert: true}, function (err, result) {
                         if (err) {

@@ -13,7 +13,7 @@ var healthSchema = mongoose.Schema({
     totalSteps: Number,
     incrementsOfStepsForEachDay: [String],
     totalStepsForEachDayOfYear: [String],
-    created: {type: Number, default: moment().unix()}
+    created: Number
 });
 
 module.exports = mongoose.model("Health", healthSchema);
