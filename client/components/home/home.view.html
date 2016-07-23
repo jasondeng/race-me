@@ -1,6 +1,6 @@
 <navigation></navigation>
 <div class="container">
-    <div ng-if="!vm.isLoggedIn">
+    <div ng-if="!vm.isLoggedIn || !vm.hasHealthData ">
         <div class="jumbotron">
             <h2><i class="ion-locations"></i> RaceMe!</h2>
             <p>Leave a footprint for challenge</p>
@@ -12,10 +12,10 @@
     </div>
 </div>
 
-    <div ng-if="vm.isLoggedIn" class="panel panel-default" >
+    <div ng-cloak ng-if="vm.isLoggedIn && vm.hasHealthData " class="panel panel-default"  >
         <div class="panel-heading text-center">
             <h3>
-                {{current.currentDate.date}}
+                <!--{{current.currentDate.date}}-->
             </h3>
         </div>
         <div class="panel-body">

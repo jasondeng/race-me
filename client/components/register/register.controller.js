@@ -5,8 +5,8 @@
         .module('app')
         .controller('RegisterCtrl', RegisterCtrl);
 
-        RegisterCtrl.$inject = ['$location', '$window', 'authentication'];
-        function RegisterCtrl($location, $window,authentication) {
+        RegisterCtrl.$inject = ['$location', 'authentication','$route'];
+        function RegisterCtrl($location,authentication, $route) {
             var vm = this;
 
             vm.credentials = {
@@ -33,9 +33,12 @@
                     .register(vm.credentials)
                     .error(function(err){
                         vm.formError = err.error;
+                        toastr.error('Something went wrong!', 'Error');
                     })
                     .then(function(){
+                        $route.reload();
                         $location.path('/');
+                        toastr.success('You have successfully signed!','Success');
                     });
             };
 
