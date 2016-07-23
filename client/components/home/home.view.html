@@ -20,31 +20,41 @@
     </div>
 </div>
 
+<div ng-if="!vm.loadedData && vm.isLoggedIn && vm.hasHealthData">
+    <loading></loading>
+</div>
+<div ng-if="vm.isLoggedIn && vm.hasHealthData && vm.loadedData" class="panel panel-default">
 
-    <div ng-cloak ng-if="vm.isLoggedIn && vm.hasHealthData " class="panel panel-default"  >
-        <div class="panel-heading text-center">
-            <h3>
-                <!--{{current.currentDate.date}}-->
-            </h3>
+
+    <div class="panel-heading text-center">
+        <h3>
+            <!--{{current.currentDate.date}}-->
+        </h3>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-4">
+                <highchart config="activityChart"></highchart>
+            </div>
         </div>
-        <div class="panel-body">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="mySelect"> Select Month </label>
-                            <select class="form-control" name="mySelect" id="mySelect"
-                                    ng-options="month.name for month in data.availableMonth track by month.id"
-                                    ng-model="data.selectedMonth" ng-change="update()"></select>
-                        </div>
-                    </form>
-                    <highchart config="calenderChart"></highchart>
-                </div>
-                <div class="col-md-8">
-                    <highchart config="areaChart"></highchart>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="mySelect"> Select Month </label>
+                        <select class="form-control" name="mySelect" id="mySelect"
+                                ng-options="month.name for month in data.availableMonth track by month.id"
+                                ng-model="data.selectedMonth" ng-change="update()"></select>
+                    </div>
+                </form>
+                <highchart config="calenderChart"></highchart>
+            </div>
+            <div class="col-md-8">
+                <highchart config="timeChart"></highchart>
             </div>
         </div>
     </div>
+</div>
 <footer-generic></footer-generic>
