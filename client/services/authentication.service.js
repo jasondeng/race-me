@@ -43,7 +43,6 @@
                     .then(function() {
                         toastr.info('You have been logged out');
                         $location.path('/');
-                        $route.reload();
                     });
                 }
                 else {

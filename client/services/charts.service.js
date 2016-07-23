@@ -11,6 +11,7 @@
         var getHealthData = function () {
             return $http.get('/profile')
                 .success(function (response) {
+                    console.log('get profile');
                     return response;
                 });
         };

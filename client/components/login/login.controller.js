@@ -32,7 +32,6 @@
                         toastr.error('Something went wrong!', 'Error');
                     })
                     .then(function() {
-                        $route.reload();
                         $location.path('/');
                         toastr.success('You have successfully signed!','Success');
                     })
