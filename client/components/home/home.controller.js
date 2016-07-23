@@ -163,7 +163,7 @@
                 var holdDay = Date.parse(currentHolder[0] + " " + currentHolder[1] + ", " + currentDayHolder[1]);
                 $scope.timeChartData.push([holdDay, Number(dataSplit[1])]);
 
-                if ($scope.storedData[currentHolder[0]][Number(currentHolder[1])] !== undefined && year === Number(currentDayHolder[1]))
+                if ($scope.storedData[currentHolder[0]][Number(currentHolder[1]) - 1] !== undefined && year === Number(currentDayHolder[1]))
                     $scope.storedData[currentHolder[0]][Number(currentHolder[1]) - 1].splice(2, 1, Number(dataSplit[1]));
             }
             console.log(data.health);
