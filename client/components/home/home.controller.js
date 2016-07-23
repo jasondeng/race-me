@@ -344,8 +344,7 @@
                 tooltip: {
                     useHTML: true,
                     formatter: function () {
-                      // $scope.timechartMonth1
-                      if (this.series.name === "Series 1"){
+                      if (this.series.name === $scope.data.availableMonth[$scope.currentMonth].name){
                          return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.timechartMonth1[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
                       }else {
                         return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.timechartMonth2[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
