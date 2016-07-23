@@ -3,13 +3,13 @@ var mongoose = require('mongoose'),
 
 var raceSchema = mongoose.Schema({
     challenger: String,
-    challenged: String,
+    opponent: String,
     route: {
         route: Array,
         created: {type: Number, default: moment().unix()}
     },
     status: String,
-    start: {type: Number, default: moment().unix()},
+    start: Number,
     end: Number,
     distance: Number,
     speed: Number,
