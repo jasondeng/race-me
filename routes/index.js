@@ -87,7 +87,7 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
                 return res.send(err);
             }
             if (foundUser.health === undefined) {
-                return res.send
+                return res.send({message: "No health data"});
             }
             res.json(foundUser);
         });
