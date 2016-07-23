@@ -5,8 +5,8 @@
         .module('app')
         .controller('LoginCtrl', LoginCtrl);
 
-        LoginCtrl.$inject = ['$location','authentication', '$scope', 'toastr', '$auth'];
-        function LoginCtrl($location, authentication, $scope, toastr, $auth) {
+        LoginCtrl.$inject = ['$location','authentication', '$scope', 'toastr', '$auth', '$route'];
+        function LoginCtrl($location, authentication, $scope, toastr, $auth, $route ) {
             var vm = this;
 
             vm.credentials = {
@@ -29,9 +29,11 @@
                     .login(vm.credentials)
                     .error(function(err){
                         vm.formError = err;
+                        toastr.error('Something went wrong!', 'Error');
                     })
                     .then(function() {
                         $location.path('/');
+                        toastr.success('You have successfully signed!','Success');
                     })
             };
             vm.oauth2 = function(provider) {
