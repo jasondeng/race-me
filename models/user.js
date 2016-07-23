@@ -11,7 +11,7 @@ var userSchema = new mongoose.Schema({
     google: String,
     first_name: String,
     picture: String,
-    created: {type: Number, default: moment().unix()},
+    created: Number,
     health: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Health"
