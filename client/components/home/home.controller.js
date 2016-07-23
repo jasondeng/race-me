@@ -5,8 +5,8 @@
         .module('app')
         .controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['$scope', 'authentication', '$http', 'charts'];
-    function HomeCtrl($scope, authentication, $http, charts) {
+    HomeCtrl.$inject = ['$scope', 'authentication', '$http', '$timeout', 'charts'];
+    function HomeCtrl($scope, authentication, $http, $timeout,charts) {
         var vm = this;
 
         vm.isLoggedIn = authentication.isLoggedIn();
@@ -15,7 +15,6 @@
 
         $scope.currentUser = authentication.currentUser();
 
-        console.log($scope.currentUser);
         charts.getHealthData()
             .then(function (response) {
                 $scope.resultData = response.data;
@@ -27,8 +26,16 @@
                 //SET CALENDAR DATA
                 $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
 
-                //SET SPLINE CHART DATA
-                $scope.timeChart.series[0].data = $scope.timeChartData;
+                $scope.timechartMonth1 = $scope.returnTimeData(selectedMonthName);
+                $scope.timeChart.series[0].data = $scope.timechartMonth1;
+                $scope.timeChart.series[0].name = $scope.data.availableMonth[$scope.data.selectedMonth.id].name;
+
+                var lastMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id -1);
+                $scope.timechartMonth2 = $scope.returnTimeData(lastMonthName);
+
+                $scope.timeChart.series.push({data: $scope.timechartMonth2});
+                $scope.timeChart.series[1].name = $scope.data.availableMonth[$scope.data.selectedMonth.id -1].name;
+
 
                 //Y AXIS MAXIUM VALUE FOR EACH DATA
                 $scope.activityChart.yAxis.max = $scope.lastActivity[2] + $scope.lastActivity[1] + $scope.lastActivity[0];
@@ -38,6 +45,24 @@
                 $scope.activityChart.series[1].data = [$scope.lastActivity[1]];
                 $scope.activityChart.series[2].data = [$scope.lastActivity[0]];
             });
+
+        $scope.timechartMonth1 = [];
+        $scope.timechartMonth2 = [];
+
+        $scope.returnTimeData = function (selectedMonthName) {
+          let storeMonth = [];
+          $scope.storedData[selectedMonthName].forEach(function(value) {
+            let dateData = Date.parse(selectedMonthName + " " + value[3] + ", " + value[4]);
+            if (value[2] === 0){
+              storeMonth.push([value[3],null,dateData]);
+            }
+            else {
+              storeMonth.push([value[3],value[2],dateData]);
+            }
+          });
+          return storeMonth;
+        };
+
         $scope.convertNumberToMonth = function (monthNumber) {
             var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             return month[monthNumber];
@@ -59,7 +84,7 @@
         };
 
         //A FORM SELECTION SO USER CAN CHANGE BETWEEN MONTH
-        $scope.data = {
+          $scope.data = {
             availableMonth: [
                 {id: '0', name: 'January'},
                 {id: '1', name: 'February'},
@@ -180,8 +205,7 @@
                 chart: {
                     type: 'heatmap',
                     marginTop: 70,
-                    marginBottom: 80,
-                    width: 500
+                    marginBottom: 80
                 },
                 colorAxis: {
                     min: 0,
@@ -211,49 +235,19 @@
             credits: {
                 enabled: false
             },
-            loading: false
-        };
-
-        $scope.timeChart = {
-            options: {
-                chart: {
-                    type: 'spline'
-                },
-                tooltip: {
-                    useHTML: true,
-                    formatter: function () {
-                        return '<b>' + Highcharts.dateFormat('%m/%d/%Y', this.x) + '</b> <center> <b>' + this.y + '</b> </center>';
-                    }
-                }
-            },
-            xAxis: {
-                type: 'datetime',
-                tickInterval: 30 * 24 * 3600 * 1000,
-                labels: {
-                    formatter: function () {
-                        return Highcharts.dateFormat('%b %Y', this.value);
-                    }
-                }
-            },
-            yAxis: {
-                type: 'logarithmic',
-                minorTickInterval: 1
-            },
-            series: [{
-                data: []
-            }],
-            title: {
-                text: 'Hello'
-            },
-            loading: false
+            loading: false,
+            func: function(chart) {
+                $timeout(function() {
+                    chart.reflow();
+                }, 0);
+            }
         };
 
         $scope.activityChart = {
             options: {
                 chart: {
                     type: 'solidgauge',
-                    marginTop: 50,
-                    width: 500
+                    marginTop: 50
                 },
                 tooltip: {
                     borderWidth: 0,
@@ -266,11 +260,8 @@
                     pointFormatter: function () {
                         return this.series.name + '<br><span style="color:' + this.color + '; font-weight: bold">' + this.series.yData + '</span>';
                     },
-                    positioner: function (labelWidth) {
-                        return {
-                            x: 255 - labelWidth / 2,
-                            y: 180
-                        };
+                    positioner: function (labelsWidth, labelsHeight, point) {
+                        return {x:point.plotX-20,y:point.plotY+20};
                     }
                 },
                 pane: {
@@ -338,12 +329,76 @@
                     innerRadius: '50%'
                 }]
             }],
+            func: function(chart) {
+                $timeout(function() {
+                    chart.reflow();
+                }, 0);
+            }
         };
-        
+
+        $scope.timeChart = {
+            options: {
+                chart: {
+                    type: 'area'
+                },
+                tooltip: {
+                    useHTML: true,
+                    formatter: function () {
+                      // $scope.timechartMonth1
+                      if (this.series.name === "Series 1"){
+                         return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.timechartMonth1[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
+                      }else {
+                        return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.timechartMonth2[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
+                      }
+                    }
+                },
+                plotOptions: {
+                  area: {
+                      marker: {
+                          enabled: false,
+                          symbol: 'circle',
+                          radius: 2,
+                          states: {
+                              hover: {
+                                  enabled: true
+                              }
+                          }
+                      }
+                  }
+                },
+            },
+            xAxis: {
+                tickInterval: 1
+            },
+            yAxis: {
+                type: 'logarithmic',
+                minorTickInterval: 1
+            },
+            series: [{
+                data: []
+            }],
+            title: {
+                text: "This month vs Last Month"
+            },
+            loading: false,
+            func: function(chart) {
+                $timeout(function() {
+                    chart.reflow();
+                }, 0);
+            }
+        };
+
         $scope.update = function () {
 
             var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
             $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
+
+
+            $scope.timechartMonth2 = $scope.returnTimeData(selectedMonthName);
+            $scope.timeChart.series[1].data = $scope.timechartMonth2;
+            $scope.timeChart.series[1].name = $scope.data.selectedMonth.name;
+            $scope.timeChart.title.text = "This month vs " + $scope.data.selectedMonth.name;
+
 
             let sum = 0;
             let max = 0;
