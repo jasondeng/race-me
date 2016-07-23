@@ -1,6 +1,6 @@
 <navigation></navigation>
 <div class="container">
-    <div ng-if="!vm.isLoggedIn || !vm.hasHealthData ">
+    <div ng-if="!vm.isLoggedIn">
         <div class="jumbotron">
             <h2><i class="ion-locations"></i> RaceMe!</h2>
             <p>Leave a footprint for challenge</p>
@@ -10,7 +10,16 @@
             </p>
         </div>
     </div>
+
+    <div ng-if="vm.isLoggedIn && !vm.hasHealthData">
+        <div class="jumbotron">
+            <h2><i class="ion-locations"></i> RaceMe!</h2>
+            <p>You need to download our app and upload data!</p>
+
+        </div>
+    </div>
 </div>
+
 
     <div ng-cloak ng-if="vm.isLoggedIn && vm.hasHealthData " class="panel panel-default"  >
         <div class="panel-heading text-center">
@@ -36,7 +45,7 @@
                                     ng-model="data.selectedMonth" ng-change="update()"></select>
                         </div>
                     </form>
-                    <highchart config="highchartsNG"></highchart>
+                    <highchart config="calenderChart"></highchart>
                 </div>
                 <div class="col-md-8">
                     <highchart config="timeChart"></highchart>

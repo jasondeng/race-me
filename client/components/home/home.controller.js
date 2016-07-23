@@ -24,7 +24,7 @@
                 var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
 
                 //SET CALENDAR DATA
-                $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
+                $scope.calenderChart.series[0].data = $scope.storedData[selectedMonthName];
 
                 $scope.timechartMonth1 = $scope.returnTimeData(selectedMonthName);
                 $scope.timeChart.series[0].data = $scope.timechartMonth1;
@@ -169,7 +169,7 @@
             console.log(data.health);
         };
 
-        $scope.highchartsNG = {
+        $scope.calenderChart = {
             options: {
                 tooltip: {
                     style: {
@@ -187,7 +187,7 @@
                             color: '#000000',
                             formatter: function () {
                                 // return "<center>" + $scope.highchartsNG.series[0].data[this.series.data.indexOf( this.point )][3] + "</center>" + this.point.value;
-                                return $scope.highchartsNG.series[0].data[this.series.data.indexOf(this.point)][3];
+                                return $scope.calenderChart.series[0].data[this.series.data.indexOf(this.point)][3];
                             }
                         }
                     }
@@ -390,7 +390,7 @@
         $scope.update = function () {
 
             var selectedMonthName = $scope.convertNumberToMonth($scope.data.selectedMonth.id);
-            $scope.highchartsNG.series[0].data = $scope.storedData[selectedMonthName];
+            $scope.calenderChart.series[0].data = $scope.storedData[selectedMonthName];
 
 
             $scope.timechartMonth2 = $scope.returnTimeData(selectedMonthName);
@@ -401,15 +401,15 @@
 
             let sum = 0;
             let max = 0;
-            $scope.highchartsNG.series[0].data.forEach((entry) => {
+            $scope.calenderChart.series[0].data.forEach((entry) => {
                 max = Math.max(max, entry[2]);
                 sum += entry[2];
             });
             if(sum === 0) {
-                $scope.highchartsNG.options.colorAxis.max = 1000;
+                $scope.calenderChart.options.colorAxis.max = 1000;
             }
             else {
-                $scope.highchartsNG.options.colorAxis.max = max;
+                $scope.calenderChart.options.colorAxis.max = max;
             }
         };
 

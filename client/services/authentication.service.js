@@ -5,8 +5,8 @@
         .module('app')
         .service('authentication', authentication);
 
-        authentication.$inject = ['$http', '$window', '$location' ,'$auth', 'toastr'];
-        function authentication ($http, $window, $location ,$auth, toastr) {
+        authentication.$inject = ['$http', '$window', '$location' ,'$auth', 'toastr', '$route'];
+        function authentication ($http, $window, $location ,$auth, toastr, $route) {
 
             var saveToken = function (token) {
                 $window.localStorage['token'] = token;
@@ -43,6 +43,7 @@
                     .then(function() {
                         toastr.info('You have been logged out');
                         $location.path('/');
+                        $route.reload();
                     });
                 }
                 else {

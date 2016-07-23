@@ -12,7 +12,6 @@
             return $http.get('/profile')
                 .success(function (response) {
                     return response;
-
                 });
         };
 
