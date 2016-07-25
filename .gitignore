@@ -12,3 +12,5 @@ env.json
 .idea/inspectionProfiles/
 .idea/jsLinters/
 .idea/codeStyleSettings.xml
+
+route_generator_js

@@ -61,6 +61,57 @@ function ensureAuthenticated(req, res, next) {
     next();
 }
 
+function rectangleRoute(length, BaseLocation) {
+    /*  
+        The algorithm was created based on the answers from these two stackoverflow links
+        http://stackoverflow.com/questions/2187657/calculate-second-point-knowing-the-starting-point-and-distance
+        http://stackoverflow.com/questions/30002372/given-point-of-latitude-longitude-distance-and-bearing-how-to-get-the-new-la
+    */
+
+    var wayPoints = [];
+    var width = length / (Math.random() + 7);
+    var height = width * 2;
+    var diagonal = Math.sqrt(width * width + height * height);
+    var theta = Math.acos(height / diagonal);
+    var direction = Math.random() * 2 * Math.PI;
+    var angle = 0 + direction;
+    var dx = height * Math.cos(angle);
+    var dy = height * Math.sin(angle);
+
+    // One degree of latitude on the Earth's surface equals 110540 meters.
+    // One degree of longitude equals 111320 meters (at the equator)
+    var delta_lat = dy / 110540;
+    // BaseLocation.lat * Math.PI / 180 = conversion of latitude from degrees to radians.
+    var delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    wayPoints[0] = {
+        lat: BaseLocation.lat + delta_lat,
+        lng: BaseLocation.lng + delta_lng
+    };
+
+    angle = -1 * theta + direction;
+    dx = diagonal * Math.cos(angle);
+    dy = diagonal * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    wayPoints[1] = {
+        lat: BaseLocation.lat + delta_lat,
+        lng: BaseLocation.lng + delta_lng
+    };
+
+    angle = -1 * Math.PI / 2 + direction;
+    dx = width * Math.cos(angle);
+    dy = width * Math.sin(angle);
+    delta_lat = dy / 110540;
+    delta_lng = dx / (111320 * Math.cos(BaseLocation.lat * Math.PI / 180));
+    wayPoints[2] = {
+        lat: BaseLocation.lat + delta_lat,
+        lng: BaseLocation.lng + delta_lng
+    };
+    
+    console.log(wayPoints);
+    return wayPoints;
+}
+
 // INDEX ROUTE
 
 router.get('/', function (req, res) {
@@ -201,6 +252,16 @@ router.post("/race", ensureAuthenticated, (req, res) => {
 
     });
 
+
+});
+
+// Generate waypoints
+
+router.post("/route", ensureAuthenticated, (req, res) => {
+    var length = req.body.length;
+    var origin = req.body.origin;
+
+    res.send(rectangleRoute(length, origin));
 
 });
 

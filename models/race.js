@@ -6,7 +6,7 @@ var raceSchema = mongoose.Schema({
     opponent: String,
     route: {
         route: Array,
-        created: {type: Number, default: moment().unix()}
+        created: Number
     },
     status: String,
     start: Number,
@@ -14,7 +14,7 @@ var raceSchema = mongoose.Schema({
     distance: Number,
     speed: Number,
     duration: Number,
-    created: {type: Number, default: moment().unix()}
+    created: Number
 });
 
 module.exports = mongoose.model("Race", raceSchema);
