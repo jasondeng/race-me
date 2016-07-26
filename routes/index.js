@@ -149,7 +149,7 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
 
 // UPLOAD ROUTE
 
-router.post("/upload", requireAuth, function (req, res) {
+router.post("/upload", ensureAuthenticated, function (req, res) {
     var user = req.user;
     console.log(user);
     var data = req.body;
