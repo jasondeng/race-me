@@ -63,6 +63,22 @@ function ensureAuthenticated(req, res, next) {
     next();
 }
 
+function findUser(req, res, next) {
+    User.findById(req.user.sub, {password: 0}, function(error, userData) {
+        if (error) {
+            console.log("error: ", error);
+            return res.send(error);
+        }
+        if (userData) {
+            console.log("GOT USER");
+            req.userData = userData;
+            next();
+        } else {
+            return res.send("User not found");
+        }
+    });
+}
+
 function rectangleRoute(length, BaseLocation) {
     /*  
         The algorithm was created based on the answers from these two stackoverflow links
@@ -149,14 +165,15 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
 
 // UPLOAD ROUTE
 
-router.post("/upload", ensureAuthenticated, function (req, res) {
-    var user = req.user;
+router.post("/upload", ensureAuthenticated, findUser, function (req, res) {
+    var user = req.userData;
     console.log(user);
+
     var data = req.body;
 
     Health.findById(user.health, function (err, foundHealth) {
         if (err) {
-            res.send(err);
+            return res.send(err);
         } else {
             if (foundHealth === null) {
                 var health = new Health({
@@ -175,13 +192,13 @@ router.post("/upload", ensureAuthenticated, function (req, res) {
                 });
                 health.save(function (err) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     res.status(201).send({message: "Health collection successfully created!"});
                 });
                 user.update({health: health._id}, function (err, raw) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     console.log(raw);
                 });
@@ -202,7 +219,7 @@ router.post("/upload", ensureAuthenticated, function (req, res) {
                 };
                 foundHealth.update({$set: options}, {upsert: true}, function (err, result) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     res.send(result);
                 });
