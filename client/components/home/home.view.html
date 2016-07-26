@@ -39,7 +39,7 @@
                 <form role="form">
                     <div class="form-group">
                         <label for="mySelect"> Select Month </label>
-                        <select class="form-control" name="mySelect" id="mySelect"
+                        <select class="form-control " name="mySelect" id="mySelect"
                                 ng-options="month.name for month in data.availableMonth track by month.id"
                                 ng-model="data.selectedMonth" ng-change="update()"></select>
                     </div>
