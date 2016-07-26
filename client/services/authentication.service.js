@@ -77,11 +77,14 @@
 
             var hasHealthData = function () {
                 if (isLoggedIn()) {
-                    var token = getToken();
-                    var payload = JSON.parse($window.atob(token.split('.')[1]));
-                    return payload.health;
+                    return $http.get('/checkHealth')
+                        .success(function (response) {
+                            console.log('HEATLH' + response);
+                        });
                 }
             };
+
+            var
 
             var oauth2 = function(provider) {
                 $auth.authenticate(provider)
