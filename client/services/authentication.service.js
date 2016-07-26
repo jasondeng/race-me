@@ -84,8 +84,6 @@
                 }
             };
 
-            var
-
             var oauth2 = function(provider) {
                 $auth.authenticate(provider)
                     .then(function() {
