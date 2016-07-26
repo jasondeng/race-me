@@ -126,6 +126,20 @@ router.post("/register", Authenticate.signUp);
 
 router.post("/login", requireSignin, Authenticate.signIn);
 
+//
+
+router.get("/checkHealth", ensureAuthenticated, function(req, res) {
+    var user = req.user;
+    User.findById(user.sub,{password: 0}, function(err, found) {
+        if(err) throw err;
+        if(found.health === undefined) {
+            res.send({health: false});
+        } else {
+            res.send({health: true});
+        }
+    })
+});
+
 // PROFILE ROUTE
 
 router.get("/profile", ensureAuthenticated, function (req, res) {
@@ -142,7 +156,6 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
             }
             res.json(foundUser);
         });
-
 });
 
 // UPLOAD ROUTE
@@ -224,15 +237,39 @@ router.post("/race", ensureAuthenticated, (req, res) => {
             res.send(err);
         }
         var race = new Race ({
-            challenger: user.username,
-            opponent: data.opponent,
-            route: data.route,
-            status: data.status,
-            start: data.start,
-            end: data.end,
-            distance: data.distance,
-            speed: data.speed,
-            duration: data.duration
+            challenger: {
+                username: String,
+                start: Number,
+                end: Number,
+                speed: Number,
+                duration: Number,
+                route: {
+                    origin: {
+                        lat: Number,
+                        lng: Number
+                    },
+                    wayPoints: Array,
+                    created: Number
+                }
+            },
+            opponent: {
+                username: String,
+                start: Number,
+                end: Number,
+                speed: Number,
+                duration: Number,
+                route: {
+                    origin: {
+                        lat: Number,
+                        lng: Number
+                    },
+                    wayPoints: Array,
+                    created: Number
+                }
+            },
+            status: String,
+            winner: String,
+            created: Number
         });
         race.save((error, product) => {
             if (error) {
@@ -251,6 +288,8 @@ router.post("/race", ensureAuthenticated, (req, res) => {
         });
 
     });
+
+
 
 
 });
