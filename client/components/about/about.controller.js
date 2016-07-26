@@ -31,7 +31,7 @@
                 description: 'Engaging learner interested in Android and Web development. '
             }, {
                 name: 'Itzhak Koren Kloussner ',
-                picture: 'vendor/img/profile-pics/itzak.jpg',
+                picture: 'vendor/img/profile-pics/itzak2.jpg',
                 github: {
                     href: 'https://github.com/zackoren'
                 },
