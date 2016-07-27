@@ -289,7 +289,7 @@ router.post("/route", ensureAuthenticated, (req, res) => {
 router.get("/match", ensureAuthenticated, (req, res) => {
     var pyOptions = {
         mode: 'text',
-        args: [50, 'rand']
+        args: [0, 'r', req.user.sub]
     };
     PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
         if (err) throw err;
