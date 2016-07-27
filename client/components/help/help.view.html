@@ -2,8 +2,60 @@
 <div class="container">
 
     <div ng-if="vm.isLoggedIn">
-        <div class="jumbotron">
-            Help page
+        <div class="custom-container">
+            <div class="header">
+                <div class="header-text">
+                    <h1 class="sitename">About RaceMe</h1>
+                    <h3 class="caption">Leave a footprint for challenge</h3>
+                </div>
+            </div>
+            <div class="content">
+
+                <h2>Frequently Asked Questions</h2>
+                <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-default">
+                        <uib-accordion-heading>
+                            What is RaceMe?
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+                    <div uib-accordion-group class="panel-primary">
+                        <uib-accordion-heading>
+                            How was RaceMe created?
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+                    <div uib-accordion-group class="panel-success">
+                        <uib-accordion-heading>
+                            How do I use the website?
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+                    <div uib-accordion-group class="panel-info">
+                        <uib-accordion-heading>
+                            How do I use the app?
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+                    <div uib-accordion-group class="panel-warning">
+                        <uib-accordion-heading>
+                            What is the future of RaceMe?
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+
+                </uib-accordion>
+            </div>
         </div>
     </div>
 
