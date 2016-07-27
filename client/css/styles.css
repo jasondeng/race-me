@@ -377,3 +377,13 @@ h4 {
     0%, 39%, 100% { opacity: 0; }
     40% { opacity: 1; }
 }
+
+i.ion-trophy {
+    font-size: 75px;
+}
+
+.custom-border-right{
+    padding-right:20px;
+    border-right: 1px solid #ccc;
+}
+
