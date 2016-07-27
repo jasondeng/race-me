@@ -280,7 +280,7 @@ router.post("/route", ensureAuthenticated, (req, res) => {
     var length = req.body.length;
     var origin = req.body.origin;
 
-    res.send(rectangleRoute(length, origin));
+    res.send({wayPoints: rectangleRoute(length, origin)});
 
 });
 
