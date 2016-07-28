@@ -10,6 +10,7 @@ var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var passportConfig = require('../middleware/passport');
 var PythonShell = require('python-shell');
+var mongoose = require('mongoose');
 
 var config;
 try {
@@ -28,11 +29,13 @@ var requireSignin = passport.authenticate('local', {session: false});
 // Import User schema
 var User = require("../models/user");
 var Health = require("../models/health");
+var Race = require("../models/race");
 // var Race = require("../models/race");
 
 function createJWT(user, healthBool) {
     var payload = {
         sub: user._id,
+        username: user.username,
         fullname: user.fullname,
         first_name: user.first_name,
         health: healthBool,
@@ -236,40 +239,93 @@ router.post("/race", ensureAuthenticated, (req, res) => {
 
     let user = req.user;
     let data = req.body;
-
-    User.findById(user.sub, (err, foundUser) => {
-        if (err) {
-            console.log(err);
-            res.send(err);
-        }
+    let raceId = req.get("race-id");
+    if (raceId === undefined) {
+        // create race
         var race = new Race ({
-            challenger: user.username,
+            challenger: {
+                username: user.username,
+                start: data.challenger.start,
+                end: data.challenger.end,
+                speed: data.challenger.speed,
+                duration: data.challenger.end - data.challenger.start,
+                route: data.challenger.route
+            },
             opponent: data.opponent,
-            route: data.route,
-            status: data.status,
-            start: data.start,
-            end: data.end,
-            distance: data.distance,
-            speed: data.speed,
-            duration: data.duration
+            status: "In progress",
+            created: moment().unix()
         });
         race.save((error, product) => {
             if (error) {
-            res.send(error);
+                return res.send(error);
             }
             res.status(201).send({
-                message: "Race collection successfully created!",
+                message: "Race successfully created!",
                 result: product
             });
         });
-        user.update({$push: {race: race._id}}, (err, raw) => {
+        User.find({username: {$in: [user.username, data.opponent.username]}}, {password: 0}, function(err, foundUsers) {
             if (err) {
-            res.send(err);
+                return res.status(404).send(err);
             }
-            console.log(raw);
+            foundUsers.forEach((user) => {
+                user.update({$push: {race: race._id}}, (err, raw) => {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    console.log(raw);
+                });
+            });
+            console.log("USERS", foundUsers); 
         });
+    }
+    else if (mongoose.Types.ObjectId.isValid("raceId") === false) {
+        return res.status(400).send({message: "Invalid race id"});
+    }
+    // console.log("VALID ?", mongoose.Types.ObjectId.isValid("raceId"));
+    // console.log("raceId", raceId);
+    // Race.findById(raceId, (err, foundRace) => {
+    //     if (err) {
+    //         console.log('errrrrrrrrrr');
+    //         return res.status(400).send(err);
+    //     }
+    //     console.log(foundRace);
+    //     res.send(foundRace);
+    // });
 
-    });
+    // User.findById(user.sub, (err, foundUser) => {
+    //     if (err) {
+    //         console.log(err);
+    //         res.send(err);
+    //     }
+    //     var race = new Race ({
+    //         challenger: user.username,
+    //         opponent: data.opponent,
+    //         route: data.route,
+    //         status: data.status,
+    //         start: data.start,
+    //         end: data.end,
+    //         distance: data.distance,
+    //         speed: data.speed,
+    //         duration: data.duration
+    //     });
+    //     race.save((error, product) => {
+    //         if (error) {
+    //         res.send(error);
+    //         }
+    //         res.status(201).send({
+    //             message: "Race collection successfully created!",
+    //             result: product
+    //         });
+    //     });
+    //     user.update({$push: {race: race._id}}, (err, raw) => {
+    //         if (err) {
+    //         res.send(err);
+    //         }
+    //         console.log(raw);
+    //     });
+
+    // });
 
 
 });

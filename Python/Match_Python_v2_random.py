@@ -35,7 +35,7 @@ def return_opponent_by_rank_v2(Fitness_rank,current_user_id):
 	user = json.loads(dumps(user))
 	user = user[random.randrange(len(user))]
 	# print(user)
-	OP_LIST = {"userID": user["user"]["$oid"], "username": user["username"],"rank": user["rank"]}
+	OP_LIST = {"userID": user["user"]["$oid"], "username": user["username"], "fullname": user["fullname"] ,"rank": user["rank"]}
 	return dumps(OP_LIST)
 	
 	

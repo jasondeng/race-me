@@ -13,8 +13,7 @@ var raceSchema = mongoose.Schema({
                 lat: Number,
                 lng: Number
             },
-            wayPoints: Array,
-            created: Number
+            wayPoints: Array
         }
     },
     opponent: {
@@ -28,8 +27,7 @@ var raceSchema = mongoose.Schema({
                 lat: Number,
                 lng: Number
             },
-            wayPoints: Array,
-            created: Number
+            wayPoints: Array
         }
     },
     status: String,
