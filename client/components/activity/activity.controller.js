@@ -10,8 +10,7 @@
         var vm = this;
 
         $scope.currentUser = authentication.currentUser();
-
-
+        
         $scope.races = [{
             challenger: {
                 username: "Alan",

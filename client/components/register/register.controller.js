@@ -5,8 +5,8 @@
         .module('app')
         .controller('RegisterCtrl', RegisterCtrl);
 
-        RegisterCtrl.$inject = ['$location', 'authentication','$route'];
-        function RegisterCtrl($location,authentication, $route) {
+        RegisterCtrl.$inject = ['$location', 'authentication','$route','toastr'];
+        function RegisterCtrl($location,authentication, $route, toastr) {
             var vm = this;
 
             vm.credentials = {
