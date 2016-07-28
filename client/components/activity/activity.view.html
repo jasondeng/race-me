@@ -1,9 +1,47 @@
 <navigation></navigation>
 <div class="container">
-
     <div>
         <div class="jumbotron">
-            Activity log page
+            <div class="list-group">
+                <div class="row row-fluid">
+                    <div class="col-md-4 text-left"><h2>{{currentUser.username}}</h2></div>
+                    <div class="col-md-4 text-center"><i class="icon icon ion-trophy"></i>
+                    </div>
+                    <div class="col-md-4 text-right"><h2>Opponent</h2></div>
+
+                </div>
+                <div ng-repeat="race in races" class="list-group-item">
+                    <div class="row row-fluid">
+                        <div class="col-md-4 custom-border-right" >
+                            <div class="text-left">
+                                <div> Race time: {{race.challenger.start}} | {{race.challenger.end}}</div>
+                                <div> Speed: {{race.challenger.speed}} | Duration:
+                                    {{race.challenger.duration}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 4 custom-border-right">
+                            <div class="text-center">
+                                <div>
+                                    <h2>{{race.winner}}</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="text-right">
+                                <h4>{{ race.opponent.username }}</h4>
+                                <div> Race time: {{race.opponent.start}} | {{race.opponent.end}}</div>
+                                <div> Speed: {{race.opponent.speed}} | Duration:
+                                    {{race.opponent.duration}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 

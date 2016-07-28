@@ -65,6 +65,7 @@
                         $scope.areaData1 = charts.areaChartData(selectedMonthName, $scope.calendarData);
                         $scope.areaChart.series[0].data = $scope.areaData1;
                         $scope.areaChart.series[0].name = $scope.data.availableMonth[$scope.data.selectedMonth.id].name;
+                        $scope.areaChart.series[0].color = "rgba(124,181,236, 0.5)";
 
 
                         let lastMonthName = charts.convertNumberToMonth($scope.data.selectedMonth.id -1);
@@ -73,6 +74,7 @@
                         $scope.areaData2 = charts.areaChartData(lastMonthName, $scope.calendarData);
                         $scope.areaChart.series.push({data: $scope.areaData2});
                         $scope.areaChart.series[1].name = $scope.data.availableMonth[$scope.data.selectedMonth.id -1].name;
+                        $scope.areaChart.series[1].color = "rgba(43,144,143, 0.3)";
 
                         vm.loadedData = true;
                         $scope.loading = false;
@@ -89,6 +91,10 @@
                 $scope.areaChart.series[1].data = $scope.areaData2;
                 $scope.areaChart.series[1].name = $scope.data.selectedMonth.name;
                 $scope.areaChart.title.text = "This month vs " + $scope.data.selectedMonth.name;
+
+                //CHART colors
+                $scope.areaChart.series[0].color = "rgba(43,144,143,0.3)";
+                $scope.areaChart.series[1].color = "rgba(124,181,236, 0.5)";
 
                 let sum = 0;
                 let max = 0;
@@ -213,8 +219,7 @@
                          fontSize: '16px'
                     }
                   },
-                  type: 'logarithmic',
-                  minorTickInterval: 1
+                  type: 'logarithmic'
               },
               series: [{
                   data: []

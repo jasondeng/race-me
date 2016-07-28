@@ -147,6 +147,20 @@ router.post("/register", Authenticate.signUp);
 
 router.post("/login", requireSignin, Authenticate.signIn);
 
+//
+
+router.get("/checkHealth", ensureAuthenticated, function(req, res) {
+    var user = req.user;
+    User.findById(user.sub,{password: 0}, function(err, found) {
+        if(err) throw err;
+        if(found.health === undefined) {
+            res.send({health: false});
+        } else {
+            res.send({health: true});
+        }
+    })
+});
+
 // PROFILE ROUTE
 
 router.get("/profile", ensureAuthenticated, function (req, res) {
@@ -163,7 +177,6 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
             }
             res.json(foundUser);
         });
-
 });
 
 // UPLOAD ROUTE
@@ -326,6 +339,8 @@ router.post("/race", ensureAuthenticated, (req, res) => {
     //     });
 
     // });
+
+
 
 
 });
