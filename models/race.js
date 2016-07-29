@@ -14,7 +14,8 @@ var raceSchema = mongoose.Schema({
                 lng: Number
             },
             wayPoints: Array
-        }
+        },
+        created: Number,
     },
     opponent: {
         username: String,
@@ -28,7 +29,8 @@ var raceSchema = mongoose.Schema({
                 lng: Number
             },
             wayPoints: Array
-        }
+        },
+        created: Number,
     },
     status: String,
     winner: String,
