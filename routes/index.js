@@ -307,6 +307,19 @@ router.post("/race", ensureAuthenticated, (req, res) => {
 
 });
 
+// Race Mailbox
+
+router.get("/mailbox", ensureAuthenticated, (req, res) => {
+    let user = req.user;
+    Race.find({$or: [{"opponent.username": user.username}, {"challenger.username": user.username}]}, (err, foundRaces) => {
+        if (err) {
+            res.send(err);
+        }
+        console.log(foundRaces);
+        res.send(foundRaces);
+    });
+});
+
 // Generate waypoints
 
 router.post("/route", ensureAuthenticated, (req, res) => {
