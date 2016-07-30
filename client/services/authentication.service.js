@@ -5,8 +5,8 @@
         .module('app')
         .service('authentication', authentication);
 
-        authentication.$inject = ['$http', '$window', '$location' ,'$auth', 'toastr', '$route'];
-        function authentication ($http, $window, $location ,$auth, toastr, $route) {
+        authentication.$inject = ['$http', '$window', '$location' ,'$auth', 'toastr', '$route', '$timeout'];
+        function authentication ($http, $window, $location ,$auth, toastr, $route, $timeout) {
 
             var saveToken = function (token) {
                 $window.localStorage['token'] = token;
@@ -83,6 +83,16 @@
                 }
             };
 
+            var checkHealth = function () {
+                return $timeout(function() {
+                    if (isLoggedIn()) {
+                        return $http.get('/checkHealth').then(function(response) {
+                            return response.data;
+                        });
+                    }
+                });
+            }
+
             var oauth2 = function(provider) {
                 $auth.authenticate(provider)
                     .then(function() {
@@ -111,6 +121,7 @@
                 isLoggedIn : isLoggedIn,
                 currentUser : currentUser,
                 hasHealthData : hasHealthData,
+                checkHealth: checkHealth,
                 oauth2 : oauth2
             };
         }

@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div ng-if="vm.isLoggedIn && !vm.hasHealthData">
+    <div ng-if="vm.isLoggedIn && !vm.hasHealth">
         <div class="jumbotron">
             <h2><i class="ion-locations"></i> RaceMe!</h2>
             <p>You need to download our app and upload data!</p>
@@ -20,10 +20,10 @@
     </div>
 </div>
 
-<div ng-if="!vm.loadedData && vm.isLoggedIn && vm.hasHealthData">
+<div ng-if="!vm.loadedData && vm.isLoggedIn && vm.hasHealth">
     <loading></loading>
 </div>
-<div ng-if="vm.isLoggedIn && vm.hasHealthData && vm.loadedData" class="panel panel-default">
+<div ng-if="vm.isLoggedIn && vm.hasHealth && vm.loadedData" class="panel panel-default">
 
 
     <div class="panel-heading text-center">

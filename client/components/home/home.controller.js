@@ -16,6 +16,10 @@
 
         $scope.currentUser = authentication.currentUser();
 
+        authentication.checkHealth().then(function(data) {
+            vm.hasHealth = data;
+        });
+
         $scope.calendarData = {};
         $scope.areaData1 = [];
         $scope.areaData2 = [];

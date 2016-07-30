@@ -14,3 +14,5 @@ env.json
 .idea/codeStyleSettings.xml
 
 route_generator_js
+
+typings/
