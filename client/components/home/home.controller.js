@@ -20,14 +20,6 @@
         $scope.areaData1 = [];
         $scope.areaData2 = [];
 
-        //GET CURRENT MONTH NUMBER FOR DEFAULT CHART MONTH
-        $scope.currentMonth = new Date().getMonth();
-
-        //GET CURRENT DATE TO DISPLAY ON PANEL
-        $scope.current = {
-            currentDate: {date: new Date().toDateString()}
-        };
-
         //A FORM SELECTION SO USER CAN CHANGE BETWEEN MONTH
         $scope.data = {
           availableMonth: [
@@ -44,7 +36,7 @@
               {id: '10', name: 'November'},
               {id: '11', name: 'December'}
           ],
-          selectedMonth: {id: $scope.currentMonth} //This sets the default value of the select in the ui
+          selectedMonth: {id: new Date().getMonth()} //This sets the default value of the select in the ui
         };
 
         vm.loadedData = false;
@@ -75,6 +67,11 @@
                         $scope.areaChart.series.push({data: $scope.areaData2});
                         $scope.areaChart.series[1].name = $scope.data.availableMonth[$scope.data.selectedMonth.id -1].name;
                         $scope.areaChart.series[1].color = "rgba(43,144,143, 0.3)";
+
+
+                        let currentDay = new Date().getDate();
+                        $scope.activityChart.series[0].data = [$scope.calendarData[selectedMonthName][currentDay-1][2]];
+
 
                         vm.loadedData = true;
                         $scope.loading = false;
@@ -187,12 +184,17 @@
                   tooltip: {
                       useHTML: true,
                       formatter: function () {
-                        if (this.series.name === $scope.data.availableMonth[$scope.currentMonth].name){
-                           return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.areaData1[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
-                        }else {
-                          return '<b>' + Highcharts.dateFormat('%m/%d/%Y', $scope.areaData2[this.series.data.indexOf(this.point)][2]) + '</b> <center> <b>' + this.y + '</b> </center>';
+                        let points = this.points;
+                        let pointsLength = points.length;
+                        let tooltipMarkup = '';
+
+                        for(let i = 0; i < pointsLength; i++) {
+                          tooltipMarkup += '<span style="color:' + points[i].series.color + '">\u25CF</span> ' + points[i].series.name + ' ' +points[0].key + ': <b>' + points[i].y  + ' steps</b><br/>';
                         }
-                      }
+                        return tooltipMarkup;
+                      },
+                      shared: true,
+                      crosshairs: true
                   },
                   plotOptions: {
                     area: {
@@ -219,7 +221,14 @@
                          fontSize: '16px'
                     }
                   },
-                  type: 'logarithmic'
+                  type: 'logarithmic',
+                  plotLines:[{
+                      value:10000,
+                      color: 'rgba(0,0,0, 0.3)',
+                      width:2,
+                      zIndex:4,
+                      label:{text:'Active Day'}
+                  }]
               },
               series: [{
                   data: []
@@ -229,6 +238,63 @@
               },
               loading: false
           };
+
+          $scope.activityChart = {
+               options: {
+                   chart: {
+                       type: 'solidgauge',
+                       marginTop: 50
+                   },
+                   tooltip: {
+                       borderWidth: 0,
+                       backgroundColor: 'none',
+                       shadow: false,
+                       style: {
+                           fontSize: '16px'
+                       },
+                       pointFormatter: function () {
+                           return this.series.name + '<br><span style="color:' + this.color + '; font-weight: bold">' + this.series.yData + '/10000</span>';
+                       },
+                       positioner: function (labelsWidth, labelsHeight, point) {
+                           return {x:point.plotX-40,y:point.plotY+20};
+                       }
+                   },
+                   pane: {
+                       startAngle: 0,
+                       endAngle: 360,
+                       background: [{
+                           outerRadius: '100%',
+                           innerRadius: '60%',
+                           borderWidth: 0
+                       }]
+                   },
+                   plotOptions: {
+                       solidgauge: {
+                           dataLabels: {
+                               enabled: false
+                           },
+                           linecap: 'round',
+                           stickyTracking: false
+                       }
+                   }
+               },
+               title: {
+                   text: "Yesterday's Active Progress"
+               },
+               subtitle: {
+                   text: 'Active lifestyle is 10000 steps per day'
+               },
+               yAxis: {
+                   min: 0,
+                   max: 10000,
+                   lineWidth: 0,
+                   tickPositions: []
+               },
+               series: [{
+                   name: 'Steps',
+                   data: []
+               }]
+           };
 
         }
     }

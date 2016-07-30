@@ -27,15 +27,13 @@
 
 
     <div class="panel-heading text-center">
-        <h3>
-            <!--{{current.currentDate.date}}-->
-        </h3>
+
     </div>
 
     <div class="panel-body">
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <form role="form">
                     <div class="form-group">
                         <label for="mySelect"> Select Month </label>
@@ -46,8 +44,11 @@
                 </form>
                 <highchart config="calenderChart"></highchart>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <highchart config="areaChart"></highchart>
+            </div>
+            <div class="col-md-4">
+                <highchart config="activityChart"></highchart>
             </div>
         </div>
     </div>
