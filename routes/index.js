@@ -10,6 +10,7 @@ var moment = require('moment');
 var jwt = require('jsonwebtoken');
 var passportConfig = require('../middleware/passport');
 var PythonShell = require('python-shell');
+var mongoose = require('mongoose');
 
 var config;
 try {
@@ -28,11 +29,13 @@ var requireSignin = passport.authenticate('local', {session: false});
 // Import User schema
 var User = require("../models/user");
 var Health = require("../models/health");
+var Race = require("../models/race");
 // var Race = require("../models/race");
 
 function createJWT(user, healthBool) {
     var payload = {
         sub: user._id,
+        username: user.username,
         fullname: user.fullname,
         first_name: user.first_name,
         health: healthBool,
@@ -61,6 +64,22 @@ function ensureAuthenticated(req, res, next) {
     }
     req.user = payload;
     next();
+}
+
+function findUser(req, res, next) {
+    User.findById(req.user.sub, {password: 0}, function(error, userData) {
+        if (error) {
+            console.log("error: ", error);
+            return res.send(error);
+        }
+        if (userData) {
+            console.log("GOT USER");
+            req.userData = userData;
+            next();
+        } else {
+            return res.send("User not found");
+        }
+    });
 }
 
 function rectangleRoute(length, BaseLocation) {
@@ -162,14 +181,15 @@ router.get("/profile", ensureAuthenticated, function (req, res) {
 
 // UPLOAD ROUTE
 
-router.post("/upload", requireAuth, function (req, res) {
-    var user = req.user;
+router.post("/upload", ensureAuthenticated, findUser, function (req, res) {
+    var user = req.userData;
     console.log(user);
+
     var data = req.body;
 
     Health.findById(user.health, function (err, foundHealth) {
         if (err) {
-            res.send(err);
+            return res.send(err);
         } else {
             if (foundHealth === null) {
                 var health = new Health({
@@ -188,13 +208,13 @@ router.post("/upload", requireAuth, function (req, res) {
                 });
                 health.save(function (err) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     res.status(201).send({message: "Health collection successfully created!"});
                 });
                 user.update({health: health._id}, function (err, raw) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     console.log(raw);
                 });
@@ -215,7 +235,7 @@ router.post("/upload", requireAuth, function (req, res) {
                 };
                 foundHealth.update({$set: options}, {upsert: true}, function (err, result) {
                     if (err) {
-                        res.send(err);
+                        return res.send(err);
                     }
                     res.send(result);
                 });
@@ -232,68 +252,72 @@ router.post("/race", ensureAuthenticated, (req, res) => {
 
     let user = req.user;
     let data = req.body;
-
-    User.findById(user.sub, (err, foundUser) => {
-        if (err) {
-            console.log(err);
-            res.send(err);
-        }
+    let raceId = req.get("Race-Id");
+    if (raceId === undefined) {
+        // create race
+        data.challenger.username = user.username;
+        data.challenger.created = moment().unix();
         var race = new Race ({
-            challenger: {
-                username: String,
-                start: Number,
-                end: Number,
-                speed: Number,
-                duration: Number,
-                route: {
-                    origin: {
-                        lat: Number,
-                        lng: Number
-                    },
-                    wayPoints: Array,
-                    created: Number
-                }
-            },
-            opponent: {
-                username: String,
-                start: Number,
-                end: Number,
-                speed: Number,
-                duration: Number,
-                route: {
-                    origin: {
-                        lat: Number,
-                        lng: Number
-                    },
-                    wayPoints: Array,
-                    created: Number
-                }
-            },
-            status: String,
-            winner: String,
-            created: Number
+            challenger: data.challenger,
+            opponent: data.opponent,
+            status: "In progress",
+            created: moment().unix()
         });
         race.save((error, product) => {
             if (error) {
-            res.send(error);
+                return res.send(error);
             }
             res.status(201).send({
-                message: "Race collection successfully created!",
+                message: "Race successfully created!",
                 result: product
             });
         });
-        user.update({$push: {race: race._id}}, (err, raw) => {
+        User.find({username: {$in: [user.username, data.opponent.username]}}, {password: 0}, function(err, foundUsers) {
             if (err) {
-            res.send(err);
+                return res.status(404).send(err);
             }
-            console.log(raw);
+            foundUsers.forEach((user) => {
+                user.update({$push: {race: race._id}}, (err, raw) => {
+                    if (err) {
+                        return res.send(err);
+                    }
+                    console.log(raw);
+                });
+            });
+            console.log("USERS", foundUsers); 
         });
+    }
+    else if (mongoose.Types.ObjectId.isValid(raceId) === false) {
+        return res.status(400).send({message: "Invalid race id"});
+    } else {
+        data.username = user.username;
+        data.duration = data.end - data.start;
+        data.created = moment().unix();
+        Race.findOneAndUpdate({_id: raceId, "opponent.username": user.username}, {opponent: data}, {new: true}, (err, doc) => {
+            if (err) {
+                return res.send(err);
+            }
+            if (!doc) {
+                return res.status(404).send({message: "Race not found"});
+            }
+            console.log(doc);
+            res.send(doc);
+        });
+    }
 
+});
+
+// Race Mailbox
+
+router.get("/mailbox", ensureAuthenticated, (req, res) => {
+    let user = req.user;
+    Race.find({$or: [{"opponent.username": user.username}, {"challenger.username": user.username}]}, (err, foundRaces) => {
+        if (err) {
+            res.send(err);
+        }
+        console.log(foundRaces);
+        res.send(foundRaces);
     });
-
-
-
-
 });
 
 // Generate waypoints
@@ -302,7 +326,7 @@ router.post("/route", ensureAuthenticated, (req, res) => {
     var length = req.body.length;
     var origin = req.body.origin;
 
-    res.send(rectangleRoute(length, origin));
+    res.send({wayPoints: rectangleRoute(length, origin)});
 
 });
 
@@ -311,7 +335,7 @@ router.post("/route", ensureAuthenticated, (req, res) => {
 router.get("/match", ensureAuthenticated, (req, res) => {
     var pyOptions = {
         mode: 'text',
-        args: [50, 'rand']
+        args: [0, 'r', req.user.sub]
     };
     PythonShell.run('Python/Match_Python_v2_random.py', pyOptions, (err, results) => {
         if (err) throw err;

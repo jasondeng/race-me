@@ -1,4 +1,5 @@
 const User = require('../models/user'),
+      Rank = require('../models/rank'),
     jwt = require('jsonwebtoken');
 
 var moment = require('moment');
@@ -54,6 +55,24 @@ exports.signUp = function(req, res, next) {
       if (error) {
         return next(error);
       }
+    
+      var rank = new Rank({
+        user: user._id,
+        username: user.username,
+        fullname: user.fullname,
+        heartRate: 0,
+        avgSpeed: 0,
+        avgDistance: 0,
+        rank: 0,
+        randomIndex: Math.random(),
+        created: moment().unix()
+      })
+
+      rank.save(function(error) {
+        if (error) {
+          return next(error);
+        }
+      });
 
       res.json({token: tokenForUser(user, false)});
     });

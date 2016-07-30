@@ -9,6 +9,7 @@ import random
 import sys
 import os
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 
 dbURI = None
@@ -23,19 +24,18 @@ else:
 
 connection = MongoClient(dbURI)
 #Call a collection
-db = connection.heroku_czw9k6mx.USER_RANKING
+db = connection.heroku_czw9k6mx.ranks
 
 
 #take p@ra Fitness_rank and current_user_id and return random  op with that rank. 
 #also check that current user is not matched with himself/herself
 def return_opponent_by_rank_v2(Fitness_rank,current_user_id):
 	random_index = random.random()
-	user = db.find_one({"rand_index": { "$gte": random_index, "$lte": random_index + 0.009}, "rank": Fitness_rank})
-	while (user == None) or (user["_id"] == current_user_id):
-		random_index = random.random()
-		user = db.find_one({"rand_index": { "$gte": random_index, "$lte": random_index + 0.009}, "rank": Fitness_rank})
+	user = db.find({"user": {"$ne": ObjectId(current_user_id)}})
 	user = json.loads(dumps(user))
-	OP_LIST = {"_id": user["_id"]["$oid"], "name": user["name"],"rank": user["rank"]}
+	user = user[random.randrange(len(user))]
+	# print(user)
+	OP_LIST = {"userID": user["user"]["$oid"], "username": user["username"], "fullname": user["fullname"] ,"rank": user["rank"]}
 	return dumps(OP_LIST)
 	
 	
@@ -45,9 +45,9 @@ def return_opponent_by_rank_v2(Fitness_rank,current_user_id):
 def return_opponent_by_random_rank(Fitness_rank,current_user_id):
 	flag = True	
 	while (flag):	
-		rand_rank = random.randint(1,59)
+		rand_rank = random.randint(0,59)
 		while (rand_rank == Fitness_rank):
-			rand_rank = random.randint(1,59)
+			rand_rank = random.randint(0,59)
 		if db.find_one({"rank": rand_rank}) != None:
 			op_list = return_opponent_by_rank_v2(rand_rank,current_user_id)
 			return op_list
@@ -113,7 +113,7 @@ xyz = index.next()
 chose = str(sys.argv[2])
 # chose = input("Enter r(ank), rand(om),h(igh),l(ow),ro(w):\n")
 if chose == "r":
-	print (return_opponent_by_rank_v2(op_rank,xyz["_id"]))
+	print (return_opponent_by_rank_v2(op_rank, sys.argv[3]))
 elif chose == "rand":	
 	print (return_opponent_by_random_rank(op_rank,xyz["_id"]))
 elif chose == "h":	
