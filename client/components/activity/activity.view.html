@@ -1,20 +1,30 @@
 <navigation></navigation>
 <div class="container">
+
+    <div ng-if="!vm.loadedData && vm.isLoggedIn && vm.hasHealthData">
+        <loading></loading>
+    </div>
+
     <div>
         <div class="jumbotron">
             <div class="list-group">
                 <div class="row row-fluid">
-                    <div class="col-md-4 text-left"><h2>{{currentUser.username}}</h2></div>
-                    <div class="col-md-4 text-center"><i class="icon icon ion-trophy"></i>
+                    <div class="col-md-4 text-center"><h2>Challenger</h2><i class="material-icons md-60">colorize</i></div>
+                    <div class="col-md-4 text-center"><h2>Winner</h2><i class="fa fa-trophy fa-5x"></i>
                     </div>
-                    <div class="col-md-4 text-right"><h2>Opponent</h2></div>
+                    <div class="col-md-4 text-center"><h2>Opponent</h2><i class="material-icons md-60">security</i></div>
 
                 </div>
                 <div ng-repeat="race in races" class="list-group-item">
                     <div class="row row-fluid">
-                        <div class="col-md-4 custom-border-right" >
+                        <div class="col-md-4 custom-border-right">
                             <div class="text-left">
-                                <div> Race time: {{race.challenger.start}} | {{race.challenger.end}}</div>
+                                <h4>{{ race.challenger.username }}</h4>
+                                <div> Date: {{race.challenger.start | date:'MM/dd/yy'}}
+                                    <br>
+                                Time: {{race.challenger.start | date:' h:mma'}} - {{race.challenger.end | date:'h:mma'}}</div>
+
+
                                 <div> Speed: {{race.challenger.speed}} | Duration:
                                     {{race.challenger.duration}}
                                 </div>
@@ -23,7 +33,8 @@
                         <div class="col-md-4 4 custom-border-right">
                             <div class="text-center">
                                 <div>
-                                    <h2>{{race.winner}}</h2>
+                                    <h2 ng-if='race.winner!==undefined'>{{race.winner}}</h2>
+                                    <h2 ng-if='race.winner==undefined'>In Progress</h2>
                                 </div>
                             </div>
                         </div>
