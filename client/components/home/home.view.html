@@ -26,8 +26,15 @@
 <div ng-if="vm.isLoggedIn && vm.hasHealth && vm.loadedData" class="panel panel-default">
 
 
-    <div class="panel-heading text-center">
-
+    <div class="panel-heading">
+      <div class="row">
+        <div class=" pull-right">
+          <div class="col-md-6 col-sm-6" ng-repeat="weather in weatherResult.list">
+                <h3 class="panel-title">{{ convertToDate(weather.dt) | date: 'MMM d' }} <i class="fa fa-sun-o" aria-hidden="true"></i></h3>
+                <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="panel-body">

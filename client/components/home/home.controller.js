@@ -76,6 +76,12 @@
                         let currentDay = new Date().getDate();
                         $scope.activityChart.series[0].data = [$scope.calendarData[selectedMonthName][currentDay-1][2]];
 
+                        $scope.convertToFahrenheit = charts.convertToFahrenheit;
+                        $scope.convertToDate = charts.convertToDate;
+
+                        charts.getWeatherAPI().then(function (response) {
+                          $scope.weatherResult = charts.returnWeather('New York, NY', '2', response.data.API_KEY);
+                        });
 
                         vm.loadedData = true;
                         $scope.loading = false;
