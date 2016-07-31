@@ -107,6 +107,47 @@
           return new Date(dt * 1000);
         };
 
+        var twoWeeks = function (data) {
+          let currentMonthNum = new Date().getMonth();
+          let currentMonth = convertNumberToMonth(currentMonthNum);
+          let start = new Date().getDate() - 1;
+          let year = new Date().getFullYear();
+
+          let storeTotal = [];
+          let total = 0;
+          let counter = 1;
+
+          for (let i = 1; i < 15; i++) {
+
+            if(start-counter !== -1){
+              total += data[currentMonth][start-counter][2];
+              counter++;
+            }
+            else if (currentMonthNum !== 0) { //NOT EQUAL TO JAN since only store current year data
+              //get last month's name + days if current month day is 0
+              currentMonth = convertNumberToMonth(currentMonthNum-1);
+              start = getDaysinMonth(currentMonthNum,year);
+              counter = 1;
+              total += data[currentMonth][start-counter][2];
+              counter++;
+            }
+
+            if (i % 7 === 0) {
+              console.log(total);
+              storeTotal.push(total);
+              total = 0;
+            }
+            
+          }
+
+          if(storeTotal[0] < storeTotal[1]){
+            return  +(-(storeTotal[1]-storeTotal[0])*100/storeTotal[1]).toFixed(2);
+          }
+          return +((storeTotal[1]-storeTotal[0])*100/storeTotal[0]).toFixed(2);
+        };
+
+
+
         return {
             getHealthData: getHealthData,
             calendarData: calendarData,
@@ -115,7 +156,8 @@
             getWeatherAPI: getWeatherAPI,
             returnWeather: returnWeather,
             convertToFahrenheit: convertToFahrenheit,
-            convertToDate: convertToDate
+            convertToDate: convertToDate,
+            twoWeeks: twoWeeks
         };
     }
 })();

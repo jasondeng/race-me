@@ -28,7 +28,13 @@
 
     <div class="panel-heading">
       <div class="row">
-        <div class=" pull-right well">
+        <div class="pull-left">
+          <div>
+            You are <h4>{{twoWeeks}}%</h4> <span ng-if="twoWeeks < 0">Less</span> <span ng-if="twoWeeks > 0">More</span> active than last week
+          </div>
+        </div>
+
+        <div class="pull-right well">
           <div class="col-md-6 col-sm-6" ng-repeat="weather in weatherResult.list">
                 <h3 class="panel-title">{{ convertToDate(weather.dt) | date: 'MMM d' }} <i class="fa fa-sun-o" aria-hidden="true"></i></h3>
                 <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
