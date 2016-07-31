@@ -1,9 +1,9 @@
-.hiddenChart{
-    display: none;
+.well{
+  padding: 0;
+  margin: 0;
 }
 
-.tester{
-    height: 250px;
-    min-width: 400px;
-    width: 50%;
+.well div p {
+  padding: 0;
+  margin: 0;
 }

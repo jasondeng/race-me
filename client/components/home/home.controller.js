@@ -81,6 +81,7 @@
 
                         charts.getWeatherAPI().then(function (response) {
                           $scope.weatherResult = charts.returnWeather('New York, NY', '2', response.data.API_KEY);
+                          console.log($scope.weatherResult);
                         });
 
                         vm.loadedData = true;
