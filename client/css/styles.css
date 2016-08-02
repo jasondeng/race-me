@@ -133,8 +133,9 @@ a:hover {
 .thumbnail {
     border: 0;
     border-radius: 0;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .04),0 1px 5px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 1px 5px rgba(0, 0, 0, .1);
 }
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -142,10 +143,12 @@ html {
     min-height: 100%;
 
 }
+
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -153,7 +156,6 @@ body {
     height: 60px;
     background-color: #f5f5f5;
 }
-
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -176,10 +178,11 @@ body > .container {
 }
 
 h4 {
-    font-size:30px;
+    font-size: 30px;
     text-transform: uppercase;
     letter-spacing: 3px;
 }
+
 .profile-pic {
     width: 250px;
     height: 250px;
@@ -203,17 +206,16 @@ h4 {
 }
 
 .btn-google-plus {
-  color: #fff;
-  background-color: #dd4b39;
-  border: 1px solid #d54331;
+    color: #fff;
+    background-color: #dd4b39;
+    border: 1px solid #d54331;
 }
 
 .btn-google-plus:hover,
 .btn-google-plus:focus {
-  color: #fff;
-  background-color: #cb3927;
+    color: #fff;
+    background-color: #cb3927;
 }
-
 
 .btn-facebook {
     color: #fff;
@@ -226,7 +228,6 @@ h4 {
     color: #fff;
     background-color: #294786;
 }
-
 
 .btn-instagram {
     color: #fff;
@@ -242,6 +243,7 @@ h4 {
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
+
 .sk-fading-circle {
     margin: 100px auto;
     width: 400px;
@@ -268,127 +270,157 @@ h4 {
     -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
     animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
 }
+
 .sk-fading-circle .sk-circle2 {
     -webkit-transform: rotate(30deg);
     -ms-transform: rotate(30deg);
     transform: rotate(30deg);
 }
+
 .sk-fading-circle .sk-circle3 {
     -webkit-transform: rotate(60deg);
     -ms-transform: rotate(60deg);
     transform: rotate(60deg);
 }
+
 .sk-fading-circle .sk-circle4 {
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
+
 .sk-fading-circle .sk-circle5 {
     -webkit-transform: rotate(120deg);
     -ms-transform: rotate(120deg);
     transform: rotate(120deg);
 }
+
 .sk-fading-circle .sk-circle6 {
     -webkit-transform: rotate(150deg);
     -ms-transform: rotate(150deg);
     transform: rotate(150deg);
 }
+
 .sk-fading-circle .sk-circle7 {
     -webkit-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+
 .sk-fading-circle .sk-circle8 {
     -webkit-transform: rotate(210deg);
     -ms-transform: rotate(210deg);
     transform: rotate(210deg);
 }
+
 .sk-fading-circle .sk-circle9 {
     -webkit-transform: rotate(240deg);
     -ms-transform: rotate(240deg);
     transform: rotate(240deg);
 }
+
 .sk-fading-circle .sk-circle10 {
     -webkit-transform: rotate(270deg);
     -ms-transform: rotate(270deg);
     transform: rotate(270deg);
 }
+
 .sk-fading-circle .sk-circle11 {
     -webkit-transform: rotate(300deg);
     -ms-transform: rotate(300deg);
     transform: rotate(300deg);
 }
+
 .sk-fading-circle .sk-circle12 {
     -webkit-transform: rotate(330deg);
     -ms-transform: rotate(330deg);
     transform: rotate(330deg);
 }
+
 .sk-fading-circle .sk-circle2:before {
     -webkit-animation-delay: -1.1s;
     animation-delay: -1.1s;
 }
+
 .sk-fading-circle .sk-circle3:before {
     -webkit-animation-delay: -1s;
     animation-delay: -1s;
 }
+
 .sk-fading-circle .sk-circle4:before {
     -webkit-animation-delay: -0.9s;
     animation-delay: -0.9s;
 }
+
 .sk-fading-circle .sk-circle5:before {
     -webkit-animation-delay: -0.8s;
     animation-delay: -0.8s;
 }
+
 .sk-fading-circle .sk-circle6:before {
     -webkit-animation-delay: -0.7s;
     animation-delay: -0.7s;
 }
+
 .sk-fading-circle .sk-circle7:before {
     -webkit-animation-delay: -0.6s;
     animation-delay: -0.6s;
 }
+
 .sk-fading-circle .sk-circle8:before {
     -webkit-animation-delay: -0.5s;
     animation-delay: -0.5s;
 }
+
 .sk-fading-circle .sk-circle9:before {
     -webkit-animation-delay: -0.4s;
     animation-delay: -0.4s;
 }
+
 .sk-fading-circle .sk-circle10:before {
     -webkit-animation-delay: -0.3s;
     animation-delay: -0.3s;
 }
+
 .sk-fading-circle .sk-circle11:before {
     -webkit-animation-delay: -0.2s;
     animation-delay: -0.2s;
 }
+
 .sk-fading-circle .sk-circle12:before {
     -webkit-animation-delay: -0.1s;
     animation-delay: -0.1s;
 }
 
 @-webkit-keyframes sk-circleFadeDelay {
-    0%, 39%, 100% { opacity: 0; }
-    40% { opacity: 1; }
+    0%, 39%, 100% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
 }
 
 @keyframes sk-circleFadeDelay {
-    0%, 39%, 100% { opacity: 0; }
-    40% { opacity: 1; }
+    0%, 39%, 100% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
 }
 
 i.ion-trophy {
     font-size: 75px;
 }
 
-.custom-border-right{
-    padding-right:20px;
+.custom-border-right {
+    padding-right: 20px;
     border-right: 1px solid #ccc;
 }
 
-.custom-container{
-    width:100%;
+.custom-container {
+    width: 100%;
     background: #f8f8f8;
     display: inline-block;
     padding: 10px;
@@ -396,22 +428,22 @@ i.ion-trophy {
     box-sizing: border-box;
 }
 
-.header{
+.header {
     background-color: #f5f5f5;
     border-color: #dddddd;
 }
 
 .header .header-text {
-    float:left;
-    width:100%;
-    padding-top:30px;
+    float: left;
+    width: 100%;
+    padding-top: 30px;
     min-height: 160px;
 
 }
 
 .header .sitename {
     color: #333544;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 64px;
     font-weight: 700;
     line-height: 1;
@@ -420,7 +452,6 @@ i.ion-trophy {
     text-rendering: optimizelegibility;
     text-align: center;
 }
-
 
 .header .caption {
     color: #333544;
@@ -438,7 +469,7 @@ i.ion-trophy {
     clear: both;
 }
 
-h2,h3,h4 {
+h2, h3, h4 {
     color: #333544;
 }
 
@@ -451,9 +482,28 @@ h2 {
     -webkit-margin-end: 0px;
     font-weight: bold;
 }
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
-.material-icons.md-60 { font-size: 60px; }
 
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.material-icons.md-60 {
+    font-size: 60px;
+}
+
+.buffer {
+    margin-top: 20px;
+    margin-bottom: 20;
+}
