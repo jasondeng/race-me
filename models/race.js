@@ -14,7 +14,8 @@ var raceSchema = mongoose.Schema({
                 lat: Number,
                 lng: Number
             },
-            wayPoints: Array
+            wayPoints: Array,
+            length: Number
         },
         created: Number,
     },
@@ -30,7 +31,8 @@ var raceSchema = mongoose.Schema({
                 lat: Number,
                 lng: Number
             },
-            wayPoints: Array
+            wayPoints: Array,
+            length: Number
         },
         created: Number,
     },
