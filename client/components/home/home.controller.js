@@ -76,7 +76,9 @@
                         let currentDay = new Date().getDate();
                         $scope.activityChart.series[0].data = [$scope.calendarData[selectedMonthName][currentDay-1][2]];
 
+
                         $scope.twoWeeks = charts.twoWeeks($scope.calendarData);
+                        $scope.negTwoWeeks = Math.abs(charts.twoWeeks($scope.calendarData));
 
                         $scope.convertToFahrenheit = charts.convertToFahrenheit;
                         $scope.convertToDate = charts.convertToDate;
@@ -144,7 +146,12 @@
                   },
                   legend: {
                       title: {
-                          text: 'Steps'
+                          text: 'Steps',
+                          style:{
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            fill: '#707070'
+                          }
                       },
                       align: 'right',
                       layout: 'vertical',
@@ -229,8 +236,13 @@
               yAxis: {
                   title:{
                     text: 'Steps',
-                    style: {
-                         fontSize: '16px'
+                    "rotation": 0,
+                    x: -27,
+                    y: -150,
+                    offset: 0,
+                    style:{
+                      fontSize: '16px',
+                      fontWeight: 'bold'
                     }
                   },
                   type: 'logarithmic',
@@ -291,7 +303,7 @@
                    }
                },
                title: {
-                   text: "Yesterday's Active Progress"
+                   text: "Today's Active Progress"
                },
                subtitle: {
                    text: 'Active lifestyle is 10000 steps per day'

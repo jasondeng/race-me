@@ -31,41 +31,51 @@
     </div>
 
     <div class="panel-body">
-        <div class="row text-center buffer">
-            <div class="col-md-4 col-sm-4">
+        <div class="row buffer">
+            <div class="col-md-4 col-sm-4 dashOutline">
                 <div>
-                    You are <h4>{{twoWeeks}}%</h4> <span ng-if="twoWeeks < 0">Less</span> <span ng-if="twoWeeks > 0">More</span>
+                    <p>You are </p><p class="twoWeeks" ng-if="twoWeeks < 0">{{negTwoWeeks}}%</p> <span ng-if="twoWeeks < 0">less</span>
+                    <p class="twoWeeks" ng-if="twoWeeks > 0">{{twoWeeks}}%</p> <span ng-if="twoWeeks > 0">more</span>
                     active than last week
                 </div>
             </div>
 
-            <div class="pull-left well">
-                <div class="col-md-4 col-sm-4" ng-repeat="weather in weatherResult.list">
-                    <h3 class="panel-title">{{ convertToDate(weather.dt) | date: 'MMM d' }} <i class="fa fa-sun-o"
-                                                                                               aria-hidden="true"></i>
-                    </h3>
+            <div>
+                <div class="col-md-4 col-sm-4 dashOutline" ng-repeat="weather in weatherResult.list">
+                    <p>{{ convertToDate(weather.dt) | date: 'MMM d' }} <i class="fa fa-sun-o" aria-hidden="true"></i></p>
                     <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
                     <p>{{ weather.weather[0].main }}: {{weather.weather[0].description}}</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="mySelect"> Select Month </label>
-                        <select class="form-control " name="mySelect" id="mySelect"
-                                ng-options="month.name for month in data.availableMonth track by month.id"
-                                ng-model="data.selectedMonth" ng-change="update()"></select>
-                    </div>
-                </form>
+          <div class="col-md-4">
+            <form role="form">
+                <div class="form-group">
+                    <label for="mySelect"> Select Month </label>
+                    <select class="form-control " name="mySelect" id="mySelect"
+                            ng-options="month.name for month in data.availableMonth track by month.id"
+                            ng-model="data.selectedMonth" ng-change="update()"></select>
+                </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+              <div class="thumbnail">
                 <highchart config="calenderChart"></highchart>
-            </div>
-            <div class="col-md-5">
-                <highchart config="areaChart"></highchart>
+              </div>
             </div>
             <div class="col-md-4">
+              <div class="thumbnail">
+                <highchart config="areaChart"></highchart>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
                 <highchart config="activityChart"></highchart>
+              </div>
             </div>
         </div>
     </div>

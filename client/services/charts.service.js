@@ -137,7 +137,7 @@
               storeTotal.push(total);
               total = 0;
             }
-            
+
           }
 
           if(storeTotal[0] < storeTotal[1]){

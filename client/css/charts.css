@@ -1,13 +1,19 @@
-.well{
-  padding: 0;
-  margin: 0;
+.twoWeeks{
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.well div p {
-  padding: 0;
-  margin: 0;
+p{
+  margin-bottom: 0;
 }
 
-.pull-left {
-  margin-left: 20px;
+.dashOutline{
+  font-weight: bold;
+  font-size: 15px;
+  margin: 1.66%;
+  width: 30%;
+}
+
+.panel-body{
+  background-color: rgba(52,136,140,0.4);
 }
