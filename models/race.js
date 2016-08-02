@@ -8,6 +8,7 @@ var raceSchema = mongoose.Schema({
         end: Number,
         speed: Number,
         duration: Number,
+        distance: Number,
         route: {
             origin: {
                 lat: Number,
@@ -23,6 +24,7 @@ var raceSchema = mongoose.Schema({
         end: Number,
         speed: Number,
         duration: Number,
+        distance: Number,
         route: {
             origin: {
                 lat: Number,

@@ -16,3 +16,4 @@ env.json
 route_generator_js
 
 typings/
+config.json
