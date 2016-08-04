@@ -26,38 +26,35 @@
 <div ng-if="vm.isLoggedIn && vm.hasHealth && vm.loadedData" class="panel panel-default">
 
 
-    <div class="panel-heading">
-
-    </div>
 
     <div class="panel-body">
-        <div class="row buffer">
-            <div class="col-md-4 col-sm-4 dashOutline">
-                <div>
-                    <p>You are </p><p class="twoWeeks" ng-if="twoWeeks < 0">{{negTwoWeeks}}%</p> <span ng-if="twoWeeks < 0">less</span>
-                    <p class="twoWeeks" ng-if="twoWeeks > 0">{{twoWeeks}}%</p> <span ng-if="twoWeeks > 0">more</span>
-                    active than last week
-                </div>
+        <div class="row-fluid text-center">
+          <div class="col-md-2 col-sm-4 " ng-repeat="weather in weatherResult.list">
+            <div class="thumbnail">
+              <p><img src="http://openweathermap.org/img/w/{{ weather.weather[0].icon}}.png"> {{ convertToDate(weather.dt) | date: 'MMM d' }} </p>
+              <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
+              <p>{{ weather.weather[0].main }}: {{weather.weather[0].description}}</p>
             </div>
-
-            <div>
-                <div class="col-md-4 col-sm-4 dashOutline" ng-repeat="weather in weatherResult.list">
-                    <p>{{ convertToDate(weather.dt) | date: 'MMM d' }} <i class="fa fa-sun-o" aria-hidden="true"></i></p>
-                    <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
-                    <p>{{ weather.weather[0].main }}: {{weather.weather[0].description}}</p>
-                </div>
-            </div>
+          </div>
         </div>
+
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4 col-sm-offset-1">
             <form role="form">
                 <div class="form-group">
                     <label for="mySelect"> Select Month </label>
-                    <select class="form-control " name="mySelect" id="mySelect"
+                    <select class="thumbnail" name="mySelect" id="mySelect"
                             ng-options="month.name for month in data.availableMonth track by month.id"
                             ng-model="data.selectedMonth" ng-change="update()"></select>
                 </div>
             </form>
+          </div>
+          <div class="col-md-4 col-sm-4 col-sm-offset-1">
+              <div class="thumbnail text-center">
+                  <p class="twoWeeksDown" ng-if="twoWeeks < 0"><i class="ion-arrow-down-a"></i> {{negTwoWeeks}}%</p> <span ng-if="twoWeeks < 0">less</span>
+                  <p class="twoWeeksUp" ng-if="twoWeeks > 0"><i class="ion-arrow-up-a"></i> {{twoWeeks}}%</p> <span ng-if="twoWeeks > 0">more</span>
+                  active than last week
+              </div>
           </div>
         </div>
 

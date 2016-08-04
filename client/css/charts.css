@@ -1,19 +1,27 @@
-.twoWeeks{
+.twoWeeksDown{
   font-weight: bold;
   font-size: 20px;
+  color: rgba(255, 0, 0, 0.5);
 }
 
-p{
+.twoWeeksUp{
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(0, 255, 0, 0.5);
+}
+
+p i{
+  vertical-align: middle;
+}
+
+div div p{
   margin-bottom: 0;
 }
 
-.dashOutline{
-  font-weight: bold;
-  font-size: 15px;
-  margin: 1.66%;
-  width: 30%;
+.panel-body{
+  margin-top: -30px;
 }
 
-.panel-body{
-  background-color: rgba(52,136,140,0.4);
+#mySelect{
+  width: 100%;
 }
