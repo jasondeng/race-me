@@ -293,13 +293,33 @@ router.post("/race", ensureAuthenticated, (req, res) => {
         data.username = user.username;
         data.duration = data.end - data.start;
         data.created = moment().unix();
-        Race.findOneAndUpdate({_id: raceId, "opponent.username": user.username}, {opponent: data}, {new: true}, (err, doc) => {
+        var winner = data.username;
+        var status = "Finished";
+        Race.findOneAndUpdate({_id: raceId, "opponent.username": user.username}, {opponent: data, status: status}, {new: true}, (err, doc) => {
             if (err) {
                 return res.send(err);
             }
             if (!doc) {
                 return res.status(404).send({message: "Race not found"});
             }
+            if (doc.challenger.distance < doc.challenger.route.length && data.distance < data.route.length) {
+                winner = "None";
+                status = "Invalid";
+            }
+            else if (doc.challenger.distance < doc.challenger.route.length) {
+                winner = data.username;
+            }
+            else if (doc.challenger.duration < data.duration) {
+                winner = doc.challenger.username;
+            }
+            doc.winner = winner;
+            doc.status = status;
+            doc.update({winner: winner, status: status}, function(err, raw) {
+                if (err) {
+                    return res.send(err);
+                }
+                console.log(raw);
+            });
             console.log(doc);
             res.send(doc);
         });
