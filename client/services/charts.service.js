@@ -133,7 +133,6 @@
             }
 
             if (i % 7 === 0) {
-              console.log(total);
               storeTotal.push(total);
               total = 0;
             }

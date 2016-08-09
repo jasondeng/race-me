@@ -75,6 +75,12 @@
 
                         let currentDay = new Date().getDate();
                         $scope.activityChart.series[0].data = [$scope.calendarData[selectedMonthName][currentDay-1][2]];
+                        $scope.currentCalTod = selectedMonthName + ' ' + currentDay;
+                        $scope.caloriesToday = (($scope.calendarData[selectedMonthName][currentDay-1][2]/2112)*100).toFixed(2);
+
+                        $scope.currentCalYes = selectedMonthName + ' ' + (currentDay - 1);
+                        $scope.caloriesYesterday = (($scope.calendarData[selectedMonthName][currentDay-2][2]/2112)*100).toFixed(2);
+
 
 
                         $scope.twoWeeks = charts.twoWeeks($scope.calendarData);
