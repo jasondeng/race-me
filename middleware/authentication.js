@@ -48,6 +48,11 @@ exports.signUp = function(req, res, next) {
       fullname: fullname,
       username: username,
       password: password,
+      heartRate: 0,
+      avgSpeed: 0,
+      avgDistance: 0,
+      rank: 0,
+      randomIndex: Math.random(),
       created: moment().unix()
     });
 
@@ -56,23 +61,23 @@ exports.signUp = function(req, res, next) {
         return next(error);
       }
     
-      var rank = new Rank({
-        user: user._id,
-        username: user.username,
-        fullname: user.fullname,
-        heartRate: 0,
-        avgSpeed: 0,
-        avgDistance: 0,
-        rank: 0,
-        randomIndex: Math.random(),
-        created: moment().unix()
-      })
+      // var rank = new Rank({
+      //   user: user._id,
+      //   username: user.username,
+      //   fullname: user.fullname,
+      //   heartRate: 0,
+      //   avgSpeed: 0,
+      //   avgDistance: 0,
+      //   rank: 0,
+      //   randomIndex: Math.random(),
+      //   created: moment().unix()
+      // })
 
-      rank.save(function(error) {
-        if (error) {
-          return next(error);
-        }
-      });
+      // rank.save(function(error) {
+      //   if (error) {
+      //     return next(error);
+      //   }
+      // });
 
       res.json({token: tokenForUser(user, false)});
     });

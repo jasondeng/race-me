@@ -23,6 +23,7 @@ var userSchema = new mongoose.Schema({
     avgSpeed: Number,
     avgDistance: Number,
     avgDuration: Number,
+    rank: Number
 });
 
 userSchema.pre('save', function (next) {

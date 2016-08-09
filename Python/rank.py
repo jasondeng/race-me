@@ -129,22 +129,35 @@ def give_user_rank(user_s,user_d):
 
 
 import json
+import os
+from bson.objectid import ObjectId
+from bson.json_util import dumps
 
-with open("../env.json") as json_file:
+with open("./env.json") as json_file:
 	json_data = json.load(json_file)
 
 #Make the connection
 from pymongo import MongoClient
-connection = MongoClient(json_data["MONGODB_URI"])
+dbURI = None
+if os.environ.get('NODE_ENV') == 'production':
+	dbURI = os.environ.get('MONGODB_URI')
+else:
+	with open("env.json") as json_file:
+		json_data = json.load(json_file)
+		dbURI = json_data["MONGODB_URI"]
+        
+connection = MongoClient(dbURI)
 #Call a collection
-db = connection.heroku_czw9k6mx.USER_RANKING
+db = connection.heroku_czw9k6mx.users
 
 #itrate DB and update rank
-go_over_db = db.find()
+go_over_db = db.find({"_id": ObjectId("57aa2fb44c139bcc14598e6f")})
+print(dumps(go_over_db))
 for doc in go_over_db:
 	User_id = doc['_id']
-	User_Speed = int(doc['Avg_Speed'])
-	User_Distance = int(doc['Avg_Distance'])
+	User_Speed = int(doc['avgSpeed'])
+	User_Distance = int(doc['avgDistance'])
 	User_rank = give_user_rank(User_Speed,User_Distance)
 	db.update_one({"_id": User_id}, {"$set": {"rank": User_rank}})
 connection.close()
+exit()

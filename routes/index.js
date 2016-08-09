@@ -82,6 +82,53 @@ function findUser(req, res, next) {
     });
 }
 
+function calculateAvg(req, res) {
+
+  var
+    totalSpeed = 0,
+    totalDuration = 0,
+    totalDistance = 0;
+  
+  User.findById(req.user.sub, {password: 0}, function(err, data) {
+    Race.find({$or: [{"opponent.username": req.user.username}, {"challenger.username": req.user.username}]}, {password: 0}, function(err, foundUsers) {
+        if (err) {
+            // return res.status(404).send(err);
+        }
+        foundUsers.forEach((user) => {
+          if(user.challenger.username === req.user.username) {
+            console.log("--------------------", user);
+            console.log("TYPEOF==========================", typeof user.opponent.speed);
+            totalSpeed += user.challenger.speed || 0;
+            totalDuration += user.challenger.duration || 0;
+            totalDistance += user.challenger.distance || 0;
+          }
+          if(user.opponent.username === req.user.username) {
+            console.log("--------------------", user);
+            console.log("TYPEOF==========================", typeof user.opponent.speed);
+            totalSpeed += user.opponent.speed || 0;
+            totalDuration += user.opponent.duration || 0;
+            totalDistance += user.opponent.distance || 0;
+          }
+        });
+        console.log("BGUIBFIUABFUIBFIQU", foundUsers.length);
+        console.log("SPEEEEEEEEEEED", totalSpeed, " ",totalDuration, " ",totalDistance);
+        var
+          avgSpeed = totalSpeed/foundUsers.length,
+          avgDuration = totalDuration/foundUsers.length,
+          avgDistance = totalDistance/foundUsers.length;
+
+        data.update({avgSpeed: avgSpeed, avgDuration: avgDuration, avgDistance: avgDistance}, (err, raw) => {
+            if (err) {
+                // return res.send(err);
+            }
+            console.log(raw);
+        });
+        console.log("USERS=============================", foundUsers);
+        console.log("AVERAGE = = = = = == = = = = = ", avgSpeed, " ", avgDuration, " ", avgDistance)
+    });
+  });
+}
+
 function rectangleRoute(length, BaseLocation) {
     /*  
         The algorithm was created based on the answers from these two stackoverflow links
@@ -320,11 +367,20 @@ router.post("/race", ensureAuthenticated, (req, res) => {
                 }
                 console.log(raw);
             });
+            var pyOptions = {
+                mode: 'text'
+            };
+            PythonShell.run('Python/rank.py', pyOptions, (err, results) => {
+                if (err) throw err;
+            // results is an array consisting of messages collected during execution
+              console.log(results);
+              // res.send(JSON.parse(results[0]));
+            });
             console.log(doc);
             res.send(doc);
         });
     }
-
+    calculateAvg(req, res);
 });
 
 // Race Mailbox
