@@ -29,60 +29,62 @@
 
     <div class="panel-body grayColor">
         <div class="row text-center">
-          <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="weather in weatherResult.list">
-            <div class="thumbnail">
+          <div class="col-md-2 col-sm-4 col-xs-6 grayShadowBox" ng-repeat="weather in weatherResult.list">
               <p><img src="http://openweathermap.org/img/w/{{ weather.weather[0].icon}}.png"> {{ convertToDate(weather.dt) | date: 'MMM d' }} </p>
               <p>Temperature: {{ convertToFahrenheit(weather.temp.day) }}&deg;</p>
               <p>{{ weather.weather[0].main }}: {{weather.weather[0].description}}</p>
-            </div>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-4 col-sm-4">
             <form role="form">
-                <div class="form-group">
+                <div class="form-group mySelect">
                     <label for="mySelect"> Select Month </label>
-                    <select class="thumbnail" name="mySelect" id="mySelect"
+                    <select class="mySelect" name="mySelect" id="mySelect"
                             ng-options="month.name for month in data.availableMonth track by month.id"
                             ng-model="data.selectedMonth" ng-change="update()"></select>
                 </div>
             </form>
           </div>
           <div class="col-md-4 col-sm-4">
-              <div class="thumbnail text-center">
+              <div class="grayShadowBox text-center">
                   <p class="twoWeeksDown" ng-if="twoWeeks < 0"><i class="ion-arrow-down-a"></i> {{negTwoWeeks}}%</p> <span ng-if="twoWeeks < 0">less</span>
                   <p class="twoWeeksUp" ng-if="twoWeeks > 0"><i class="ion-arrow-up-a"></i> {{twoWeeks}}%</p> <span ng-if="twoWeeks > 0">more</span>
                   active than last week
               </div>
           </div>
           <div class="col-md-2 col-sm-2">
-            <div class="thumbnail text-center">
+            <div class="grayShadowBox text-center">
               <p>{{currentCalYes}}</p>
-              {{caloriesYesterday}} Calories <i class="ion-ios-flame"></i>
+              <div class="twoWeeksDown">
+                {{caloriesYesterday}} Calories <i class="ion-ios-flame"></i>
+              </div>
             </div>
           </div>
           <div class="col-md-2 col-sm-2">
-            <div class="thumbnail text-center">
+            <div class="grayShadowBox text-center">
               <p> {{currentCalTod}} </p>
-              {{caloriesToday}} Calories <i class="ion-ios-flame"></i>
+              <div class="twoWeeksDown">
+                {{caloriesToday}} Calories <i class="ion-ios-flame"></i>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-              <div class="thumbnail">
+              <div class="grayShadowBox">
                 <highchart config="calenderChart"></highchart>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="thumbnail">
+              <div class="grayShadowBox">
                 <highchart config="areaChart"></highchart>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="thumbnail">
+              <div class="grayShadowBox">
                 <highchart config="activityChart"></highchart>
               </div>
             </div>
