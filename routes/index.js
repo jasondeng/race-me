@@ -96,22 +96,16 @@ function calculateAvg(req, res) {
         }
         foundUsers.forEach((user) => {
           if(user.challenger.username === req.user.username) {
-            console.log("--------------------", user);
-            console.log("TYPEOF==========================", typeof user.opponent.speed);
             totalSpeed += user.challenger.speed || 0;
             totalDuration += user.challenger.duration || 0;
             totalDistance += user.challenger.distance || 0;
           }
           if(user.opponent.username === req.user.username) {
-            console.log("--------------------", user);
-            console.log("TYPEOF==========================", typeof user.opponent.speed);
             totalSpeed += user.opponent.speed || 0;
             totalDuration += user.opponent.duration || 0;
             totalDistance += user.opponent.distance || 0;
           }
         });
-        console.log("BGUIBFIUABFUIBFIQU", foundUsers.length);
-        console.log("SPEEEEEEEEEEED", totalSpeed, " ",totalDuration, " ",totalDistance);
         var
           avgSpeed = totalSpeed/foundUsers.length,
           avgDuration = totalDuration/foundUsers.length,
@@ -123,8 +117,7 @@ function calculateAvg(req, res) {
             }
             console.log(raw);
         });
-        console.log("USERS=============================", foundUsers);
-        console.log("AVERAGE = = = = = == = = = = = ", avgSpeed, " ", avgDuration, " ", avgDistance)
+        console.log("USERS", foundUsers);
     });
   });
 }
@@ -368,13 +361,14 @@ router.post("/race", ensureAuthenticated, (req, res) => {
                 console.log(raw);
             });
             var pyOptions = {
-                mode: 'text'
+                mode: 'json',
+                args: [req.user.sub]
             };
             PythonShell.run('Python/rank.py', pyOptions, (err, results) => {
                 if (err) throw err;
             // results is an array consisting of messages collected during execution
               console.log(results);
-              // res.send(JSON.parse(results[0]));
+              res.send(results);
             });
             console.log(doc);
             res.send(doc);
