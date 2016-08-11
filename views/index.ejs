@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html ng-app="app">
-    <head>
-        <base href="/">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Race Me</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/heatmap.js"></script>
-        <script src="https://code.highcharts.com/highcharts-more.js"></script>
-        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-        <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-        <link rel="stylesheet" href="css/angular-toastr.css">
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="css/social-icons.css">
-    </head>
-    <body>
-        <div ng-view></div>
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Race Me</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
-        <script src="vendor/angular.js"></script>
-        <script src="/vendor/angular-animate.js"></script>
-        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.0.js"></script>
-        <script src="vendor/angular-route.js"></script>
-        <script src="vendor/angular-messages.js"></script>
-        <script src="vendor/angular-toastr.tpls.js"></script>
-        <script src="vendor/highcharts-ng.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.7/angular-sanitize.min.js"></script>
-        <script src="app.js"></script>
-        <script src="components/home/home.controller.js"></script>
-        <script src="components/login/login.controller.js"></script>
-        <script src="components/register/register.controller.js"></script>
-        <script src="components/help/help.controller.js"></script>
-        <script src="components/about/about.controller.js"></script>
-        <script src="components/navigation/navigation.controller.js"></script>
-        <script src="components/achievements/achievement.controller.js"></script>
-        <script src="components/activity/activity.controller.js"></script>
-        <script src="components/gear/gear.controller.js"></script>
-        <script src="components/social/social.controller.js"></script>
-        <script src="components/footer/footer.directive.js"></script>
-        <script src="components/no-data/no-data.directive.js"></script>
-        <script src="components/navigation/navigation.directive.js"></script>
-        <script src="components/loading/loading.directive.js"></script>
-        <script src="services/authentication.service.js"></script>
-        <script src="services/charts.service.js"></script>
-        <script src="//cdn.jsdelivr.net/satellizer/0.14.1/satellizer.min.js"></script>
+    <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="css/angular-toastr.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/social-icons.css">
+    <link rel="stylesheet" href="css/charts.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div ng-view></div>
 
-    </body>
+<script src="vendor/angular.js"></script>
+<script src="/vendor/angular-animate.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.0.js"></script>
+<script src="vendor/angular-route.js"></script>
+<script src="vendor/angular-messages.js"></script>
+<script src="vendor/angular-toastr.tpls.js"></script>
+<script src="vendor/angular-resource.min.js"></script>
+<script src="vendor/highcharts-ng.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.7/angular-sanitize.min.js"></script>
+<script src="app.js"></script>
+<script src="components/home/home.controller.js"></script>
+<script src="components/login/login.controller.js"></script>
+<script src="components/register/register.controller.js"></script>
+<script src="components/help/help.controller.js"></script>
+<script src="components/about/about.controller.js"></script>
+<script src="components/activity/activity.service.js"></script>
+<script src="components/navigation/navigation.controller.js"></script>
+<script src="components/achievements/achievement.controller.js"></script>
+<script src="components/activity/activity.controller.js"></script>
+<script src="components/gear/gear.controller.js"></script>
+<script src="components/social/social.controller.js"></script>
+<script src="components/footer/footer.directive.js"></script>
+<script src="components/no-data/no-data.directive.js"></script>
+<script src="components/navigation/navigation.directive.js"></script>
+<script src="components/loading/loading.directive.js"></script>
+<script src="services/authentication.service.js"></script>
+<script src="services/charts.service.js"></script>
+<script src="//cdn.jsdelivr.net/satellizer/0.14.1/satellizer.min.js"></script>
+
+</body>
 </html>

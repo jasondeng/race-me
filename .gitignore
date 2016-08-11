@@ -4,6 +4,8 @@ npm-debug.log
 # ENV variable
 env.json
 
+client/config.json
+
 # Webstorm stuff
 .idea/workspace.xml
 .idea/vcs.xml
@@ -16,4 +18,3 @@ env.json
 route_generator_js
 
 typings/
-config.json

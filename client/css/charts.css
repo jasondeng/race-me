@@ -1,9 +1,39 @@
-.hiddenChart{
-    display: none;
+.twoWeeksDown{
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(255, 0, 0, 0.5);
 }
 
-.tester{
-    height: 250px;
-    min-width: 400px;
-    width: 50%;
+.twoWeeksUp{
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(0, 255, 0, 0.5);
+}
+
+p i{
+  vertical-align: middle;
+}
+
+div div p{
+  margin-bottom: 0;
+}
+
+.grayColor{
+  background: rgba(142,158,171,0.5);
+}
+
+.mySelect{
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 1px 5px rgba(0, 0, 0, .1);
+  display: block;
+  padding: 4px;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.grayShadowBox{
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 1px 5px rgba(0, 0, 0, .1);
+  display: block;
+  margin-bottom: 20px;
+  line-height: 1.846;
+  background-color: #ffffff;
 }

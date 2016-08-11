@@ -5,8 +5,8 @@
         .module('app')
         .service('charts', charts);
 
-    charts.$inject = ['$http'];
-    function charts($http) {
+    charts.$inject = ['$http', '$resource'];
+    function charts($http, $resource) {
 
         var getHealthData = function () {
             return $http.get('/profile')
@@ -87,11 +87,76 @@
           return storeMonth;
         };
 
+        var getWeatherAPI = function () {
+            return $http.get('config.json')
+                .success(function (response) {
+                    return response.API_KEY;
+                });
+        };
+
+        var returnWeather = function (city, days, API_KEY) {
+          let weatherAPI = $resource("http://api.openweathermap.org/data/2.5/forecast/daily", {callback:"JSON_CALLBACK"}, {get:{method:"JSONP"}});
+          return weatherAPI.get({q: city, cnt: days, APPID: API_KEY});
+        };
+
+        var convertToFahrenheit = function (degK) {
+          return Math.round((1.8 *(degK - 273)) + 32);
+        };
+
+        var convertToDate = function (dt) {
+          return new Date(dt * 1000);
+        };
+
+        var twoWeeks = function (data) {
+          let currentMonthNum = new Date().getMonth();
+          let currentMonth = convertNumberToMonth(currentMonthNum);
+          let start = new Date().getDate() - 1;
+          let year = new Date().getFullYear();
+
+          let storeTotal = [];
+          let total = 0;
+          let counter = 1;
+
+          for (let i = 1; i < 15; i++) {
+
+            if(start-counter !== -1){
+              total += data[currentMonth][start-counter][2];
+              counter++;
+            }
+            else if (currentMonthNum !== 0) { //NOT EQUAL TO JAN since only store current year data
+              //get last month's name + days if current month day is 0
+              currentMonth = convertNumberToMonth(currentMonthNum-1);
+              start = getDaysinMonth(currentMonthNum,year);
+              counter = 1;
+              total += data[currentMonth][start-counter][2];
+              counter++;
+            }
+
+            if (i % 7 === 0) {
+              storeTotal.push(total);
+              total = 0;
+            }
+
+          }
+
+          if(storeTotal[0] < storeTotal[1]){
+            return  +(-(storeTotal[1]-storeTotal[0])*100/storeTotal[1]).toFixed(2);
+          }
+          return +((storeTotal[1]-storeTotal[0])*100/storeTotal[0]).toFixed(2);
+        };
+
+
+
         return {
             getHealthData: getHealthData,
             calendarData: calendarData,
             areaChartData: areaChartData,
-            convertNumberToMonth: convertNumberToMonth
+            convertNumberToMonth: convertNumberToMonth,
+            getWeatherAPI: getWeatherAPI,
+            returnWeather: returnWeather,
+            convertToFahrenheit: convertToFahrenheit,
+            convertToDate: convertToDate,
+            twoWeeks: twoWeeks
         };
     }
 })();
