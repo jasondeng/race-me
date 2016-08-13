@@ -1,3 +1,7 @@
+.navbar{
+  margin-bottom: 0px;
+}
+
 .twoWeeksDown{
   font-weight: bold;
   font-size: 20px;
@@ -36,4 +40,15 @@ div div p{
   margin-bottom: 20px;
   line-height: 1.846;
   background-color: #ffffff;
+}
+
+.lowOpacity{
+  opacity: 0.5;
+}
+
+.weatherTable {
+    display: table;
+}
+.weatherTableChild {
+    display: table-cell;
 }

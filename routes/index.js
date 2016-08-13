@@ -583,4 +583,20 @@ router.post('/auth/unlink', ensureAuthenticated, function (req, res) {
     });
 });
 
+
+////////////////////WEATHER
+router.get('/weather', ensureAuthenticated, (req, res) => {
+var features = 'forecast10day',
+    location = 'NY/New_York',
+    keys = config.WUNDERGROUND_KEY || process.env.WUNDERGROUND_KEY,
+    url = 'http://api.wunderground.com/api/' + keys + '/' + features + '/q/' + location + '.json';
+
+    request({url: url}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var data = JSON.parse(body);
+            res.json(data);
+        }
+    })
+});
+
 module.exports = router;

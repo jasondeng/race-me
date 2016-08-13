@@ -87,26 +87,6 @@
           return storeMonth;
         };
 
-        var getWeatherAPI = function () {
-            return $http.get('config.json')
-                .success(function (response) {
-                    return response.API_KEY;
-                });
-        };
-
-        var returnWeather = function (city, days, API_KEY) {
-          let weatherAPI = $resource("http://api.openweathermap.org/data/2.5/forecast/daily", {callback:"JSON_CALLBACK"}, {get:{method:"JSONP"}});
-          return weatherAPI.get({q: city, cnt: days, APPID: API_KEY});
-        };
-
-        var convertToFahrenheit = function (degK) {
-          return Math.round((1.8 *(degK - 273)) + 32);
-        };
-
-        var convertToDate = function (dt) {
-          return new Date(dt * 1000);
-        };
-
         var twoWeeks = function (data) {
           let currentMonthNum = new Date().getMonth();
           let currentMonth = convertNumberToMonth(currentMonthNum);
@@ -145,18 +125,20 @@
           return +((storeTotal[1]-storeTotal[0])*100/storeTotal[0]).toFixed(2);
         };
 
-
+        var getWUnderGround = function () {
+            return $http.get('/weather')
+                .success(function (response) {
+                    return response.data;
+                });
+        };
 
         return {
             getHealthData: getHealthData,
             calendarData: calendarData,
             areaChartData: areaChartData,
             convertNumberToMonth: convertNumberToMonth,
-            getWeatherAPI: getWeatherAPI,
-            returnWeather: returnWeather,
-            convertToFahrenheit: convertToFahrenheit,
-            convertToDate: convertToDate,
-            twoWeeks: twoWeeks
+            twoWeeks: twoWeeks,
+            getWUnderGround: getWUnderGround
         };
     }
 })();
