@@ -41,7 +41,7 @@
               {id: '11', name: 'December'}
           ],
           selectedMonth: {id: new Date().getMonth()} //This sets the default value of the select in the ui
-        };
+        };       
 
         vm.loadedData = false;
         if (vm.isLoggedIn && vm.hasHealthData) {
@@ -81,16 +81,13 @@
                         $scope.currentCalYes = selectedMonthName + ' ' + (currentDay - 1);
                         $scope.caloriesYesterday = (($scope.calendarData[selectedMonthName][currentDay-2][2]/2112)*100).toFixed(2);
 
-
-
                         $scope.twoWeeks = charts.twoWeeks($scope.calendarData);
                         $scope.negTwoWeeks = Math.abs(charts.twoWeeks($scope.calendarData));
-
-                        $scope.convertToFahrenheit = charts.convertToFahrenheit;
+                        
                         $scope.convertToDate = charts.convertToDate;
 
-                        charts.getWeatherAPI().then(function (response) {
-                          $scope.weatherResult = charts.returnWeather('New York, NY', '6', response.data.API_KEY);
+                        charts.getWUnderGround().then(function (response) {
+                          $scope.weatherWUG = response.data;
                         });
 
                         vm.loadedData = true;

@@ -1,17 +1,21 @@
 {
+    "extends": "eslint:recommended",
     "env": {
         "browser": true,
         "node": true
     },
     "globals": {
+        "Highcharts": true,
         "google": true,
         "maps": true,
-        "map": true
+        "map": true,
+        "$": true
     },
     "parserOptions": {
         "ecmaVersion": 6
     },
     "rules": {
-        "no-console": 0
+        "no-console": 0,
+        "no-unused-vars": 0
     }
 }

@@ -1,12 +1,16 @@
+.navbar{
+  margin-bottom: 0px;
+}
+
 .twoWeeksDown{
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   color: rgba(255, 0, 0, 0.5);
 }
 
 .twoWeeksUp{
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   color: rgba(0, 255, 0, 0.5);
 }
 
@@ -33,7 +37,44 @@ div div p{
 .grayShadowBox{
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), 0 1px 5px rgba(0, 0, 0, .1);
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   line-height: 1.846;
   background-color: #ffffff;
+}
+
+.lowOpacity{
+  opacity: 0.5;
+}
+
+.boxes {
+  display:table;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.box {
+  display: table-cell;
+}
+
+#hideWeatherTable {
+  display: none;
+}
+
+@media (max-width: 900px) {
+    .boxes {
+      display:table;
+      width: 100%;
+      height: 100%;
+    }
+    .box {
+        width: 100%;
+        float: left;
+    }
+    #hideWeatherTable {
+      display: block;
+    }
+    #hideMultWeatherTable {
+      display: none;
+    }
 }
