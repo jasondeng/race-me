@@ -7,7 +7,7 @@
         .run(run);
 
 
-    function config($routeProvider, $authProvider, $httpProvider) {
+    function config($routeProvider, $authProvider, $httpProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'components/home/home.view.html',
@@ -55,6 +55,8 @@
                 controllerAs: 'vm'
             })
             .otherwise({redirectTo: '/'});
+
+        $locationProvider.html5Mode(true);
 
 
 

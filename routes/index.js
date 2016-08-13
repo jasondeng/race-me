@@ -599,4 +599,8 @@ var features = 'forecast10day',
     })
 });
 
+router.get('/*', function (req, res) {
+    res.render('index');
+});
+
 module.exports = router;
