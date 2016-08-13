@@ -83,6 +83,8 @@
 
                         $scope.twoWeeks = charts.twoWeeks($scope.calendarData);
                         $scope.negTwoWeeks = Math.abs(charts.twoWeeks($scope.calendarData));
+                        
+                        $scope.convertToDate = charts.convertToDate;
 
                         charts.getWUnderGround().then(function (response) {
                           $scope.weatherWUG = response.data;

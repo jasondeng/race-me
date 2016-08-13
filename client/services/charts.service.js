@@ -131,6 +131,9 @@
                     return response.data;
                 });
         };
+        var convertToDate = function (dt) {
+         return new Date(dt * 1000);
+        };
 
         return {
             getHealthData: getHealthData,
@@ -138,7 +141,8 @@
             areaChartData: areaChartData,
             convertNumberToMonth: convertNumberToMonth,
             twoWeeks: twoWeeks,
-            getWUnderGround: getWUnderGround
+            getWUnderGround: getWUnderGround,
+            convertToDate:convertToDate
         };
     }
 })();

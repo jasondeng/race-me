@@ -29,25 +29,54 @@
 
     <div class="panel-body grayColor">
 
-      <uib-accordion>
-        <div class="row-fluid weatherTable">
-          <div uib-accordion-group class="weatherTableChild"
-               ng-repeat="weather in weatherWUG.forecast.simpleforecast.forecastday|limitTo: 6"
-               ng-init="outterIndex = $index * 2">
-              <uib-accordion-heading>
-                <p><img src="{{weather.icon_url}}"> {{ convertToDate(weather.date.epoch) | date: 'MMM d' }} </p>
-                <p>{{weather.high.fahrenheit}}&deg; <span class="lowOpacity">{{weather.low.fahrenheit}}&deg;</span> </p>
-                <p><i class="ion-waterdrop"></i> {{weather.pop}}%</p>
-                <p>{{weather.conditions}}</p>
-              </uib-accordion-heading>
+        <uib-accordion id="hideWeatherTable">
+          <div uib-accordion-group>
+            <uib-accordion-heading>
+              <div>CLICK TO SHOW WEATHER</div>
+            </uib-accordion-heading>
+            <uib-accordion>
+              <div class="row-fluid boxes">
+                <div uib-accordion-group class="box"
+                    ng-repeat="weather in weatherWUG.forecast.simpleforecast.forecastday|limitTo: 6"
+                    ng-init="outterIndex = $index * 2">
+                    <uib-accordion-heading>
+                      <p><img src="{{weather.icon_url}}"> {{ convertToDate(weather.date.epoch) | date: 'MMM d' }} </p>
+                      <p>{{weather.high.fahrenheit}}&deg; <span class="lowOpacity">{{weather.low.fahrenheit}}&deg;</span> </p>
+                      <p><i class="ion-waterdrop"></i> {{weather.pop}}%</p>
+                      <p>{{weather.conditions}}</p>
+                    </uib-accordion-heading>
 
-              <div ng-repeat="weather in weatherWUG.forecast.txt_forecast.forecastday|limitTo: 2:outterIndex">
-                <p><strong>{{weather.title}}</strong></p>
-                <p><small>{{weather.fcttext}}</small></p>
+                    <div ng-repeat="weather in weatherWUG.forecast.txt_forecast.forecastday|limitTo: 2:outterIndex">
+                      <p><strong>{{weather.title}}</strong></p>
+                      <p><small>{{weather.fcttext}}</small></p>
+                    </div>
+                </div>
               </div>
+            </uib-accordion>
           </div>
-        </div>
-      </uib-accordion>
+        </uib-accordion>
+
+        <uib-accordion id="hideMultWeatherTable">
+          <div class="row-fluid boxes">
+            <div uib-accordion-group class="box"
+                ng-repeat="weather in weatherWUG.forecast.simpleforecast.forecastday|limitTo: 6"
+                ng-init="outterIndex = $index * 2">
+                <uib-accordion-heading>
+                  <p><img src="{{weather.icon_url}}"> </p>
+                  <p>{{ convertToDate(weather.date.epoch) | date: 'MMM d' }} </p>
+                  <p>{{weather.high.fahrenheit}}&deg; <span class="lowOpacity">{{weather.low.fahrenheit}}&deg;</span> </p>
+                  <p><i class="ion-waterdrop"></i> {{weather.pop}}%</p>
+                  <p>{{weather.conditions}}</p>
+                </uib-accordion-heading>
+
+                <div ng-repeat="weather in weatherWUG.forecast.txt_forecast.forecastday|limitTo: 2:outterIndex">
+                  <p><strong>{{weather.title}}</strong></p>
+                  <p><small>{{weather.fcttext}}</small></p>
+                </div>
+            </div>
+          </div>
+        </uib-accordion>
+
 
         <div class="row">
           <div class="col-md-4 col-sm-4">
