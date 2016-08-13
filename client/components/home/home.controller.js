@@ -16,8 +16,11 @@
 
         $scope.currentUser = authentication.currentUser();
 
+        vm.hasHealth = false;
         authentication.checkHealth().then(function(data) {
-            vm.hasHealth = data.health;
+            if(data) {
+              vm.hasHealth = data.health;
+            }
         });
 
         $scope.calendarData = {};
