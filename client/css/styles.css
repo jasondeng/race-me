@@ -1,3 +1,8 @@
+html {
+  height: 100%;
+  margin: 0;
+}
+
 body {
     /*background-color: #d8d8d8;*/
     /*
@@ -9,7 +14,19 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    display: flex;
+    min-height: 100%;
+}
 
+#root {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+#team {
+  margin-top: 20px;
+  margin-bottom: 60px;
 }
 
 a {
@@ -138,16 +155,10 @@ a:hover {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
 
-}
-
-body {
-    /* Margin bottom by footer height */
+/*body {
     margin-bottom: 60px;
-}
+}*/
 
 .footer {
     position: absolute;
