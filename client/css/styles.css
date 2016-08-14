@@ -19,14 +19,30 @@ body {
 }
 
 #root {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   position: relative;
   overflow: hidden;
 }
 
 #team {
-  margin-top: 20px;
-  margin-bottom: 60px;
+  margin-top: 25px;
+  /*margin-bottom: 60px;*/
+}
+
+.container {
+  flex: 1;
+}
+
+.panel {
+  margin: 0;
+}
+
+.weather {
+  display: flex;
+  height: 100%;
+  align-content: center;
 }
 
 a {
@@ -161,9 +177,7 @@ a:hover {
 }*/
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    margin-top: 25px;
     height: 60px;
     background-color: #f5f5f5;
 }
