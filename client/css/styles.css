@@ -28,6 +28,7 @@ body {
 
 #team {
   margin-top: 25px;
+  margin-bottom: 25px;
   /*margin-bottom: 60px;*/
 }
 
@@ -177,7 +178,6 @@ a:hover {
 }*/
 
 .footer {
-    margin-top: 25px;
     height: 60px;
     background-color: #f5f5f5;
 }
