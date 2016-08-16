@@ -20,13 +20,11 @@
                         <div class="col-md-4 custom-border-right">
                             <div class="text-left">
                                 <h4>{{ race.challenger.username }}</h4>
-                                <div> Date: {{race.challenger.start | date:'MM/dd/yy'}}
-                                    <br>
-                                Time: {{race.challenger.start | date:' h:mma'}} - {{race.challenger.end | date:'h:mma'}}</div>
-
-
-                                <div> Speed: {{race.challenger.speed}} | Duration:
-                                    {{race.challenger.duration}}
+                                <div> Date: {{race.challenger.start*1000 | date:'MM/dd/yy'}}</div>
+                                <div> Time: {{race.challenger.start | date:' h:mma'}} - {{race.challenger.end | date:'h:mma'}}</div>
+                                <div>
+                                    Speed: {{race.challenger.speed}} |
+                                    Duration:{{race.challenger.duration}}
                                 </div>
                             </div>
                         </div>
@@ -42,9 +40,11 @@
                         <div class="col-md-4">
                             <div class="text-right">
                                 <h4>{{ race.opponent.username }}</h4>
-                                <div> Race time: {{race.opponent.start}} | {{race.opponent.end}}</div>
-                                <div> Speed: {{race.opponent.speed}} | Duration:
-                                    {{race.opponent.duration}}
+                                <div> Date: {{race.opponent.start*1000 | date:'MM/dd/yy'}}</div>
+                                <div> Time: {{race.opponent.start | date:'h:mma'}} - {{race.opponent.end | date: 'h:mma'}}</div>
+                                <div>
+                                    Speed: {{race.opponent.speed}} |
+                                    Duration:{{race.opponent.duration}}
                                 </div>
                             </div>
                         </div>

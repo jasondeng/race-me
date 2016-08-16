@@ -365,10 +365,13 @@ router.post("/race", ensureAuthenticated, (req, res) => {
                 args: [req.user.sub]
             };
             PythonShell.run('Python/rank.py', pyOptions, (err, results) => {
-                if (err) throw err;
+                if (err) {
+                  console.log(err);
+                  return res.send(err);
+                }
             // results is an array consisting of messages collected during execution
-              console.log(results);
-              res.send(results);
+              // console.log(results);
+              // res.send(results);
             });
             console.log(doc);
             res.send(doc);
