@@ -21,6 +21,13 @@
 
             navvm.hasHealthData = authentication.hasHealthData();
 
+            navvm.hasHealth = false;
+            authentication.checkHealth().then(function(data) {
+                if(data) {
+                  navvm.hasHealth = data.health;
+                }
+            });
+
             navvm.logout = function() {
                 authentication.logout();
                 $location.path('/');

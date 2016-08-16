@@ -39,6 +39,10 @@ function createJWT(user, healthBool) {
         fullname: user.fullname,
         first_name: user.first_name,
         health: healthBool,
+        // heartRate: user.heartRate || 0,
+        // avgSpeed: user.avgSpeed || 0,
+        // avgDistance: user.avgDistance || 0,
+        // rank: user.rank || 0,
         iat: moment().unix(),
         exp: moment().add(14, 'days').unix()
     };
@@ -463,6 +467,10 @@ router.post('/auth/facebook', function (req, res) {
                         user.fullname = user.fullname || profile.name;
                         user.first_name = user.first_name || profile.given_name;
                         user.username = user.username || profile.email;
+                        user.heartRate = user.heartRate;
+                        user.avgSpeed = user.avgSpeed;
+                        user.avgDistance = user.avgDistance;
+                        user.rank = user.rank;
                         user.save(function () {
                             var token = createJWT(user, false);
                             res.send({token: token});
@@ -484,8 +492,11 @@ router.post('/auth/facebook', function (req, res) {
                     user.fullname = user.fullname || profile.name;
                     user.first_name = user.first_name || profile.first_name;
                     user.username = user.username || profile.email;
-                    console.log(user);
-
+                    user.heartRate = 0;
+                    user.avgSpeed = 0;
+                    user.avgDistance = 0;
+                    user.rank = 0;
+                    user.randomIndex = Math.random();
                     user.save(function () {
                         var token = createJWT(user, false);
                         res.send({token: token});
@@ -539,6 +550,10 @@ router.post('/auth/google', function (req, res) {
                         user.fullname = user.fullname || profile.name;
                         user.first_name = user.first_name || profile.given_name;
                         user.username = user.username || profile.email;
+                        user.heartRate = user.heartRate || 0;
+                        user.avgSpeed = user.avgSpeed || 0;
+                        user.avgDistance = user.avgDistance || 0;
+                        user.rank = user.rank || 0;
                         user.save(function () {
                             var token = createJWT(user, false);
                             res.send({token: token});
@@ -558,6 +573,11 @@ router.post('/auth/google', function (req, res) {
                     user.fullname = profile.name;
                     user.first_name = profile.given_name;
                     user.username = profile.email;
+                    user.heartRate = 0;
+                    user.avgSpeed = 0;
+                    user.avgDistance = 0;
+                    user.rank = 0;
+                    user.randomIndex = Math.random();
                     user.save(function (err) {
                         if (err) {
                             console.log(err);

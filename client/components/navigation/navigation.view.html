@@ -15,7 +15,7 @@
                 <li ng-class="{active : isActive('/')}"><a href="/">Home</a></li>
 
                 <li ng-if="navvm.isLoggedIn"><a href="" >{{ navvm.currentUser.username || navvm.currentUser.first_name }}</a></li>
-                <li ng-class="{active : isActive('/activity')}" ng-if="navvm.isLoggedIn && navvm.hasHealthData"><a href="/activity" >Activity Log</a></li>
+                <li ng-class="{active : isActive('/activity')}" ng-if="navvm.isLoggedIn && navvm.hasHealth"><a href="/activity" >Activity Log</a></li>
                 <!--<li ng-class="{active : isActive('/achievements')}"ng-if="navvm.isLoggedIn && navvm.hasHealthData"><a href="/achievements" >Achievements</a></li>-->
                 <!--<li ng-class="{active : isActive('/gear')}" ng-if="navvm.isLoggedIn && navvm.hasHealthData"><a href="/gear" >Gear Comparison</a></li>-->
                 <!--<li ng-class="{active : isActive('/social')}" ng-if="navvm.isLoggedIn && navvm.hasHealthData"><a href="/social" >Share</a></li>-->
