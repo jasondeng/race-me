@@ -444,6 +444,10 @@ i.ion-trophy {
     border-right: 1px solid #ccc;
 }
 
+.custom-border-left {
+    border-left: 1px solid #ccc;
+}
+
 .custom-container {
     width: 100%;
     background: #f8f8f8;

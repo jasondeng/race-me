@@ -28,16 +28,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 4 custom-border-right">
+                        <div class="col-md-4 4">
                             <div class="text-center">
                                 <div>
-                                    <h2 ng-if='race.winner!==undefined'>{{race.winner}}</h2>
+                                    <h2 ng-if='race.winner!==undefined'>{{race.winner | uppercase}}</h2>
                                     <h2 ng-if='race.winner==undefined'>In Progress</h2>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 custom-border-left">
                             <div class="text-right">
                                 <h4>{{ race.opponent.username }}</h4>
                                 <div> Date: {{race.opponent.start*1000 | date:'MM/dd/yy'}}</div>
